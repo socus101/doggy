@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doggy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* ============================================================
+           iOS 16 Design Language — restyle only (structure untouched)
+           ============================================================ */
+        :root {
+            --primary: #007AFF; --secondary: #32ADE6; --success: #34C759; --danger: #FF3B30; --warning: #FF9500;
+            --raw: #A2845E; --connection: #AF52DE; --bg: #F2F2F7; --card: #FFFFFF; --text: #1C1C1E; --text-2: #8E8E93;
+            --border: rgba(60,60,67,0.29); --fill: rgba(118,118,128,0.12);
+            --radius-card: 18px; --radius-control: 12px;
+            --shadow-card: 0 1px 1px rgba(0,0,0,0.03), 0 6px 20px rgba(0,0,0,0.05);
+            --shadow-float: 0 12px 32px rgba(0,0,0,0.16);
+            --font-ios: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Noto Sans Thai', 'Segoe UI', Roboto, sans-serif;
+        }
+        * { -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-ios); background-color: var(--bg); background-image: radial-gradient(1200px 500px at 85% -10%, rgba(0,122,255,0.06), transparent 60%), radial-gradient(900px 420px at -10% 0%, rgba(175,82,222,0.05), transparent 55%); background-attachment: fixed; color: var(--text); margin: 0; padding: 20px; font-size: 16px; line-height: 1.45; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+        h1, h2, h3 { color: var(--text); margin-top: 0; display: flex; align-items: center; justify-content: space-between; letter-spacing: -0.02em; }
+        h1 { font-size: 28px; font-weight: 800; } h2 { font-size: 21px; font-weight: 700; } h3 { font-size: 17px; font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .card { background-color: var(--card); padding: 20px; border-radius: var(--radius-card); box-shadow: var(--shadow-card); border: 0.5px solid rgba(60,60,67,0.08); margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label.input-label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: var(--text-2); letter-spacing: 0.01em; }
+        input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; padding: 11px 14px; border: 1px solid transparent; background: var(--fill); border-radius: var(--radius-control); box-sizing: border-box; font-family: inherit; font-size: 16px; color: var(--text); transition: box-shadow .18s ease, background .18s ease, border-color .18s ease; appearance: none; -webkit-appearance: none; }
+        input::placeholder, textarea::placeholder { color: rgba(60,60,67,0.4); }
+        input:focus, select:focus, textarea:focus { outline: none; background: #fff; border-color: var(--primary); box-shadow: 0 0 0 3.5px rgba(0,122,255,0.22); }
+        select { background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238E8E93' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 13px center; padding-right: 34px; cursor: pointer; }
+        button, .btn-label { border: none; padding: 11px 16px; border-radius: var(--radius-control); cursor: pointer; font-weight: 600; font-size: 15px; font-family: inherit; display: inline-block; text-align: center; box-sizing: border-box; transition: transform .12s ease, filter .15s ease, box-shadow .15s ease, opacity .15s ease; }
+        button:hover, .btn-label:hover { filter: brightness(1.06); } button:active, .btn-label:active { transform: scale(0.965); filter: brightness(0.94); }
+        button:focus-visible, .btn-label:focus-visible { outline: none; box-shadow: 0 0 0 3.5px rgba(0,122,255,0.35); }
+        .btn-primary { background-color: var(--primary); color: white; width: 100%; box-shadow: 0 4px 12px rgba(0,122,255,0.22); }
+        .btn-camera  { background-color: var(--secondary); color: white; }
+        .btn-sell    { background-color: var(--success); color: white; box-shadow: 0 4px 12px rgba(52,199,89,0.22); }
+        .btn-cancel  { background-color: var(--fill); color: var(--text); }
+        .btn-cancel[style*="--danger"], .btn-cancel[style*="--raw"], .btn-cancel[style*="--primary"], .btn-cancel[style*="#32ADE6"] { color: #fff; }
+        .btn-sm      { padding: 6px 10px; font-size: 13px; margin: 0 2px; border-radius: 9px; }
+        .btn-edit, .btn-delete { background: var(--fill); border-radius: 9px; padding: 6px 9px; font-size: 13px; margin: 0 2px; }
+        .btn-delete:hover { background: rgba(255,59,48,0.14); }
+        button[onclick="openHelperModal()"] { color: #fff; } button:disabled { box-shadow: none; cursor: default; opacity: .85; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 15px; } th, td { text-align: left; padding: 12px 10px; border-bottom: 0.5px solid var(--border); } tr:last-child td { border-bottom: none; } th { background-color: transparent; color: var(--text-2); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; border-bottom: 0.5px solid var(--border); } tbody tr { transition: background .15s ease; } tbody tr:hover { background: rgba(118,118,128,0.06); }
+        .inventory-img { width: 42px; height: 42px; object-fit: cover; border-radius: 10px; border: 0.5px solid var(--border); } .detail-img { width: 50px; height: 50px; object-fit: cover; border-radius: 12px; border: 0.5px solid var(--border); }
+        .summary-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .summary-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .stat { padding: 18px 15px 22px; border-radius: 16px; text-align: center; color: white; font-weight: 600; font-size: 14px; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; background-image: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%); }
+        .stat:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 10px 24px rgba(0,0,0,0.18); } .stat::after { content: '👆 กดดูรายละเอียด'; position: absolute; bottom: 6px; left: 0; right: 0; font-size: 0.65em; opacity: 0.85; font-weight: 500; }
+        .stat-revenue { background-color: #007AFF; } .stat-cost { background-color: #FF3B30; } .stat-profit { background-color: #98989D; } .stat span { display: block; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-top: 6px; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+        .storefront-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; margin-top: 20px; }
+        .product-card { background: var(--card); border: 0.5px solid rgba(60,60,67,0.08); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-card); transition: transform 0.22s cubic-bezier(.2,.8,.3,1), box-shadow 0.22s ease; } .product-card:hover { transform: translateY(-4px) scale(1.012); box-shadow: 0 14px 30px rgba(0,0,0,0.12); }
+        .product-img-container { width: 100%; padding-top: 100%; position: relative; background-color: var(--bg); } .product-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: filter 0.3s, transform 0.35s ease; } .product-card:hover img { transform: scale(1.03); } .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-name { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; margin-bottom: 4px; } .product-price { color: var(--primary); font-size: 19px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 8px; font-variant-numeric: tabular-nums; } .product-stock { font-size: 13px; color: var(--text-2); margin-bottom: 12px; } .out-of-stock { color: var(--danger); font-weight: 700; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.32); -webkit-backdrop-filter: blur(8px) saturate(120%); backdrop-filter: blur(8px) saturate(120%); z-index: 1000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; } .modal-overlay.active { display: flex; animation: fadeIn .2s ease; } @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content { background: var(--bg); padding: 22px; border-radius: 22px; width: 100%; max-width: 500px; box-shadow: var(--shadow-float); max-height: 90vh; overflow-y: auto; border: 0.5px solid rgba(255,255,255,0.6); animation: sheetUp .28s cubic-bezier(.2,.9,.3,1); } @keyframes sheetUp { from { opacity: 0; transform: translateY(22px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } } .modal-content.large { max-width: 1000px; }
+        .modal-title { margin-top: 0; margin-bottom: 15px; color: var(--text); display: flex; justify-content: space-between; align-items: center; } .close-btn { background: var(--fill); border: none; cursor: pointer; color: var(--text-2); width: 30px; height: 30px; min-width: 30px; border-radius: 50%; padding: 0; font-size: 19px; line-height: 30px; text-align: center; font-weight: 600; transition: background .15s ease, transform .12s ease; } .close-btn:hover { background: rgba(118,118,128,0.2); filter: none; } .close-btn:active { transform: scale(0.92); } .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .discount-section { background: var(--fill); padding: 15px; border-radius: 14px; margin-top: 15px; border: 1px dashed rgba(60,60,67,0.25); } .tag-checkbox { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; color: var(--primary); font-weight: 600; user-select: none; } .tag-checkbox input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary); border-radius: 12px; } .text-plus { color: var(--success); font-weight: 700; } .text-minus { color: var(--danger); font-weight: 700; }
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; } .kpi-card { background: var(--card); border: 0.5px solid rgba(60,60,67,0.1); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--shadow-card); transition: all 0.2s ease; } .kpi-card.clickable { cursor: pointer; position: relative; } .kpi-card.clickable:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(255,149,0,0.18); border-color: var(--warning); } .kpi-title { font-size: 13px; color: var(--text-2); font-weight: 600; margin-bottom: 6px; } .kpi-value { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--primary); font-variant-numeric: tabular-nums; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; } .cal-box { padding: 16px; border-radius: 16px; border-left: 5px solid #D1D1D6; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 10px; cursor: pointer; transition: transform 0.2s ease, box-shadow .2s ease; background: var(--card); } .cal-box:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(0,0,0,0.1); } .cal-box h3 { margin: 0; font-size: 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid var(--border); padding-bottom: 8px; } .cal-box .season-badge { font-size: 11px; padding: 4px 10px; border-radius: 100px; color: white; font-weight: 600; } .cal-section { font-size: 14px; } .cal-section strong { display: block; margin-bottom: 4px; color: #3A3A3C; } .cal-tag { display: inline-block; padding: 4px 10px; background: rgba(255,255,255,0.72); border-radius: 100px; margin: 2px; font-size: 13px; border: 0.5px solid rgba(60,60,67,0.16); }
+        .theme-summer { background: #FFF4E6; border-left-color: #FF9500; } .theme-summer .season-badge { background: #FF9500; } .theme-summer h3 { color: #C93400; } .theme-rainy { background: #EAFAF0; border-left-color: #34C759; } .theme-rainy .season-badge { background: #34C759; } .theme-rainy h3 { color: #248A3D; } .theme-winter { background: #EAF3FF; border-left-color: #007AFF; } .theme-winter .season-badge { background: #007AFF; } .theme-winter h3 { color: #0040DD; }
+        .conn-card { background: var(--card); border: 0.5px solid rgba(60,60,67,0.1); border-radius: 16px; padding: 15px; display: flex; gap: 15px; cursor: pointer; box-shadow: var(--shadow-card); transition: 0.2s ease; } .conn-card:hover { border-color: var(--connection); box-shadow: 0 8px 20px rgba(175,82,222,0.16); transform: translateY(-2px); } .conn-img { width: 80px; height: 80px; object-fit: cover; border-radius: 14px; background: var(--fill); } .conn-info { flex-grow: 1; } .conn-title { font-weight: 700; font-size: 17px; color: var(--connection); margin-bottom: 5px; letter-spacing: -0.01em; } .conn-detail { font-size: 13px; color: #48484A; margin-bottom: 3px; }
+        .notify-bell { position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.78); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); border: 0.5px solid rgba(60,60,67,0.12); box-shadow: 0 8px 24px rgba(0,0,0,0.16); display: flex; justify-content: center; align-items: center; font-size: 26px; cursor: pointer; z-index: 2000; transition: transform 0.18s cubic-bezier(.2,.8,.3,1); } .notify-bell:hover { transform: scale(1.08); } .notify-bell:active { transform: scale(0.95); } .notify-badge { position: absolute; top: -4px; right: -4px; background: var(--danger); color: white; font-size: 12px; font-weight: 700; font-family: var(--font-ios); min-width: 22px; height: 22px; border-radius: 100px; padding: 0 4px; box-sizing: border-box; display: flex; justify-content: center; align-items: center; border: 2px solid #fff; box-shadow: 0 2px 6px rgba(255,59,48,0.4); } .notify-panel { position: fixed; bottom: 98px; right: 30px; width: 330px; background: rgba(250,250,250,0.92); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); border-radius: 18px; box-shadow: var(--shadow-float); z-index: 2000; display: none; flex-direction: column; overflow: hidden; border: 0.5px solid rgba(60,60,67,0.12); } .notify-panel.active { display: flex; animation: slideUp 0.28s cubic-bezier(.2,.9,.3,1); } @keyframes slideUp { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } } .notify-header { background: transparent; color: var(--text); padding: 14px 16px; font-weight: 700; font-size: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 0.5px solid var(--border); } .notify-body { padding: 0; max-height: 300px; overflow-y: auto; background: transparent; } .notify-item { padding: 13px 16px; border-bottom: 0.5px solid var(--border); background: transparent; font-size: 14px; } .notify-item:last-child { border-bottom: none; } .notify-item-date { font-size: 12px; color: var(--danger); font-weight: 700; margin-bottom: 4px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 28px; margin: 0; } .switch input { opacity: 0; width: 0; height: 0; } .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(120,120,128,0.32); transition: .25s ease; border-radius: 100px; } .slider:before { position: absolute; content: ""; height: 24px; width: 24px; left: 2px; bottom: 2px; background-color: white; transition: .25s cubic-bezier(.2,.9,.3,1); border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2), 0 0 1px rgba(0,0,0,0.1); } input:checked + .slider { background-color: var(--success); } input:checked + .slider:before { transform: translateX(18px); }
+        .sell-product-header { display: flex; align-items: center; gap: 14px; background: var(--card); border: 0.5px solid rgba(60,60,67,0.1); border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; box-shadow: var(--shadow-card); } .sell-product-img { width: 72px; height: 72px; object-fit: cover; flex-shrink: 0; border-radius: 14px; border: 0.5px solid var(--border); background: var(--fill); } .sell-product-meta { min-width: 0; } .sell-product-meta h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; } .qty-stepper { display: grid; grid-template-columns: 64px 1fr 64px; gap: 8px; align-items: stretch; } .qty-btn { height: 56px; font-size: 30px; font-weight: 600; line-height: 1; background: var(--fill); color: var(--primary); border-radius: 14px; padding: 0; user-select: none; -webkit-user-select: none; } .qty-btn:hover { background: rgba(0,122,255,0.12); filter: none; } .qty-btn:active { transform: scale(0.93); background: rgba(0,122,255,0.2); } .qty-stepper input[type="number"] { height: 56px; text-align: center; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 0 8px; -moz-appearance: textfield; } .qty-stepper input[type="number"]::-webkit-outer-spin-button, .qty-stepper input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: rgba(60,60,67,0.25); border-radius: 100px; } ::-webkit-scrollbar-track { background: transparent; } ::selection { background: rgba(0,122,255,0.22); }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto 20px auto; flex-wrap: wrap; gap: 10px; background: rgba(255,255,255,0.72); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); padding: 14px 20px; border-radius: 18px; border: 0.5px solid rgba(60,60,67,0.1); box-shadow: 0 1px 1px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.06); position: sticky; top: 12px; z-index: 100;">
+        <h1 style="margin:0;">🛒 Doggy</h1>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn-primary" style="width: auto; background-color: #007AFF;" onclick="openModal('inventoryModal')">📦 สินค้าคงคลัง</button>
+            <button class="btn-primary" style="width: auto; background-color: var(--raw);" onclick="openModal('rawMaterialModal')">⚙️ วัตถุดิบแฝง</button>
+            <button class="btn-primary" style="width: auto; background-color: #AF52DE;" onclick="openModal('summaryModal')">📊 สรุปยอด</button>
+            <button class="btn-primary" style="width: auto; background-color: var(--warning);" onclick="openHelperModal()">💡 ผู้ช่วยแม่ค้า</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="storefront-panel">
+            <div class="card" style="min-height: 70vh;">
+                <h2>🏠 หน้าร้าน (Storefront)</h2>
+                <div class="storefront-grid" id="storefrontGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- แจ้งเตือน -->
+    <div class="notify-bell" onclick="toggleNotifyPanel()" title="การแจ้งเตือน">
+        🔔<div class="notify-badge" id="notifyBadge" style="display: none;">0</div>
+    </div>
+    <div class="notify-panel" id="notifyPanel">
+        <div class="notify-header">
+            <span>แจ้งเตือนล่วงหน้า (3 วัน)</span>
+            <label class="switch" title="เปิด/ปิดการแจ้งเตือน">
+                <input type="checkbox" id="notifyToggle" checked onchange="updateNotifications()">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="notify-body" id="notifyBody"></div>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+    <div class="modal-overlay" id="inventoryModal">
+        <div class="modal-content large" style="background-color: #F2F2F7;">
+            <h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 20px;">📦 ระบบจัดการสินค้าคงคลัง<button class="close-btn" onclick="closeModal('inventoryModal')">&times;</button></h2>
+            <div class="card">
+                <h3 style="margin-top:0; color:var(--primary);">➕ เพิ่มสินค้าในสต็อก (สร้างล็อตใหม่)</h3>
+                <form id="addProductForm">
+                    <div class="form-group"><label class="input-label">รูปสินค้า (ตัดภาพ 1:1 ให้อัตโนมัติ)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1;">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label></div><img id="imagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="prodName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="prodStock" min="1" required></div></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ต้นทุน (บาท/ต่อชิ้น)</label><input type="number" id="prodCost" min="0" step="0.01" required></div><div class="form-group"><label class="input-label">ราคาขาย (บาท/ต่อชิ้น)</label><input type="number" id="prodPrice" min="0" step="0.01" required></div></div>
+                    <button type="submit" class="btn-primary">บันทึกสินค้าลงคลัง</button>
+                </form>
+            </div>
+            <div class="card" style="overflow-x: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;"><h3 style="margin:0; color:var(--primary);">📋 คลังสินค้าคงเหลือ</h3><button class="btn-cancel" style="background-color: var(--primary);" onclick="openStockHistoryModal('product')">📋 ดูประวัติเคลื่อนไหวสต็อก</button></div>
+                <table><thead><tr><th>รูป</th><th>สินค้า</th><th>ราคาขาย</th><th style="text-align:center;">คงเหลือ</th><th>จัดการ</th></tr></thead><tbody id="inventoryTable"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="rawMaterialModal">
+        <div class="modal-content large" style="background-color: #F2F2F7;">
+            <h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 20px;"><span style="color: var(--raw);">⚙️ ระบบจัดการวัตถุดิบแฝง</span><button class="close-btn" onclick="closeModal('rawMaterialModal')">&times;</button></h2>
+            <div class="card" style="border-top: 4px solid var(--raw);">
+                <h3 style="margin-top:0; color:var(--raw);">➕ เพิ่มวัตถุดิบในสต็อก</h3>
+                <form id="addRawMaterialForm">
+                    <div class="form-group"><label class="input-label">รูปภาพวัตถุดิบ (ตัดภาพ 1:1)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1; background-color: var(--raw);">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label></div><img id="rawImagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อวัตถุดิบ</label><input type="text" id="rawName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="rawStock" min="1" required></div></div>
+                    <div class="form-group"><label class="input-label">ต้นทุนที่ซื้อมา (บาท/ต่อชิ้น)</label><input type="number" id="rawCost" min="0" step="0.01" required></div>
+                    <button type="submit" class="btn-primary" style="background-color: var(--raw);">บันทึกวัตถุดิบลงคลัง</button>
+                </form>
+            </div>
+            <div class="card" style="overflow-x: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;"><h3 style="margin:0; color:var(--raw);">📋 คลังวัตถุดิบคงเหลือ</h3><div style="display: flex; gap: 10px;"><button class="btn-cancel" onclick="openStockHistoryModal('raw')">📋 ดูประวัติวัตถุดิบ</button><button class="btn-primary" style="background-color: var(--danger);" onclick="openRawSummaryModal()">📊 สรุปยอดจ่ายวัตถุดิบ</button></div></div>
+                <table><thead><tr><th>รูป</th><th>วัตถุดิบ</th><th>ต้นทุน (ต่อชิ้น)</th><th style="text-align:center;">คงเหลือ</th><th>จัดการ</th></tr></thead><tbody id="rawMaterialTable"></tbody></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: สรุปยอด -->
+    <div class="modal-overlay" id="summaryModal">
+        <div class="modal-content large" style="background-color: #F2F2F7;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 20px;">
+                <h2 class="modal-title" style="margin:0;">📊 ระบบสรุปยอดและประวัติ</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-cancel" style="background-color: var(--danger); color: white;" onclick="clearSystemData()">ล้างข้อมูลทั้งหมด</button>
+                    <button class="btn-primary" style="background-color: #34C759;" onclick="saveSummaryAsImage()">📸 บันทึกภาพสรุปยอด</button>
+                    <button class="close-btn" onclick="closeModal('summaryModal')">&times;</button>
+                </div>
+            </div>
+            <div id="summaryCaptureArea" style="background-color: #F2F2F7; padding: 10px;">
+                <div class="card">
+                    <div class="summary-header" data-html2canvas-ignore="true">
+                        <h3 style="margin:0; color:var(--primary);">💰 สรุปยอดกำไร</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="timeframeFilter" onchange="updateUI()" style="width: auto; cursor: pointer;">
+                                <option value="today" selected>วันนี้</option><option value="week">สัปดาห์นี้</option>
+                                <option value="month">เดือนนี้</option><option value="year">ปีนี้</option><option value="all">ทั้งหมด</option>
+                            </select>
+                            <button class="btn-primary" style="width: auto; background-color: var(--secondary);" onclick="openAnalytics()">📈 กราฟวิเคราะห์</button>
+                        </div>
+                    </div>
+                    <div class="summary-box">
+                        <div class="stat stat-revenue" onclick="openSummaryDetail('revenue')">ยอดขายรวม<span id="totalRevenue">0 ฿</span></div>
+                        <div class="stat stat-cost" onclick="openSummaryDetail('cost')">ต้นทุนจ่ายออกไป<span id="totalCost">0 ฿</span></div>
+                        <div class="stat stat-profit" id="profitStatBox" onclick="openSummaryDetail('profit')">กำไรเงินสด<span id="totalProfit">0 ฿</span></div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="card" style="overflow-x: auto; margin-bottom: 0;">
+                        <h3 style="margin-top:0; color:var(--primary);">🕒 ประวัติการขาย (รายรับ)</h3>
+                        <table><thead><tr><th>เวลา</th><th>รายการ</th><th>จำนวน</th><th>ยอดรวม</th><th style="text-align:center; width:40px;">ลบ</th></tr></thead><tbody id="historyTable"></tbody></table>
+                    </div>
+                    <div class="card" style="overflow-x: auto; margin-bottom: 0;">
+                        <h3 style="margin-top:0; color:var(--raw);">🛒 ประวัติซื้อเข้า (ลงทุน/รายจ่าย)</h3>
+                        <table><thead><tr><th>เวลา</th><th>รายการ</th><th>จำนวน</th><th>รายจ่าย</th><th style="text-align:center; width:40px;">ลบ</th></tr></thead><tbody id="rawHistoryTable"></tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ส่วนอื่นๆ ของ Modal ย่อไว้ให้กระชับแต่ครบถ้วน -->
+    <div class="modal-overlay" id="sellModal"><div class="modal-content"><h2 class="modal-title">ขายสินค้า</h2><div class="sell-product-header"><img id="sellModalImg" src="" class="sell-product-img"><div class="sell-product-meta"><h3 id="sellModalName" style="margin: 0;"></h3><p id="sellModalStock" style="color: #8E8E93; margin: 4px 0 0 0;"></p></div></div><div class="form-group"><label class="input-label">จำนวนที่ขาย:</label><div class="qty-stepper"><button type="button" class="qty-btn" onclick="adjustSellQty(-1)">−</button><input type="number" id="sellModalQty" min="1" value="1" required><button type="button" class="qty-btn" onclick="adjustSellQty(1)">＋</button></div></div><div class="discount-section"><label class="tag-checkbox"><input type="checkbox" id="hasDiscount" onchange="toggleDiscount()"> 🏷️ เพิ่มส่วนลดพิเศษ</label><div id="discountDetails" style="display: none; margin-top: 15px;"><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group" style="margin-bottom:0;"><label class="input-label">เงินส่วนลด (บาท)</label><input type="number" id="discountVal" min="0" step="0.01" value="0"></div><div class="form-group" style="margin-bottom:0;"><label class="input-label">รูปแบบส่วนลด</label><select id="discountType"><option value="total">ลดรวมทั้งบิล</option><option value="per_item">ลดต่อชิ้น</option></select></div></div></div></div><div class="modal-actions"><button class="btn-cancel" onclick="closeModal('sellModal')">ยกเลิก</button><button class="btn-sell" onclick="confirmSell()">ยืนยันการขาย</button></div></div></div>
+
+    <div class="modal-overlay" id="summaryDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="summaryDetailTitle">รายละเอียด</span><button class="close-btn" onclick="closeModal('summaryDetailModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;" id="summaryDetailValueHeader">มูลค่า</th></tr></thead><tbody id="summaryDetailTableBody"></tbody><tfoot style="font-weight:bold; background-color:#F2F2F7;"><tr><td colspan="2" style="text-align:right; padding: 15px;">รวมทั้งหมด:</td><td style="text-align:center; padding: 15px;" id="summaryDetailTotalQty">0</td><td style="text-align:right; padding: 15px; color:var(--primary);" id="summaryDetailTotalValue">0 ฿</td></tr></tfoot></table></div></div></div>
+    <div class="modal-overlay" id="stockHistoryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="stockHistoryTitle">📦 ประวัติสต็อก</span><button class="close-btn" onclick="closeModal('stockHistoryModal')">&times;</button></h2><div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;"><select id="stockHistoryFilter" onchange="renderStockHistory()" style="width: auto; flex-grow: 1;"><option value="today">วันนี้</option><option value="week">สัปดาห์นี้</option><option value="month">เดือนนี้</option><option value="all" selected>ประวัติทั้งหมด</option></select><button class="btn-sell" onclick="saveStockHistoryAsImage()">📸 เซฟเป็นรูป</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;" id="stockCaptureArea"><h3 style="text-align:center; margin-top:0; display:none;" id="watermarkTitle">รายงานประวัติสต็อก</h3><table><thead><tr><th>วัน-เวลา</th><th>รายการ</th><th style="text-align:center;">เคลื่อนไหว</th><th style="text-align:center;">คงเหลือ</th><th>หมายเหตุ</th></tr></thead><tbody id="stockHistoryTableBody"></tbody></table></div></div></div>
+    <div class="modal-overlay" id="rawSummaryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📊 สรุปยอดใช้วัตถุดิบ<button class="close-btn" onclick="closeModal('rawSummaryModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card" style="border-color: var(--danger); background-color: #FFEDEB;"><div class="kpi-title">💸 จ่ายเยอะสุด</div><div class="kpi-value" style="color: var(--danger); font-size: 1.2em;" id="rawHighestCost">-</div></div><div class="kpi-card" style="border-color: var(--secondary); background-color: #EAF6FF;"><div class="kpi-title">🛒 ซื้อบ่อยสุด</div><div class="kpi-value" style="color: var(--secondary); font-size: 1.2em;" id="rawHighestFreq">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th>วัตถุดิบ</th><th style="text-align:center;">ความถี่</th><th style="text-align:right;">เงินที่จ่ายไป</th></tr></thead><tbody id="rawSummaryTableBody"></tbody></table></div></div></div>
+    <div class="modal-overlay" id="editModal"><div class="modal-content"><h2 class="modal-title">แก้ไขรายการ</h2><form id="editForm"><div class="form-group"><label>ชื่อรายการ</label><input type="text" id="editName" required></div><div class="form-group"><label>จำนวนสต็อก</label><input type="number" id="editStock" min="0" required></div><div class="form-group"><label>ต้นทุน (ต่อชิ้น)</label><input type="number" id="editCost" min="0" step="0.01" required></div><div class="form-group" id="editPriceContainer"><label>ราคาขาย (ต่อชิ้น)</label><input type="number" id="editPrice" min="0" step="0.01"></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('editModal')">ยกเลิก</button><button type="submit" class="btn-primary">บันทึก</button></div></form></div></div>
+    <div class="modal-overlay" id="analyticsModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📈 กราฟวิเคราะห์<button class="close-btn" onclick="closeModal('analyticsModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card"><div class="kpi-title">อัตรากำไร</div><div class="kpi-value" id="kpiMargin">0%</div></div><div class="kpi-card"><div class="kpi-title">ยอดขายเฉลี่ยบิล</div><div class="kpi-value" id="kpiAOV">0 ฿</div></div><div class="kpi-card" style="border-color: var(--raw); background-color: #FFF4E6;"><div class="kpi-title">🛒 ต้นทุนรวม</div><div class="kpi-value" style="color: var(--raw);" id="kpiRawCost">0 ฿</div></div><div class="kpi-card clickable" style="border-color: var(--warning); background-color: #FFF8E1;" onclick="openRankingModal()"><div class="kpi-title">🔥 สินค้าทำเงินอันดับ 1</div><div class="kpi-value" style="color: var(--warning); font-size: 1.2em;" id="kpiBestSeller">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; height: 400px;"><canvas id="salesChart"></canvas></div></div></div>
+    <div class="modal-overlay" id="rankingModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">🏆 จัดอันดับสินค้าขายดี<button class="close-btn" onclick="closeModal('rankingModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px;"><input type="date" id="rankStartDate"><input type="date" id="rankEndDate"><button class="btn-primary" style="width: auto;" onclick="renderRankingTable()">ค้นหา</button><button class="btn-cancel" style="width: auto;" onclick="resetRankingFilter()">ดูทั้งหมด</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th style="text-align:center; width: 80px;">อันดับ</th><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;">ยอดรวม (฿)</th></tr></thead><tbody id="rankingTableBody"></tbody></table></div></div></div>
+    <div class="modal-overlay" id="helperModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0;">💡 คู่มือผู้ช่วยแม่ค้า</h2><div style="display: flex; gap: 10px;"><select id="helperYear" onchange="renderHelperGrid()" style="width: 120px;"></select><button class="btn-primary" style="background-color: var(--connection);" onclick="openConnectionModal()">🤝 สมุดคู่ค้า</button><button class="close-btn" onclick="closeModal('helperModal')">&times;</button></div></div><div class="calendar-grid" id="helperGridContainer"></div></div></div>
+    <div class="modal-overlay" id="calendarDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📅 <span id="calDetailTitle">ปฏิทิน</span><button class="close-btn" onclick="closeModal('calendarDetailModal')">&times;</button></h2><div id="calDetailContainer" style="background: white; padding: 15px; border-radius: 16px;"></div></div></div>
+    <div class="modal-overlay" id="dayNoteModal"><div class="modal-content"><h2 class="modal-title">📝 โน้ตวันที่ <span id="dayNoteDateLabel"></span></h2><div id="dayNoteList" style="margin-bottom: 15px;"></div><form id="dayNoteForm"><div class="form-group"><input type="text" id="dayNoteInput" placeholder="พิมพ์ข้อความที่นี่..." required></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('dayNoteModal')">ปิด</button><button type="submit" class="btn-primary">เพิ่มโน้ต</button></div></form></div></div>
+    <div class="modal-overlay" id="connectionModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0; color: var(--connection);">🤝 สมุดคู่ค้า</h2><div style="display: flex; gap: 10px;"><button class="btn-primary" style="background-color: var(--connection);" onclick="openModal('addConnectionModal')">➕ เพิ่มคู่ค้า</button><button class="close-btn" onclick="closeModal('connectionModal')">&times;</button></div></div><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;" id="connectionListContainer"></div></div></div>
+    <div class="modal-overlay" id="addConnectionModal"><div class="modal-content"><h2 class="modal-title" style="color: var(--connection);">➕ เพิ่มข้อมูลคู่ค้า</h2><form id="addConnectionForm"><div class="form-group"><label class="input-label">รูปร้านค้า</label><label class="btn-label btn-primary" style="width:100%; background: var(--connection);">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'connImagePreview')"></label><img id="connImagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px;"></div><div class="form-group"><label class="input-label">ประเภทร้านค้า</label><input type="text" id="connShopType" required></div><div class="form-group"><label class="input-label">ที่อยู่</label><textarea id="connAddress" rows="2" required></textarea></div><div class="form-group"><label class="input-label">สินค้าหลัก</label><input type="text" id="connProdType" required></div><div class="form-group"><label class="input-label">เบอร์โทร</label><input type="text" id="connPhone" required></div><div class="form-group"><label class="input-label">ชื่อเจ้าของ</label><input type="text" id="connOwner"></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('addConnectionModal')">ยกเลิก</button><button type="submit" class="btn-primary" style="background-color: var(--connection);">บันทึก</button></div></form></div></div>
+    <div class="modal-overlay" id="connectionDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="connDetailTitle" style="color: var(--connection);">รายละเอียดร้านค้า</span><div style="display:flex; gap:8px; align-items:center;"><button class="btn-cancel btn-sm" style="background: var(--danger); color:#fff;" onclick="deleteConnection(currentConnId)">🗑️ ลบคู่ค้านี้</button><button class="close-btn" onclick="closeModal('connectionDetailModal')">&times;</button></div></h2><div id="connDetailInfo" style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"></div><div class="card"><h3 style="margin-top:0; color:var(--connection);">➕ เพิ่มรายการสินค้าของร้านนี้</h3><form id="addConnProductForm"><div class="form-group"><label class="input-label">รูปสินค้า</label><label class="btn-label btn-primary" style="background: var(--connection);">📁 เลือกรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'connProdImgPreview')"></label><img id="connProdImgPreview" src="" style="display:none; width: 60px; height: 60px; object-fit: cover; margin-top: 10px; border-radius: 10px;"></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="connProdName" required></div><div class="form-group"><label class="input-label">ราคาส่ง</label><input type="number" id="connProdWholesale" min="0" step="0.01" required></div><div class="form-group"><label class="input-label">ราคาปลีก</label><input type="number" id="connProdRetail" min="0" step="0.01" required></div></div><button type="submit" class="btn-primary" style="background-color: var(--connection);">บันทึกสินค้าร้านคู่ค้า</button></form></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><h3 style="margin-top:0; color:var(--connection);">📋 รายการสินค้าทั้งหมด</h3><table><thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>ราคาส่ง</th><th>ราคาปลีก</th><th style="text-align:center;">จัดการ</th></tr></thead><tbody id="connProductTableBody"></tbody></table></div></div></div>
+
+    <script>
+        // ==============================================================
+        // 🔴 ใส่ URL ของ Web App ที่ได้จาก Google Apps Script ตรงนี้ 🔴
+        // ==============================================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQi1KUgB49fcpop2uP9XZgwurooBIRcMosOVy-rpiN8TFK0Ke5ffEhEpZterYHJSZzuA/exec'; 
+
+        // ================= Local Storage Data =================
+        let products = JSON.parse(localStorage.getItem('products')) || []; 
+        
+        let transactions = JSON.parse(localStorage.getItem('transactions')) || []; 
+        transactions.forEach(t => t.dateObj = new Date(t.dateObj)); 
+        
+        let stockLogs = JSON.parse(localStorage.getItem('stockLogs')) || []; 
+        stockLogs.forEach(l => l.dateObj = new Date(l.dateObj));
+        
+        let calendarNotes = JSON.parse(localStorage.getItem('calendarNotes')) || {}; 
+        let connections = JSON.parse(localStorage.getItem('connections')) || []; 
+
+        function saveDataLocally() {
+            localStorage.setItem('products', JSON.stringify(products));
+            localStorage.setItem('transactions', JSON.stringify(transactions));
+            localStorage.setItem('stockLogs', JSON.stringify(stockLogs));
+            localStorage.setItem('calendarNotes', JSON.stringify(calendarNotes));
+            localStorage.setItem('connections', JSON.stringify(connections));
+        }
+
+        function sendToGoogleSheets(type, data) {
+            if(!SCRIPT_URL || SCRIPT_URL.includes('ใส่_URL')) return;
+            let cleanData = JSON.parse(JSON.stringify(data));
+            if(cleanData.image) delete cleanData.image; 
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ type: type, data: cleanData })
+            }).catch(e => console.log('Sync to sheets failed:', e));
+        }
+
+        let currentSellId = null; let currentEditId = null; let selectedImageFile = null; let currentCopyImage = null; let currentStockHistoryType = 'all'; let salesChartInstance = null; let currentCalMonth = 1; let currentNoteDay = 1; let isNotifyEnabled = true; let currentConnId = null;
+        const PLACEHOLDER_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
+        // Calendar Data Setup
+        const calendarData = [{ id: 1, name: "มกราคม", season: "winter", seasonName: "ฤดูหนาว ❄️", events: ["ปีใหม่", "วันเด็ก"], fruits: ["สตรอว์เบอร์รี", "พุทรา"], items: ["กระเช้าปีใหม่", "เสื้อหนาว"] },{ id: 2, name: "กุมภาพันธ์", season: "winter", seasonName: "ปลายหนาว ❄️", events: ["วาเลนไทน์", "มาฆบูชา"], fruits: ["องุ่น", "เมล่อน"], items: ["ดอกกุหลาบ", "ช็อกโกแลต", "สังฆทาน"] },{ id: 3, name: "มีนาคม", season: "summer", seasonName: "ฤดูร้อน ☀️", events: ["ปิดเทอม"], fruits: ["มะม่วง", "แตงโม"], items: ["เครื่องดื่มเย็น", "ครีมกันแดด"] },{ id: 4, name: "เมษายน", season: "summer", seasonName: "ฤดูร้อน ☀️", events: ["สงกรานต์"], fruits: ["ทุเรียน", "มะม่วง"], items: ["ปืนฉีดน้ำ", "ซองกันน้ำ", "เสื้อลายดอก"] },{ id: 5, name: "พฤษภาคม", season: "summer", seasonName: "ปลายร้อน ☀️", events: ["วิสาขบูชา", "เปิดเทอม", "แรงงาน"], fruits: ["ทุเรียน", "มังคุด"], items: ["ชุดนักเรียน", "เครื่องเขียน"] },{ id: 6, name: "มิถุนายน", season: "rainy", seasonName: "ฤดูฝน 🌧️", events: ["Pride Month"], fruits: ["มังคุด", "เงาะ"], items: ["ร่ม", "เสื้อกันฝน", "รองเท้ายาง"] },{ id: 7, name: "กรกฎาคม", season: "rainy", seasonName: "ฤดูฝน 🌧️", events: ["อาสาฬหบูชา", "เข้าพรรษา"], fruits: ["ส้มโอ", "กล้วยหอม"], items: ["เทียนพรรษา", "ชุดฝน", "บะหมี่กึ่งสำเร็จรูป"] },{ id: 8, name: "สิงหาคม", season: "rainy", seasonName: "ฤดูฝน 🌧️", events: ["วันแม่แห่งชาติ"], fruits: ["ลำไย", "แก้วมังกร"], items: ["พวงมาลัยมะลิ", "กระเช้าวันแม่"] },{ id: 9, name: "กันยายน", season: "rainy", seasonName: "ฤดูฝน 🌧️", events: ["สารทจีน"], fruits: ["ฝรั่ง", "มะละกอ"], items: ["ของไหว้เจ้า", "อาหารตุนช่วงฝนตก"] },{ id: 10, name: "ตุลาคม", season: "rainy", seasonName: "ปลายฝน 🌧️", events: ["กินเจ", "ฮาโลวีน"], fruits: ["ส้มสายน้ำผึ้ง", "กล้วยไข่"], items: ["อาหารเจ", "ขนมฮาโลวีน"] },{ id: 11, name: "พฤศจิกายน", season: "winter", seasonName: "ต้นหนาว ❄️", events: ["ลอยกระทง"], fruits: ["สตรอว์เบอร์รี", "ส้ม"], items: ["กระทง", "โคมลอย", "เสื้อหนาวบาง"] },{ id: 12, name: "ธันวาคม", season: "winter", seasonName: "ฤดูหนาว ❄️", events: ["คริสต์มาส", "สิ้นปี"], fruits: ["สตรอว์เบอร์รี", "พุทรา"], items: ["ของขวัญจับฉลาก", "อุปกรณ์แคมป์ปิ้ง"] }];
+        const curY = new Date().getFullYear(); const yearSelect = document.getElementById('helperYear'); for(let y = curY - 1; y <= curY + 5; y++) { yearSelect.innerHTML += `<option value="${y}" ${y === curY ? 'selected' : ''}>ปี ${y}</option>`; }
+        const publicHolidays = { "1-1": "วันขึ้นปีใหม่", "2-14": "วันวาเลนไทน์", "4-13": "สงกรานต์", "4-14": "สงกรานต์", "4-15": "สงกรานต์", "5-1": "วันแรงงาน", "8-12": "วันแม่แห่งชาติ", "12-5": "วันพ่อแห่งชาติ", "12-31": "วันสิ้นปี" };
+
+        function handleImageSelect(input, previewId) { if (input.files && input.files[0]) { selectedImageFile = input.files[0]; const reader = new FileReader(); reader.onload = e => { document.getElementById(previewId).src = e.target.result; document.getElementById(previewId).style.display = 'block'; }; reader.readAsDataURL(selectedImageFile); } }
+        function cropImageToSquare(file, callback) { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = event => { const img = new Image(); img.src = event.target.result; img.onload = () => { const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d'); const minSide = Math.min(img.width, img.height); canvas.width = 300; canvas.height = 300; ctx.drawImage(img, (img.width - minSide)/2, (img.height - minSide)/2, minSide, minSide, 0, 0, 300, 300); callback(canvas.toDataURL('image/jpeg', 0.8)); }; }; }
+        function openModal(modalId) { document.getElementById(modalId).classList.add('active'); } function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); }
+
+        // ================= Notifications =================
+        function updateNotifications() {
+            const badge = document.getElementById('notifyBadge'); const body = document.getElementById('notifyBody');
+            if (!isNotifyEnabled) { badge.style.display = 'none'; body.innerHTML = '<div style="text-align:center; color:#8E8E93; padding: 20px;">การแจ้งเตือนถูกปิดไว้ 🔕</div>'; return; }
+            const now = new Date(); now.setHours(0,0,0,0); const upcoming = [];
+            for (const [dateKey, notes] of Object.entries(calendarNotes)) {
+                if(notes.length === 0) continue; const [y, m, d] = dateKey.split('-'); const noteDate = new Date(y, m-1, d); const diffTime = noteDate - now; const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                if (diffDays >= 0 && diffDays <= 3) { let dayLabel = diffDays === 0 ? "วันนี้" : (diffDays === 1 ? "พรุ่งนี้" : `อีก ${diffDays} วัน`); upcoming.push({ dateKey, diffDays, dayLabel, notes, dateObj: noteDate }); }
+            }
+            upcoming.sort((a,b) => a.diffDays - b.diffDays); body.innerHTML = ''; let count = 0;
+            if (upcoming.length === 0) { body.innerHTML = '<div style="text-align:center; color:#8E8E93; padding: 20px;">ไม่มีรายการที่ใกล้ถึงใน 3 วันนี้ 🎉</div>'; badge.style.display = 'none'; } else {
+                upcoming.forEach(item => { item.notes.forEach(note => { count++; body.innerHTML += `<div class="notify-item"><div class="notify-item-date">⏱️ ${item.dayLabel} (${item.dateObj.toLocaleDateString('th-TH')})</div><div style="font-size: 0.9em; color:#3A3A3C;">${note}</div></div>`; }); });
+                badge.innerText = count; badge.style.display = count > 0 ? 'flex' : 'none';
+            }
+        }
+        function toggleNotifyPanel() { const panel = document.getElementById('notifyPanel'); panel.classList.toggle('active'); if(panel.classList.contains('active')) updateNotifications(); }
+        document.getElementById('notifyToggle').addEventListener('change', function(e) { isNotifyEnabled = e.target.checked; updateNotifications(); });
+
+        // ================= History & Stock Logging =================
+        function logStockChange(productName, changeAmount, currentStock, note, isRaw, itemCost, investChange) {
+            const newLog = { dateObj: new Date(), time: new Date().toLocaleString('th-TH'), name: productName, change: changeAmount, balance: currentStock, note: note, isRawMaterial: isRaw || false, cost: itemCost || 0, investChange: investChange || 0 };
+            stockLogs.unshift(newLog);
+            if(document.getElementById('stockHistoryModal').classList.contains('active')) renderStockHistory();
+            calculateSummary(); 
+            saveDataLocally(); 
+            sendToGoogleSheets('stockLog', newLog); 
+        }
+
+        function openStockHistoryModal(type) { currentStockHistoryType = type; document.getElementById('stockHistoryTitle').innerHTML = type === 'raw' ? '📦 ประวัติการเคลื่อนไหว (วัตถุดิบ)' : '📦 ประวัติการเคลื่อนไหวสต็อก (สินค้า)'; document.getElementById('stockHistoryFilter').value = 'all'; renderStockHistory(); openModal('stockHistoryModal'); }
+        function renderStockHistory() {
+            const filter = document.getElementById('stockHistoryFilter').value; const now = new Date(); const tbody = document.getElementById('stockHistoryTableBody'); tbody.innerHTML = '';
+            let filteredLogs = stockLogs.filter(log => log.isRawMaterial === (currentStockHistoryType === 'raw'));
+            filteredLogs = filteredLogs.filter(log => { const d = log.dateObj; if (filter === 'all') return true; if (filter === 'today') return d.toDateString() === now.toDateString(); if (filter === 'week') { const firstDay = new Date(new Date().setDate(now.getDate() - now.getDay())).setHours(0,0,0,0); const lastDay = new Date(new Date().setDate((now.getDate() - now.getDay()) + 6)).setHours(23,59,59,999); return d >= firstDay && d <= lastDay; } if (filter === 'month') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); });
+            if (filteredLogs.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#8E8E93;">ไม่มีประวัติในช่วงเวลานี้</td></tr>'; return; }
+            filteredLogs.forEach(log => { const changeClass = log.change > 0 ? 'text-plus' : (log.change < 0 ? 'text-minus' : ''); tbody.innerHTML += `<tr><td style="font-size: 0.85em; color: #8E8E93;">${log.time}</td><td style="font-weight: bold;">${log.name}</td><td style="text-align:center;" class="${changeClass}">${log.change>0?'+':''}${log.change}</td><td style="text-align:center; font-weight:bold;">${log.balance}</td><td>${log.note}</td></tr>`; });
+        }
+        function saveStockHistoryAsImage() { const captureArea = document.getElementById('stockCaptureArea'); document.getElementById('watermarkTitle').style.display = 'block'; html2canvas(captureArea, { backgroundColor: '#ffffff', scale: 2 }).then(canvas => { const link = document.createElement('a'); link.download = `รายงานสต็อก_${new Date().toLocaleDateString('th-TH')}.png`; link.href = canvas.toDataURL('image/png'); link.click(); document.getElementById('watermarkTitle').style.display = 'none'; }); }
+        function saveSummaryAsImage() { const captureArea = document.getElementById('summaryCaptureArea'); html2canvas(captureArea, { backgroundColor: '#F2F2F7', scale: 2 }).then(canvas => { const link = document.createElement('a'); link.download = `สรุปยอดร้านค้า_${new Date().toLocaleDateString('th-TH')}.png`; link.href = canvas.toDataURL('image/png'); link.click(); }); }
+
+        // ================= Product & Raw Material =================
+        function deleteProduct(id) { 
+            const p = products.find(x => x.id === id); 
+            // เปลี่ยนใหม่: การลบสินค้าจะ "ไม่คืนเงิน" ลงในระบบแล้ว เพื่อป้องกันยอดติดลบ (ให้ไปลบประวัติรายจ่ายเองถ้าต้องการ)
+            if (p && confirm("ลบรายการสินค้านี้ถาวรใช่หรือไม่?\n\n(การลบนี้จะไม่ลบยอดเงินที่เคยจ่ายไป หากคุณต้องการลบต้นทุน/รายจ่ายที่กดพลาด ให้ไปลบในตาราง [ประวัติซื้อเข้า] ที่หน้าสรุปยอด)")) { 
+                logStockChange(p.name, -p.stock, 0, 'ลบรายการออกจากระบบ 🗑️', p.isRawMaterial, p.cost, 0); // investChange = 0 (ไม่กระทบยอดเงิน)
+                products = products.filter(x => x.id !== id); 
+                saveDataLocally(); 
+                updateUI(); 
+            } 
+        }
+        function copyProduct(id) {
+            const p = products.find(x => x.id === id); if (!p) return; currentCopyImage = p.image; selectedImageFile = null; 
+            if (p.isRawMaterial) { document.getElementById('rawName').value = p.name; document.getElementById('rawCost').value = p.cost; document.getElementById('rawStock').value = p.stock; document.getElementById('rawImagePreview').src = p.image; document.getElementById('rawImagePreview').style.display = 'block'; openModal('rawMaterialModal'); } else { document.getElementById('prodName').value = p.name; document.getElementById('prodCost').value = p.cost; document.getElementById('prodPrice').value = p.price; document.getElementById('prodStock').value = p.stock; document.getElementById('imagePreview').src = p.image; document.getElementById('imagePreview').style.display = 'block'; openModal('inventoryModal'); }
+        }
+
+        document.getElementById('addProductForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const name = document.getElementById('prodName').value; const cost = parseFloat(document.getElementById('prodCost').value); const price = parseFloat(document.getElementById('prodPrice').value); const stock = parseInt(document.getElementById('prodStock').value);
+            const handleAddition = (imgData) => { 
+                products.push({ id: Date.now(), name, cost, price, stock, image: imgData, isRawMaterial: false }); 
+                logStockChange(name, stock, stock, 'นำเข้าสินค้าล็อตใหม่', false, cost, (stock * cost)); 
+                saveDataLocally(); 
+                selectedImageFile = null; currentCopyImage = null; document.getElementById('imagePreview').style.display = 'none'; this.reset(); updateUI(); 
+            };
+            if (selectedImageFile) cropImageToSquare(selectedImageFile, handleAddition); else if (currentCopyImage) handleAddition(currentCopyImage); else handleAddition(PLACEHOLDER_IMAGE);
+        });
+
+        document.getElementById('addRawMaterialForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const name = document.getElementById('rawName').value; const cost = parseFloat(document.getElementById('rawCost').value); const stock = parseInt(document.getElementById('rawStock').value);
+            const handleAddition = (imgData) => { 
+                products.push({ id: Date.now(), name, cost, price: 0, stock, image: imgData, isRawMaterial: true }); 
+                logStockChange(name, stock, stock, 'นำเข้าวัตถุดิบล็อตใหม่', true, cost, (stock * cost)); 
+                saveDataLocally(); 
+                selectedImageFile = null; currentCopyImage = null; document.getElementById('rawImagePreview').style.display = 'none'; this.reset(); updateUI(); 
+            };
+            if (selectedImageFile) cropImageToSquare(selectedImageFile, handleAddition); else if (currentCopyImage) handleAddition(currentCopyImage); else handleAddition(PLACEHOLDER_IMAGE);
+        });
+
+        function openRawSummaryModal() {
+            const summaryMap = {}; let highestCostName = "-"; let maxCost = 0; let highestFreqName = "-"; let maxFreq = 0;
+            stockLogs.forEach(log => { if (log.isRawMaterial && log.investChange > 0) { if (!summaryMap[log.name]) summaryMap[log.name] = { cost: 0, freq: 0 }; summaryMap[log.name].cost += log.investChange; summaryMap[log.name].freq += 1; } });
+            const tbody = document.getElementById('rawSummaryTableBody'); tbody.innerHTML = '';
+            if(Object.keys(summaryMap).length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#8E8E93; padding:20px;">ยังไม่มีข้อมูลการซื้อวัตถุดิบ</td></tr>'; } else { for(let name in summaryMap) { const data = summaryMap[name]; if(data.cost > maxCost) { maxCost = data.cost; highestCostName = name; } if(data.freq > maxFreq) { maxFreq = data.freq; highestFreqName = name; } tbody.innerHTML += `<tr><td style="font-weight:bold;">${name}</td><td style="text-align:center;">${data.freq} ครั้ง</td><td style="text-align:right; font-weight:bold; color:var(--danger);">${data.cost.toLocaleString()} ฿</td></tr>`; } }
+            document.getElementById('rawHighestCost').innerText = highestCostName !== "-" ? `${highestCostName} (จ่ายรวม ${maxCost.toLocaleString()} ฿)` : "-"; document.getElementById('rawHighestFreq').innerText = highestFreqName !== "-" ? `${highestFreqName} (${maxFreq} ครั้ง)` : "-"; openModal('rawSummaryModal');
+        }
+
+        // ================= Selling Logic =================
+        function toggleDiscount() { document.getElementById('discountDetails').style.display = document.getElementById('hasDiscount').checked ? 'block' : 'none'; }
+        function openSellModal(id) { const p = products.find(x => x.id === id); if (!p) return; currentSellId = id; document.getElementById('sellModalName').innerText = p.name; document.getElementById('sellModalStock').innerText = `ราคาปกติ: ${p.price}฿ | เหลือ: ${p.stock}`; document.getElementById('sellModalImg').src = p.image || PLACEHOLDER_IMAGE; document.getElementById('sellModalQty').value = 1; document.getElementById('sellModalQty').max = p.stock; document.getElementById('hasDiscount').checked = false; document.getElementById('discountVal').value = 0; toggleDiscount(); openModal('sellModal'); }
+        function adjustSellQty(delta) { const input = document.getElementById('sellModalQty'); const max = parseInt(input.max) || Infinity; let val = parseInt(input.value); if (isNaN(val)) val = 1; val += delta; if (val < 1) val = 1; if (val > max) val = max; input.value = val; }
+        
+        function confirmSell() {
+            const qty = parseInt(document.getElementById('sellModalQty').value); const p = products.find(x => x.id === currentSellId);
+            if (qty <= 0 || isNaN(qty) || qty > p.stock) return alert('จำนวนไม่ถูกต้อง/สต็อกไม่พอ');
+            const hasDiscount = document.getElementById('hasDiscount').checked; const discountVal = parseFloat(document.getElementById('discountVal').value) || 0; const discountType = document.getElementById('discountType').value;
+            const subtotal = p.price * qty; let totalDiscount = 0; if (hasDiscount && discountVal > 0) totalDiscount = discountType === 'per_item' ? discountVal * qty : discountVal;
+            if (totalDiscount > subtotal) return alert('ส่วนลดมากกว่าราคาขาย!');
+            p.stock -= qty;
+            const newTx = { dateObj: new Date(), time: new Date().toLocaleString('th-TH'), productId: p.id, name: p.name, image: p.image, qty: qty, revenue: subtotal - totalDiscount, discount: totalDiscount, cost: p.cost * qty, profit: (subtotal - totalDiscount) - (p.cost * qty) };
+            transactions.unshift(newTx);
+            logStockChange(p.name, -qty, p.stock, `ขายสินค้า ${totalDiscount>0?`(ลดไป ${totalDiscount}฿)`:''}`, false, p.cost, 0);
+            
+            saveDataLocally(); 
+            sendToGoogleSheets('transaction', newTx); 
+            
+            closeModal('sellModal'); updateUI();
+        }
+
+        // ================= Summary =================
+        function isWithinFilter(d, filter, now) { if (filter === 'all') return true; if (filter === 'today') return d.toDateString() === now.toDateString(); if (filter === 'week') { const firstDay = new Date(new Date().setDate(now.getDate() - now.getDay())).setHours(0,0,0,0); const lastDay = new Date(new Date().setDate((now.getDate() - now.getDay()) + 6)).setHours(23,59,59,999); return d >= firstDay && d <= lastDay; } if (filter === 'month') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); if (filter === 'year') return d.getFullYear() === now.getFullYear(); return false; }
+        function calculateSummary() {
+            const filter = document.getElementById('timeframeFilter').value; const now = new Date(); let sumRev = 0, totalInvested = 0;
+            transactions.forEach(t => { if(isWithinFilter(t.dateObj, filter, now)) sumRev += t.revenue; });
+            stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += log.investChange; } });
+            const profit = sumRev - totalInvested; 
+            document.getElementById('totalRevenue').innerText = sumRev.toLocaleString() + ' ฿'; document.getElementById('totalCost').innerText = totalInvested.toLocaleString() + ' ฿';
+            const pEl = document.getElementById('totalProfit'); pEl.innerText = profit.toLocaleString() + ' ฿'; const box = document.getElementById('profitStatBox'); if(profit > 0) box.style.backgroundColor = 'var(--success)'; else if(profit < 0) box.style.backgroundColor = 'var(--danger)'; else box.style.backgroundColor = '#98989D';
+        }
+        function openSummaryDetail(type) {
+            const filter = document.getElementById('timeframeFilter').value; const now = new Date(); const summaryMap = {}; let titleText = ''; let headerText = ''; let valueColor = 'var(--primary)';
+            if (type === 'revenue' || type === 'profit') { transactions.forEach(t => { if(!isWithinFilter(t.dateObj, filter, now)) return; if(!summaryMap[t.name]) { summaryMap[t.name] = { name: t.name, image: t.image, qty: 0, val: 0 }; } summaryMap[t.name].qty += t.qty; summaryMap[t.name].val += (type === 'revenue' ? t.revenue : t.profit); }); titleText = type === 'revenue' ? '📋 รายละเอียด: ยอดขาย' : '📋 รายละเอียด: กำไรจากสินค้าที่ขายแล้ว<div style="font-size:12px; font-weight:500; color:#8E8E93; margin-top:4px;">💡 คิดจากราคาขาย−ต้นทุนเฉพาะชิ้นที่ขายไป จึงอาจไม่เท่ากับ "กำไรเงินสด" หน้าสรุปซึ่งหักเงินลงทุนของที่ยังค้างสต็อกด้วย</div>'; headerText = type === 'revenue' ? 'ยอดขายรวม' : 'กำไรสุทธิรวม'; valueColor = type === 'revenue' ? '#007AFF' : '#34C759'; } else if (type === 'cost') { stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now) && log.investChange !== 0) { const label = log.isRawMaterial ? `${log.name} (วัตถุดิบ)` : `${log.name} (สินค้า)`; if(!summaryMap[label]) { const p = products.find(x => x.name === log.name); summaryMap[label] = { name: label, image: p ? p.image : PLACEHOLDER_IMAGE, qty: 0, val: 0 }; } if(log.change > 0) summaryMap[label].qty += log.change; summaryMap[label].val += log.investChange; } }); titleText = '📋 รายละเอียด: รวมเงินลงทุน (สินค้า+วัตถุดิบ)'; headerText = 'ต้นทุนที่จ่ายไป'; valueColor = '#FF3B30'; }
+            const sortedData = Object.values(summaryMap).sort((a,b) => b.val - a.val); document.getElementById('summaryDetailTitle').innerHTML = titleText; document.getElementById('summaryDetailValueHeader').innerHTML = headerText; let totalQty = 0; let totalValue = 0; const tbody = document.getElementById('summaryDetailTableBody'); tbody.innerHTML = '';
+            if(sortedData.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#8E8E93; padding: 20px;">ไม่มีข้อมูลในช่วงเวลานี้</td></tr>'; } else { sortedData.forEach(item => { totalQty += item.qty; totalValue += item.val; let rowColor = (type === 'profit' && item.val < 0) ? 'var(--danger)' : valueColor; tbody.innerHTML += `<tr><td><img src="${item.image}" class="detail-img"></td><td style="font-weight:bold;">${item.name}</td><td style="text-align:center;">${item.qty}</td><td style="text-align:right; font-weight:bold; color:${rowColor};">${item.val.toLocaleString()} ฿</td></tr>`; }); }
+            document.getElementById('summaryDetailTotalQty').innerText = totalQty; const totalValEl = document.getElementById('summaryDetailTotalValue'); totalValEl.innerText = totalValue.toLocaleString() + ' ฿'; totalValEl.style.color = (type === 'profit' && totalValue < 0) ? 'var(--danger)' : valueColor; openModal('summaryDetailModal');
+        }
+
+        // ================= Analytics & Ranking =================
+        function openAnalytics() { openModal('analyticsModal'); renderChart(); }
+        function renderChart() {
+            const filter = document.getElementById('timeframeFilter').value; const now = new Date(); let totalRev = 0, totalInvested = 0; const labelsMap = {}; const productSales = {};
+            // ใช้ key แบบ yyyy-mm-dd เพื่อ (1) ไม่ให้วันเดียวกันคนละปีถูกรวมแท่งเดียว (2) เรียงลำดับเวลาได้ถูกต้อง
+            const dateKeyOf = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+            transactions.forEach(t => { if(!isWithinFilter(t.dateObj, filter, now)) return; totalRev += t.revenue; if(!productSales[t.name]) productSales[t.name] = 0; productSales[t.name] += t.revenue; const k = dateKeyOf(t.dateObj); if(!labelsMap[k]) labelsMap[k] = { rev: 0, invest: 0, label: t.dateObj.toLocaleDateString('th-TH', {day: 'numeric', month: 'short', year: '2-digit'}) }; labelsMap[k].rev += t.revenue; });
+            stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += log.investChange; const k = dateKeyOf(log.dateObj); if(!labelsMap[k]) labelsMap[k] = { rev: 0, invest: 0, label: log.dateObj.toLocaleDateString('th-TH', {day: 'numeric', month: 'short', year: '2-digit'}) }; labelsMap[k].invest += log.investChange; } });
+            const profit = totalRev - totalInvested; const margin = totalRev > 0 ? ((profit / totalRev) * 100).toFixed(1) : 0; const filteredTxs = transactions.filter(t => isWithinFilter(t.dateObj, filter, now)); const aov = filteredTxs.length > 0 ? (totalRev / filteredTxs.length).toFixed(0) : 0; let bestSellerName = "-"; let maxSales = -1; for(const [name, sales] of Object.entries(productSales)) { if(sales > maxSales) { maxSales = sales; bestSellerName = name; } }
+            document.getElementById('kpiMargin').innerText = margin + '%'; document.getElementById('kpiMargin').style.color = margin > 0 ? 'var(--success)' : (margin < 0 ? 'var(--danger)' : 'var(--primary)'); document.getElementById('kpiAOV').innerText = Number(aov).toLocaleString() + ' ฿'; document.getElementById('kpiRawCost').innerText = totalInvested.toLocaleString() + ' ฿'; document.getElementById('kpiBestSeller').innerText = bestSellerName !== '-' ? `${bestSellerName}` : '-';
+            const ctx = document.getElementById('salesChart').getContext('2d'); const sortedKeys = Object.keys(labelsMap).sort(); const labels = sortedKeys.map(k => labelsMap[k].label); const dataRev = sortedKeys.map(k => labelsMap[k].rev); const dataProfit = sortedKeys.map(k => labelsMap[k].rev - labelsMap[k].invest); 
+            if(salesChartInstance) salesChartInstance.destroy(); salesChartInstance = new Chart(ctx, { type: 'bar', data: { labels: labels.length > 0 ? labels : ['ไม่มีข้อมูล'], datasets: [ { type: 'line', label: 'กำไรเงินสด', data: labels.length > 0 ? dataProfit : [0], borderColor: '#34C759', backgroundColor: '#34C759', borderWidth: 3, tension: 0.3 }, { type: 'bar', label: 'ยอดขาย', data: labels.length > 0 ? dataRev : [0], backgroundColor: 'rgba(0,122,255,0.75)', borderRadius: 4 } ] }, options: { responsive: true, maintainAspectRatio: false } });
+        }
+        function openRankingModal() { closeModal('analyticsModal'); openModal('rankingModal'); resetRankingFilter(); }
+        function resetRankingFilter() { document.getElementById('rankStartDate').value = ''; document.getElementById('rankEndDate').value = ''; renderRankingTable(); }
+        function renderRankingTable() {
+            const startDateVal = document.getElementById('rankStartDate').value; const endDateVal = document.getElementById('rankEndDate').value; let filteredTxs = transactions;
+            if (startDateVal || endDateVal) { const start = startDateVal ? new Date(startDateVal).setHours(0,0,0,0) : 0; const end = endDateVal ? new Date(endDateVal).setHours(23,59,59,999) : new Date().setHours(23,59,59,999); filteredTxs = transactions.filter(t => { const time = t.dateObj.getTime(); return time >= start && time <= end; }); }
+            const salesMap = {}; filteredTxs.forEach(t => { if(!salesMap[t.name]) { salesMap[t.name] = { name: t.name, image: t.image, qty: 0, revenue: 0 }; } salesMap[t.name].qty += t.qty; salesMap[t.name].revenue += t.revenue; });
+            const sortedRank = Object.values(salesMap).sort((a, b) => b.revenue - a.revenue); const tbody = document.getElementById('rankingTableBody'); tbody.innerHTML = '';
+            if (sortedRank.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:#8E8E93;">ไม่มีข้อมูล</td></tr>'; return; }
+            sortedRank.forEach((item, index) => { let rankTrophy = `${index + 1}`; if(index === 0) rankTrophy = '🥇 1'; else if(index === 1) rankTrophy = '🥈 2'; else if(index === 2) rankTrophy = '🥉 3'; tbody.innerHTML += `<tr><td style="text-align:center; font-size: 1.2em; font-weight:bold;">${rankTrophy}</td><td><img src="${item.image}" class="detail-img"></td><td style="font-weight:bold;">${item.name}</td><td style="text-align:center;">${item.qty}</td><td style="text-align:right; font-weight:bold; color: var(--primary);">${item.revenue.toLocaleString()} ฿</td></tr>`; });
+        }
+
+        // ================= Calendar & Notes =================
+        function renderHelperGrid() { const container = document.getElementById('helperGridContainer'); container.innerHTML = ''; calendarData.forEach(m => { let html = `<div class="cal-box theme-${m.season}" onclick="openCalendarDetail(${m.id})"><h3>${m.name} <span class="season-badge">${m.seasonName}</span></h3><div class="cal-section"><strong>🎉 เทศกาล:</strong> ${m.events.map(e => `<span class="cal-tag">${e}</span>`).join('')}</div><div class="cal-section"><strong>🍎 ผลไม้:</strong> ${m.fruits.map(f => `<span class="cal-tag">${f}</span>`).join('')}</div><div class="cal-section"><strong>🛍️ แนะนำขาย:</strong> ${m.items.map(i => `<span class="cal-tag" style="background:#fff;">${i}</span>`).join('')}</div></div>`; container.innerHTML += html; }); }
+        function openHelperModal() { openModal('helperModal'); renderHelperGrid(); }
+        function openCalendarDetail(monthId) {
+            currentCalMonth = monthId; const yearStr = document.getElementById('helperYear').value; const year = parseInt(yearStr); const monthObj = calendarData.find(m => m.id === monthId); document.getElementById('calDetailTitle').innerText = `ปฏิทินเดือน ${monthObj.name} ปี ${year}`;
+            const daysInMonth = new Date(year, monthId, 0).getDate(); const firstDayIndex = new Date(year, monthId - 1, 1).getDay(); const startOffset = firstDayIndex === 0 ? 6 : firstDayIndex - 1; 
+            let html = `<div style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align:center; font-weight:bold; margin-bottom: 10px;"><div>จ.</div><div>อ.</div><div>พ.</div><div>พฤ.</div><div>ศ.</div><div style="color:var(--danger)">ส.</div><div style="color:var(--danger)">อา.</div></div><div style="display:grid; grid-template-columns: repeat(7, 1fr); gap: 5px; min-height: 250px;">`;
+            for(let i=0; i<startOffset; i++) { html += `<div style="background:#F2F2F7; border-radius:10px;"></div>`; }
+            for(let day=1; day<=daysInMonth; day++) { const dateKey = `${year}-${monthId}-${day}`; const holKey = `${monthId}-${day}`; const isWeekend = (startOffset + day - 1) % 7 >= 5; const hol = publicHolidays[holKey] ? `<div style="font-size:0.7em; color:var(--primary); background:#E4EFFF; border-radius:5px; margin-top:2px; padding:2px;">${publicHolidays[holKey]}</div>` : ''; const nts = calendarNotes[dateKey] ? calendarNotes[dateKey].map(n => `<div style="font-size:0.7em; background:#FFF3CC; color:#B25000; border-radius:5px; margin-top:2px; padding:2px; text-align:left; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">- ${n}</div>`).join('') : ''; html += `<div onclick="openDayNoteModal(${year}, ${monthId}, ${day})" style="border:1px solid #E5E5EA; border-radius:10px; padding:5px; cursor:pointer; background: ${isWeekend ? '#FFEDEE' : '#ffffff'}; transition: 0.2s;"><div style="text-align:right; font-weight:bold; color: ${isWeekend ? 'var(--danger)' : '#3A3A3C'};">${day}</div>${hol}${nts}</div>`; } html += `</div>`; document.getElementById('calDetailContainer').innerHTML = html; openModal('calendarDetailModal');
+        }
+        function openDayNoteModal(year, month, day) { currentNoteDay = day; document.getElementById('dayNoteDateLabel').innerText = `${day}/${month}/${year}`; renderDayNotes(); openModal('dayNoteModal'); }
+        function renderDayNotes() { const year = document.getElementById('helperYear').value; const dateKey = `${year}-${currentCalMonth}-${currentNoteDay}`; const listEl = document.getElementById('dayNoteList'); listEl.innerHTML = ''; if(!calendarNotes[dateKey] || calendarNotes[dateKey].length === 0) { listEl.innerHTML = '<div style="color:#8E8E93; font-size:0.9em; text-align:center;">ยังไม่มีโน้ตสำหรับวันนี้</div>'; } else { calendarNotes[dateKey].forEach((note, index) => { listEl.innerHTML += `<div style="display:flex; justify-content:space-between; align-items:center; background:#F2F2F7; padding:8px; border-radius:10px; margin-bottom:5px; border:1px solid #E5E5EA;"><span>${note}</span><button type="button" class="btn-cancel btn-sm" style="background:var(--danger);" onclick="deleteDayNote(${index})">ลบ</button></div>`; }); } }
+        document.getElementById('dayNoteForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const input = document.getElementById('dayNoteInput'); const noteText = input.value.trim();
+            if(noteText) { 
+                const year = document.getElementById('helperYear').value; const dateKey = `${year}-${currentCalMonth}-${currentNoteDay}`; 
+                if(!calendarNotes[dateKey]) calendarNotes[dateKey] = []; calendarNotes[dateKey].push(noteText); input.value = ''; 
+                saveDataLocally(); 
+                renderDayNotes(); openCalendarDetail(currentCalMonth); updateNotifications(); 
+            }
+        });
+        function deleteDayNote(index) { const year = document.getElementById('helperYear').value; const dateKey = `${year}-${currentCalMonth}-${currentNoteDay}`; calendarNotes[dateKey].splice(index, 1); saveDataLocally(); renderDayNotes(); openCalendarDetail(currentCalMonth); updateNotifications(); }
+
+        // ================= Connections =================
+        function openConnectionModal() { openModal('connectionModal'); renderConnections(); }
+        function renderConnections() { const container = document.getElementById('connectionListContainer'); container.innerHTML = ''; if (connections.length === 0) { container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 20px; color:#8E8E93;">ยังไม่มีข้อมูลคู่ค้า กด ➕ เพิ่มคู่ค้าใหม่</div>'; return; } connections.forEach(c => { container.innerHTML += `<div class="conn-card" onclick="openConnectionDetail(${c.id})"><img src="${c.image}" class="conn-img"><div class="conn-info"><div class="conn-title">${c.shopType}</div><div class="conn-detail"><strong>สินค้า:</strong> ${c.prodType}</div><div class="conn-detail"><strong>โทร:</strong> ${c.phone}</div></div><button class="btn-delete" style="align-self: flex-start;" title="ลบคู่ค้า" onclick="event.stopPropagation(); deleteConnection(${c.id})">🗑️</button></div>`; }); }
+        function deleteConnection(id) {
+            const c = connections.find(x => x.id === id); if (!c) return;
+            const itemCount = c.items ? c.items.length : 0;
+            if (confirm(`ต้องการลบคู่ค้า "${c.shopType}" ใช่หรือไม่?${itemCount > 0 ? `\n\n⚠️ ข้อมูลสินค้าของร้านนี้ ${itemCount} รายการจะถูกลบไปด้วย` : ''}\n(ลบแล้วไม่สามารถกู้คืนได้)`)) {
+                connections = connections.filter(x => x.id !== id);
+                saveDataLocally();
+                renderConnections();
+                closeModal('connectionDetailModal');
+            }
+        }
+        document.getElementById('addConnectionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const shopType = document.getElementById('connShopType').value; const address = document.getElementById('connAddress').value; const prodType = document.getElementById('connProdType').value; const phone = document.getElementById('connPhone').value; const owner = document.getElementById('connOwner').value;
+            const handleConnAdd = (imgData) => { connections.push({ id: Date.now(), image: imgData, shopType, address, prodType, phone, owner, items: [] }); saveDataLocally(); selectedImageFile = null; document.getElementById('connImagePreview').style.display = 'none'; this.reset(); closeModal('addConnectionModal'); renderConnections(); };
+            if(selectedImageFile) cropImageToSquare(selectedImageFile, handleConnAdd); else handleConnAdd(PLACEHOLDER_IMAGE);
+        });
+        function openConnectionDetail(id) { const c = connections.find(x => x.id === id); if(!c) return; currentConnId = id; document.getElementById('connDetailTitle').innerText = `ร้าน: ${c.shopType}`; document.getElementById('connDetailInfo').innerHTML = `<div style="display:flex; gap:15px; align-items:center;"><img src="${c.image}" style="width:100px; height:100px; border-radius:8px; object-fit:cover;"><div><div><strong>📍 ที่อยู่:</strong> ${c.address}</div><div><strong>📦 สินค้าหลัก:</strong> ${c.prodType}</div><div><strong>📞 เบอร์โทร:</strong> ${c.phone}</div><div><strong>👤 เจ้าของร้าน:</strong> ${c.owner || '-'}</div></div></div>`; renderConnItems(c); openModal('connectionDetailModal'); }
+        function renderConnItems(c) { const tbody = document.getElementById('connProductTableBody'); tbody.innerHTML = ''; if(c.items.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#8E8E93;">ยังไม่มีข้อมูลสินค้าของร้านนี้</td></tr>'; } else { c.items.forEach(i => { tbody.innerHTML += `<tr><td><img src="${i.image}" class="inventory-img"></td><td><b>${i.name}</b></td><td>${i.wholesale.toLocaleString()} ฿</td><td>${i.retail.toLocaleString()} ฿</td><td style="text-align:center;"><button class="btn-cancel btn-sm" style="background:var(--danger);" onclick="deleteConnItem(${c.id}, ${i.id})">🗑️ ลบ</button></td></tr>`; }); } }
+        function deleteConnItem(connId, itemId) { if(confirm('คุณแน่ใจหรือไม่ที่จะลบสินค้ารายการนี้?')) { const c = connections.find(x => x.id === connId); if(c) { c.items = c.items.filter(x => x.id !== itemId); saveDataLocally(); renderConnItems(c); } } }
+        document.getElementById('addConnProductForm').addEventListener('submit', function(e) {
+            e.preventDefault(); const name = document.getElementById('connProdName').value; const wholesale = parseFloat(document.getElementById('connProdWholesale').value); const retail = parseFloat(document.getElementById('connProdRetail').value);
+            const handleItemAdd = (imgData) => { const c = connections.find(x => x.id === currentConnId); if(c) { c.items.push({ id: Date.now(), name, wholesale, retail, image: imgData }); saveDataLocally(); renderConnItems(c); } selectedImageFile = null; document.getElementById('connProdImgPreview').style.display = 'none'; this.reset(); };
+            if(selectedImageFile) cropImageToSquare(selectedImageFile, handleItemAdd); else handleItemAdd(PLACEHOLDER_IMAGE);
+        });
+
+        // ================= ลบเฉพาะบางรายการ (ลบรายออเดอร์/รายจ่าย) =================
+        function deleteSale(ts) {
+            const pwd = prompt('⚠️ ต้องการลบประวัติการขายนี้ใช่หรือไม่?\n(กรุณาใส่รหัสผ่าน 999 เพื่อยืนยัน)');
+            if (pwd === "999") {
+                const index = transactions.findIndex(t => t.dateObj.getTime() === ts);
+                if(index > -1) {
+                    const tx = transactions[index];
+                    // หาสินค้าด้วย id ก่อน (แม่นยำที่สุด) ถ้าเป็นข้อมูลเก่าที่ไม่มี productId ค่อย fallback ไปหาด้วยชื่อ
+                    let p = tx.productId ? products.find(x => x.id === tx.productId) : null;
+                    if (!p) p = products.find(x => x.name === tx.name && !x.isRawMaterial);
+
+                    if (!p) {
+                        // สินค้าถูกลบ/เปลี่ยนชื่อไปแล้ว → คืนสต็อกไม่ได้ ต้องให้ผู้ใช้ตัดสินใจเอง ไม่ลบเงียบ ๆ
+                        if (!confirm(`⚠️ ไม่พบสินค้า "${tx.name}" ในคลังแล้ว (อาจถูกลบหรือเปลี่ยนชื่อไป)\n\nระบบจะลบได้เฉพาะ "ประวัติการขาย" โดยไม่สามารถคืนของเข้าสต็อกได้\n\nยืนยันลบประวัติต่อหรือไม่?`)) return;
+                        transactions.splice(index, 1);
+                        saveDataLocally();
+                        sendToGoogleSheets('deleteTransaction', tx);
+                        updateUI();
+                        alert("✅ ลบประวัติการขายแล้ว (ไม่มีการคืนสต็อก เนื่องจากไม่พบสินค้าในคลัง)");
+                        return;
+                    }
+
+                    p.stock += tx.qty;
+                    transactions.splice(index, 1);
+                    // บันทึกการคืนของลงประวัติสต็อก เพื่อให้ยอดเคลื่อนไหวสอดคล้องกันเสมอ (investChange = 0 ไม่กระทบยอดเงิน)
+                    logStockChange(p.name, tx.qty, p.stock, `ยกเลิกการขาย คืนของเข้าสต็อก ↩️ (บิลเดิม +${tx.revenue.toLocaleString()}฿)`, false, p.cost, 0);
+                    saveDataLocally();
+                    sendToGoogleSheets('deleteTransaction', tx);
+                    updateUI();
+                    alert("✅ ลบประวัติการขายและดึงสินค้ากลับเข้าสต็อกเรียบร้อย");
+                }
+            } else if (pwd !== null) {
+                alert("❌ รหัสผ่านไม่ถูกต้อง");
+            }
+        }
+
+        function deleteExpense(ts) {
+            const pwd = prompt('⚠️ ต้องการลบประวัติการนำเข้า/รายจ่ายนี้ใช่หรือไม่?\n(กรุณาใส่รหัสผ่าน 999 เพื่อยืนยัน)');
+            if (pwd === "999") {
+                const index = stockLogs.findIndex(l => l.dateObj.getTime() === ts && l.investChange > 0);
+                if(index > -1) {
+                    const log = stockLogs[index];
+                    const p = products.find(x => x.name === log.name && x.isRawMaterial === log.isRawMaterial);
+
+                    if (!p) {
+                        if (!confirm(`⚠️ ไม่พบ "${log.name}" ในคลังแล้ว\n\nระบบจะลบได้เฉพาะ "ประวัติรายจ่าย ${log.investChange.toLocaleString()}฿" โดยไม่มีการหักสต็อก\n\nยืนยันลบต่อหรือไม่?`)) return;
+                        stockLogs.splice(index, 1);
+                        saveDataLocally();
+                        sendToGoogleSheets('deleteStockLog', log);
+                        updateUI();
+                        alert("✅ ลบประวัติรายจ่ายแล้ว (ไม่มีการหักสต็อก)");
+                        return;
+                    }
+
+                    // ถ้าสต็อกปัจจุบันน้อยกว่าจำนวนที่นำเข้าล็อตนี้ = มีการขาย/ใช้ของล็อตนี้ไปแล้ว
+                    // การลบรายจ่ายทั้งก้อนจะทำให้ต้นทุนหาย แต่รายได้ที่ขายไปยังอยู่ → กำไรเพี้ยน ต้องเตือนก่อน
+                    if (p.stock < log.change) {
+                        const soldQty = log.change - p.stock;
+                        if (!confirm(`⚠️ คำเตือน: ล็อตนี้นำเข้า ${log.change} ชิ้น แต่คงเหลือเพียง ${p.stock} ชิ้น\n(คาดว่าขาย/ใช้ไปแล้วประมาณ ${soldQty} ชิ้น)\n\nหากลบรายจ่ายนี้ ต้นทุน ${log.investChange.toLocaleString()}฿ จะหายทั้งก้อน แต่ยอดขายของที่ขายไปแล้วยังอยู่ → "กำไร" จะสูงเกินจริง\n\nแนะนำ: ใช้เมนูนี้เฉพาะกรณี "กดนำเข้าพลาด" ที่ยังไม่ได้ขายของล็อตนั้นเลย\n\nยืนยันลบต่อหรือไม่?`)) return;
+                    }
+
+                    const deductQty = Math.min(p.stock, log.change);
+                    p.stock -= deductQty;
+                    stockLogs.splice(index, 1);
+                    // บันทึกการหักของลงประวัติ เพื่อให้ยอดเคลื่อนไหวตรวจสอบย้อนหลังได้ (เงินถูกหักไปแล้วจากการลบลอคด้านบน จึงใส่ investChange = 0)
+                    if (deductQty > 0) logStockChange(p.name, -deductQty, p.stock, `ยกเลิกรายการนำเข้า หักของออก ↩️ (รายจ่ายเดิม ${log.investChange.toLocaleString()}฿)`, p.isRawMaterial, log.cost, 0);
+                    saveDataLocally();
+                    sendToGoogleSheets('deleteStockLog', log);
+                    updateUI();
+                    alert("✅ ลบประวัติรายจ่ายและหักยอดออกจากสต็อกเรียบร้อย");
+                }
+            } else if (pwd !== null) {
+                alert("❌ รหัสผ่านไม่ถูกต้อง");
+            }
+        }
+
+        // ================= ฟังก์ชันล้างระบบทั้งหมด (Reset System) =================
+        function clearSystemData() {
+            const pwd = prompt("⚠️ คำเตือน: ระบบจะล้างข้อมูลสินค้า, ประวัติการขาย และต้นทุนทั้งหมดเพื่อเริ่มใหม่\n\nกรุณาใส่รหัสผ่านเพื่อยืนยัน (999):");
+            if (pwd === "999") {
+                if (confirm("คุณแน่ใจหรือไม่? ข้อมูลในหน้านี้จะกลายเป็นศูนย์ทั้งหมด (ไม่สามารถกู้คืนได้)")) {
+                    products = [];
+                    transactions = [];
+                    stockLogs = [];
+                    
+                    saveDataLocally();
+                    sendToGoogleSheets('systemClear', { time: new Date().toLocaleString('th-TH'), note: 'ผู้ใช้ล้างข้อมูลระบบทั้งหมด (สินค้า/การขาย/สต็อก) — ข้อมูลในชีตก่อนหน้านี้ถือเป็นรอบเก่า' });
+                    updateUI();
+                    
+                    alert("✅ ล้างข้อมูลระบบเรียบร้อยแล้ว เริ่มต้นใช้งานใหม่ได้เลยครับ!");
+                    closeModal('summaryModal');
+                }
+            } else if (pwd !== null) {
+                alert("❌ รหัสผ่านไม่ถูกต้อง ลบข้อมูลไม่สำเร็จ");
+            }
+        }
+
+        // ================= Update UI & Edit =================
+        function updateUI() {
+            const grid = document.getElementById('storefrontGrid'); const sellableProducts = products.filter(p => !p.isRawMaterial);
+            grid.innerHTML = sellableProducts.length === 0 ? '<div style="grid-column:1/-1; padding: 50px; text-align:center; color: #8E8E93;">ยังไม่มีสินค้า กด <b>📦 สินค้าคงคลัง</b> ด้านบนเพื่อเพิ่มสินค้า</div>' : '';
+            sellableProducts.forEach(p => { const out = p.stock <= 0; grid.innerHTML += `<div class="product-card"><div class="product-img-container"><img src="${p.image}" style="${out ? 'filter: grayscale(100%); opacity: 0.6;' : ''}"></div><div class="product-info"><div><div class="product-name">${p.name}</div><div class="product-price">${p.price.toLocaleString()} ฿</div><div class="product-stock ${out?'out-of-stock':''}">${out?'💥 หมด':`เหลือ: ${p.stock}`}</div></div><button class="btn-sell" onclick="openSellModal(${p.id})" style="width:100%;" ${out?'disabled style="background:#D1D1D6;"':''}>${out?'หมด':'🛒 ขาย / ลดราคา'}</button></div></div>`; });
+
+            const invBody = document.getElementById('inventoryTable'); invBody.innerHTML = sellableProducts.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีสินค้า</td></tr>' : '';
+            sellableProducts.forEach(p => { invBody.innerHTML += `<tr><td><img src="${p.image}" class="inventory-img"></td><td><b>${p.name}</b><br><span style="font-size:0.8em; color:#8E8E93;">ทุน: ${p.cost}฿</span></td><td>${p.price.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold; color: ${p.stock<=5?'#FF3B30':'#1C1C1E'}">${p.stock}</td><td><button class="btn-cancel btn-sm" style="background:#32ADE6;" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`; });
+
+            const rawBody = document.getElementById('rawMaterialTable'); const rawProducts = products.filter(p => p.isRawMaterial); rawBody.innerHTML = rawProducts.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีวัตถุดิบ</td></tr>' : '';
+            rawProducts.forEach(p => { rawBody.innerHTML += `<tr><td><img src="${p.image}" class="inventory-img"></td><td><b>${p.name}</b><br><span style="font-size:0.8em; color:#8E8E93;">ทุน: ${p.cost}฿</span></td><td>${p.cost.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold; color: ${p.stock<=5?'#FF3B30':'#1C1C1E'}">${p.stock}</td><td><button class="btn-cancel btn-sm" style="background:var(--raw);" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`; });
+
+            const filter = document.getElementById('timeframeFilter').value; const now = new Date();
+            
+            // ประวัติการขาย (เพิ่มปุ่มลบรายออเดอร์)
+            const filteredTxs = transactions.filter(t => isWithinFilter(t.dateObj, filter, now)); const historyBody = document.getElementById('historyTable'); historyBody.innerHTML = filteredTxs.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีประวัติในช่วงเวลานี้</td></tr>' : '';
+            filteredTxs.forEach(t => { const discountText = t.discount > 0 ? `<br><span style="font-size: 0.85em; color: var(--danger); font-weight: bold;">🏷️ สินค้าลดราคา (ลดไป ${t.discount}฿)</span>` : ''; historyBody.innerHTML += `<tr><td style="font-size: 0.85em;">${t.time}</td><td>${t.name} ${discountText}</td><td style="text-align:center;">${t.qty}</td><td style="color: var(--success); font-weight: bold;">+${t.revenue.toLocaleString()} ฿</td><td style="text-align:center;"><button class="btn-delete" onclick="deleteSale(${t.dateObj.getTime()})">🗑️</button></td></tr>`; });
+
+            // ประวัติซื้อเข้า/ลงทุน (รวมทั้งวัตถุดิบและสินค้า และเพิ่มปุ่มลบรายจ่าย)
+            const expenseHistoryBody = document.getElementById('rawHistoryTable'); const filteredExpenses = stockLogs.filter(log => log.investChange > 0 && isWithinFilter(log.dateObj, filter, now)); expenseHistoryBody.innerHTML = filteredExpenses.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีประวัติการนำเข้าในช่วงเวลานี้</td></tr>' : '';
+            filteredExpenses.forEach(r => { const icon = r.isRawMaterial ? '⚙️' : '📦'; expenseHistoryBody.innerHTML += `<tr><td style="font-size: 0.85em;">${r.time}</td><td>${icon} ${r.name}</td><td style="text-align:center;">${r.change}</td><td style="color: var(--danger); font-weight: bold;">-${r.investChange.toLocaleString()} ฿</td><td style="text-align:center;"><button class="btn-delete" onclick="deleteExpense(${r.dateObj.getTime()})">🗑️</button></td></tr>`; });
+
+            calculateSummary(); updateNotifications();
+        }
+        
+        function openEditModal(id) { const p = products.find(x => x.id === id); if(p) { currentEditId = id; document.getElementById('editName').value = p.name; document.getElementById('editStock').value = p.stock; document.getElementById('editCost').value = p.cost; if (p.isRawMaterial) { document.getElementById('editPriceContainer').style.display = 'none'; } else { document.getElementById('editPriceContainer').style.display = 'block'; document.getElementById('editPrice').value = p.price; } openModal('editModal'); } }
+        
+        // แก้ไขฟังก์ชัน Edit ไม่ให้ไปกวนยอดเงินลงทุน
+        document.getElementById('editForm').addEventListener('submit', function(e) { 
+            e.preventDefault(); 
+            const p = products.find(x => x.id === currentEditId); 
+            const oldStock = p.stock; 
+            const newStock = parseInt(document.getElementById('editStock').value); 
+            const newCost = parseFloat(document.getElementById('editCost').value); 
+            
+            p.name = document.getElementById('editName').value; 
+            p.stock = newStock; 
+            p.cost = newCost;
+            
+            if (!p.isRawMaterial) p.price = parseFloat(document.getElementById('editPrice').value); 
+            
+            // บันทึกเฉพาะจำนวนสต็อกที่เปลี่ยน ไม่บันทึกยอดเงิน (เพื่อป้องกันตัวเลขรวน)
+            if(oldStock !== newStock) { 
+                // กันช่องโหว่ "เติมของฟรี": การเพิ่มจำนวนผ่านหน้าแก้ไขจะไม่บันทึกต้นทุน → กำไรเงินสดจะสูงเกินจริง
+                if (newStock > oldStock) {
+                    if (!confirm(`⚠️ คุณกำลังเพิ่มสต็อก +${newStock - oldStock} ชิ้นผ่านหน้า "แก้ไข"\n\nการเพิ่มทางนี้จะ "ไม่บันทึกต้นทุน" ลงระบบ (เหมาะกับการแก้ตัวเลขที่นับพลาดเท่านั้น)\n\nหากเป็นการซื้อของเข้าจริง กรุณายกเลิกแล้วใช้ปุ่ม "📄 Copy" หรือฟอร์ม "➕ เพิ่มสินค้า/วัตถุดิบ" แทน เพื่อให้ต้นทุนถูกบันทึก\n\nยืนยันเพิ่มโดยไม่บันทึกต้นทุนหรือไม่?`)) return;
+                }
+                logStockChange(p.name, newStock - oldStock, newStock, newStock > oldStock ? 'แก้ไขปรับปรุงจำนวนสต็อก (ไม่บันทึกต้นทุน)' : 'แก้ไข/ปรับปรุงข้อมูลจำนวนสต็อก', p.isRawMaterial, newCost, 0); 
+            }
+            
+            saveDataLocally(); 
+            closeModal('editModal'); 
+            updateUI(); 
+        });
+
+        // Initialize Call
+        updateUI(); updateNotifications();
+    </script>
+</body>
+</html>
