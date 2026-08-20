@@ -71,6 +71,103 @@
         .sell-product-header { display: flex; align-items: center; gap: 14px; background: var(--card); border: 0.5px solid rgba(60,60,67,0.1); border-radius: 16px; padding: 12px 14px; margin-bottom: 16px; box-shadow: var(--shadow-card); } .sell-product-img { width: 72px; height: 72px; object-fit: cover; flex-shrink: 0; border-radius: 14px; border: 0.5px solid var(--border); background: var(--fill); } .sell-product-meta { min-width: 0; } .sell-product-meta h3 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; overflow: hidden; text-overflow: ellipsis; } .qty-stepper { display: grid; grid-template-columns: 64px 1fr 64px; gap: 8px; align-items: stretch; } .qty-btn { height: 56px; font-size: 30px; font-weight: 600; line-height: 1; background: var(--fill); color: var(--primary); border-radius: 14px; padding: 0; user-select: none; -webkit-user-select: none; } .qty-btn:hover { background: rgba(0,122,255,0.12); filter: none; } .qty-btn:active { transform: scale(0.93); background: rgba(0,122,255,0.2); } .qty-stepper input[type="number"] { height: 56px; text-align: center; font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; padding: 0 8px; -moz-appearance: textfield; } .qty-stepper input[type="number"]::-webkit-outer-spin-button, .qty-stepper input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: rgba(60,60,67,0.25); border-radius: 100px; } ::-webkit-scrollbar-track { background: transparent; } ::selection { background: rgba(0,122,255,0.22); }
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+        /* ============================================================
+           📱 Mobile Layout (CSS only — โครงสร้าง HTML/JS เดิมไม่ถูกแตะ)
+           ============================================================ */
+        @media (max-width: 640px) {
+            body { padding: 12px 12px 96px; }
+
+            /* ---- Header (sticky bar) ---- */
+            body > div[style*="position: sticky"] {
+                flex-direction: column !important;
+                align-items: stretch !important;
+                gap: 10px !important;
+                padding: 12px !important;
+                top: 8px !important;
+            }
+            body > div[style*="position: sticky"] h1 { font-size: 21px; justify-content: center; }
+            body > div[style*="position: sticky"] > div {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            body > div[style*="position: sticky"] button { width: 100% !important; padding: 10px 6px; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+            h2 { font-size: 19px; } h3 { font-size: 16px; }
+            .card { padding: 14px; border-radius: 16px; margin-bottom: 14px; }
+            .container { gap: 14px; }
+
+            /* ---- Modals → bottom sheet เต็มจอแบบ iOS ---- */
+            .modal-overlay { padding: 0 !important; align-items: flex-end !important; }
+            .modal-content, .modal-content.large {
+                width: 100% !important;
+                max-width: 100% !important;
+                border-radius: 22px 22px 0 0 !important;
+                max-height: 92vh;
+                max-height: 92dvh;
+                padding: 14px 14px calc(16px + env(safe-area-inset-bottom));
+            }
+
+            /* แถบปุ่ม/ตัวกรองที่เขียน inline flex ไว้ → ให้ตัดบรรทัดได้ */
+            .modal-content div[style*="display: flex"],
+            .modal-content div[style*="display:flex"] { flex-wrap: wrap !important; }
+            .modal-content div[style*="display: flex"] > button:not(.close-btn),
+            .modal-content div[style*="display:flex"] > button:not(.close-btn) { flex: 1 1 auto; }
+
+            /* กริด 2 คอลัมน์ที่เขียน inline ไว้ (ฟอร์ม / ตารางประวัติคู่) → เรียงเป็นคอลัมน์เดียว */
+            .modal-content div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+            /* ---- สรุปยอด 3 ช่อง ---- */
+            .summary-box { gap: 8px; }
+            .stat { padding: 12px 6px 22px; font-size: 12px; border-radius: 14px; }
+            .stat span { font-size: 19px; margin: 4px 0; }
+            .stat::after { font-size: 0.62em; bottom: 4px; }
+
+            /* ---- หน้าร้าน: การ์ดสินค้า 2 คอลัมน์ ---- */
+            .storefront-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+            .product-info { padding: 11px; }
+            .product-name { font-size: 15px; }
+            .product-price { font-size: 17px; }
+            .product-stock { font-size: 12px; margin-bottom: 9px; }
+            .product-info .btn-sell { padding: 9px 8px; font-size: 14px; }
+
+            /* ---- ตาราง: ฟอนต์เล็กลง + หัวตารางไม่หักบรรทัด (เลื่อนซ้ายขวาได้ตาม overflow-x เดิม) ---- */
+            table { font-size: 13px; }
+            th, td { padding: 9px 7px; }
+            th { white-space: nowrap; }
+            .inventory-img { width: 36px; height: 36px; }
+            .detail-img { width: 40px; height: 40px; }
+            .btn-edit, .btn-delete, .btn-sm { padding: 5px 7px; font-size: 12px; }
+
+            /* ---- KPI / กราฟ ---- */
+            .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .kpi-card { padding: 12px 10px; }
+            .kpi-value { font-size: 19px; }
+            #analyticsModal div[style*="height: 400px"] { height: 280px !important; }
+
+            /* ---- ปฏิทิน / คู่ค้า ---- */
+            .calendar-grid { grid-template-columns: 1fr; }
+            .conn-img { width: 64px; height: 64px; }
+
+            /* ---- กระดิ่งแจ้งเตือน ---- */
+            .notify-bell { bottom: 18px; right: 14px; width: 52px; height: 52px; font-size: 23px; }
+            .notify-panel { left: 12px; right: 12px; width: auto; bottom: 82px; }
+
+            /* ---- อินพุตในแถบตัวกรอง ---- */
+            input[type="date"] { min-width: 0; flex: 1 1 130px; }
+            .qty-stepper { grid-template-columns: 56px 1fr 56px; }
+            .qty-btn, .qty-stepper input[type="number"] { height: 50px; }
+        }
+
+        /* จอแคบมาก (iPhone SE / มือถือเล็ก) */
+        @media (max-width: 400px) {
+            .summary-box { grid-template-columns: 1fr; }
+            .stat { display: flex; align-items: center; justify-content: space-between; text-align: left; padding: 14px 14px 24px; }
+            .stat span { margin: 0; font-size: 20px; }
+            .storefront-grid { gap: 10px; }
+            body > div[style*="position: sticky"] button { font-size: 12.5px; }
+        }
     </style>
 </head>
 <body>
