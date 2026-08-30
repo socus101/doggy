@@ -1,0 +1,33 @@
+{
+  "name": "Doggy - ระบบจัดการร้านค้า",
+  "short_name": "Doggy",
+  "description": "ระบบขายหน้าร้าน สต็อกสินค้า และสรุปยอด ใช้งานได้แม้ไม่มีอินเทอร์เน็ต",
+  "start_url": "./doggy_webapp.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F2F2F7",
+  "theme_color": "#007AFF",
+  "lang": "th",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
