@@ -321,6 +321,8 @@
         .qr-empty { width: 110px; height: 110px; border: 1.5px dashed #CBD5E1; border-radius: 10px; display: grid; place-items: center; color: var(--text-3); font-size: 12px; text-align: center; }
         .set-row.disabled { opacity: .45; pointer-events: none; }
 
+        .period-hint { margin-top: 12px; background: #FEF3C7; color: #92400E; border-radius: 12px; padding: 10px 14px; font-size: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+        .period-hint button { background: #92400E; color: #fff; padding: 8px 14px; font-size: 14px; box-shadow: none; }
         .tax-note { margin-top: 10px; font-size: 13px; color: var(--text-2); text-align: right; }
         .toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 11px 18px; border-radius: 12px; font-size: 14px; z-index: 3000; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; max-width: calc(100vw - 40px); text-align: center; }
         .toast.show { opacity: 1; transform: translate(-50%, 0); }
@@ -531,6 +533,7 @@
                         <div class="stat stat-profit" id="profitStatBox" onclick="openSummaryDetail('profit')">กำไรเงินสด<span id="totalProfit">0 ฿</span></div>
                     </div>
                     <div class="tax-note" id="taxNote" style="display:none;"></div>
+                    <div class="period-hint" id="summaryEmptyHint" data-html2canvas-ignore="true" style="display:none;"></div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div class="card" style="overflow-x: auto; margin-bottom: 0;">
@@ -929,8 +932,12 @@
                     applyData({ ...d, syncQueue, settings: d.settings || settings });
                     cart = [];
                     saveDataLocally(); saveSettings();
+                    document.getElementById('timeframeFilter').value = 'all';
+                    const billCount = new Set(transactions.map(t => t.billId)).size;
                     updateUI();
-                    alert('กู้คืนข้อมูลเรียบร้อยแล้ว ✅');
+                    alert(`กู้คืนข้อมูลเรียบร้อยแล้ว ✅\n\nในไฟล์มี: สินค้า ${products.length} รายการ · บิลขาย ${billCount} บิล · ประวัติสต็อก ${stockLogs.length} รายการ` +
+                          (billCount === 0 ? `\n\n⚠️ ไฟล์สำรองนี้ไม่มีประวัติการขายเลย ยอดขายในหน้าสรุปยอดจึงเป็น 0` : '') +
+                          `\n\n(หน้าสรุปยอดถูกตั้งเป็น "ทั้งหมด" ให้แล้ว)`);
                 } catch (err) {
                     alert('กู้คืนไม่สำเร็จ: ' + err.message);
                 }
@@ -1398,8 +1405,21 @@
             const taxNote = document.getElementById('taxNote'); if (sumTax > 0) { taxNote.style.display = ''; taxNote.textContent = `ภาษีขายที่เก็บจากลูกค้า ${money(sumTax)} (ไม่นับรวมในยอดขาย)`; } else taxNote.style.display = 'none';
             stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += log.investChange; } });
             const profit = sumRev - totalInvested; 
+            updateSummaryEmptyHint(filter, sumRev, totalInvested);
             document.getElementById('totalRevenue').innerText = sumRev.toLocaleString() + ' ฿'; document.getElementById('totalCost').innerText = totalInvested.toLocaleString() + ' ฿';
             const pEl = document.getElementById('totalProfit'); pEl.innerText = profit.toLocaleString() + ' ฿'; const box = document.getElementById('profitStatBox'); if(profit > 0) box.style.backgroundColor = 'var(--success)'; else if(profit < 0) box.style.backgroundColor = 'var(--danger)'; else box.style.backgroundColor = '#98989D';
+        }
+        const FILTER_LABELS = { today: 'วันนี้', week: 'สัปดาห์นี้', month: 'เดือนนี้', year: 'ปีนี้', all: 'ทั้งหมด' };
+        function setSummaryFilter(f) { document.getElementById('timeframeFilter').value = f; updateUI(); }
+        function updateSummaryEmptyHint(filter, sumRev, totalInvested) {
+            const el = document.getElementById('summaryEmptyHint'); if (!el) return;
+            let latest = 0;
+            transactions.forEach(t => { const v = t.dateObj.getTime(); if (v > latest) latest = v; });
+            stockLogs.forEach(l => { if (l.investChange) { const v = l.dateObj.getTime(); if (v > latest) latest = v; } });
+            if (filter !== 'all' && sumRev === 0 && totalInvested === 0 && latest) {
+                el.innerHTML = `<span>📅 ช่วง "${FILTER_LABELS[filter] || filter}" ยังไม่มีรายการ — ข้อมูลล่าสุดในระบบเมื่อ ${new Date(latest).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' })}</span><button type="button" onclick="setSummaryFilter('all')">ดูยอดทั้งหมด</button>`;
+                el.style.display = 'flex';
+            } else el.style.display = 'none';
         }
         function openSummaryDetail(type) {
             const filter = document.getElementById('timeframeFilter').value; const now = new Date(); const summaryMap = {}; let titleText = ''; let headerText = ''; let valueColor = 'var(--primary)';
