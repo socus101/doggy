@@ -4,7 +4,7 @@
   "description": "ระบบขายหน้าร้าน สต็อกสินค้า และสรุปยอด ใช้งานได้แม้ไม่มีอินเทอร์เน็ต",
   "start_url": "./doggy_webapp.html",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "any",
   "background_color": "#F1F5F9",
   "theme_color": "#0F172A",
@@ -29,5 +29,9 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "display_override": [
+    "fullscreen",
+    "standalone"
   ]
 }
