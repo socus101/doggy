@@ -578,6 +578,51 @@
             #printableReceipt .muted, #printableReceipt .shop, #printableReceipt .grand { color: #000 !important; }
             #printableReceipt .hr { border-top-color: #000; }
         }
+
+        /* ============================================================
+           แป้นตัวเลขบนจอ (Numpad) — เฉพาะแท็บเล็ต/มือถือ (จอสัมผัส)
+           คอมพิวเตอร์ (มีเมาส์) จะไม่เห็นส่วนนี้เลย
+           ============================================================ */
+        .kp-sheet { position: fixed; left: 50%; bottom: 0; z-index: 5000; width: 100%; max-width: 460px; box-sizing: border-box;
+            transform: translate(-50%, 110%); transition: transform .22s cubic-bezier(.2,.9,.3,1); visibility: hidden;
+            background: #E2E8F0; border-radius: 22px 22px 0 0; box-shadow: 0 -10px 34px rgba(15,23,42,0.22);
+            padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); font-family: var(--font-ios);
+            user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+        .kp-sheet.open { transform: translate(-50%, 0); visibility: visible; }
+        .kp-head { display: flex; align-items: center; gap: 10px; background: #fff; border-radius: 14px; padding: 8px 14px; margin-bottom: 8px; min-height: 58px; box-sizing: border-box; }
+        .kp-label { flex: 0 1 auto; font-size: 14px; font-weight: 600; color: var(--text-2); line-height: 1.25; max-width: 45%; overflow: hidden; text-overflow: ellipsis; }
+        .kp-value { flex: 1 1 auto; text-align: right; font-size: 30px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; direction: rtl; }
+        .kp-value span { direction: ltr; unicode-bidi: isolate; border-radius: 6px; padding: 0 4px; }
+        .kp-value.fresh span { background: rgba(37,99,235,0.16); }
+        .kp-value.empty span { color: var(--text-3); }
+        .kp-value.shake { animation: kpShake .28s ease; }
+        @keyframes kpShake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        .kp-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 58px; gap: 8px; }
+        .kp-key { display: flex; align-items: center; justify-content: center; background: #fff; color: var(--text); border-radius: 14px;
+            font-size: 26px; font-weight: 600; box-shadow: 0 1px 0 rgba(15,23,42,0.12); cursor: pointer; transition: background .08s ease, transform .08s ease; }
+        .kp-key.pressed { background: #CBD5E1; transform: scale(.96); }
+        .kp-key.fn { background: #F1F5F9; font-size: 17px; color: var(--text-2); }
+        .kp-key.fn.pressed { background: #CBD5E1; }
+        .kp-key.ok { background: var(--primary); color: #fff; font-size: 20px; grid-row: span 2; }
+        .kp-key.ok.pressed { background: var(--primary-700, #1D4ED8); }
+        .kp-key.zero { grid-column: span 2; }
+        .kp-key.off { opacity: .35; pointer-events: none; }
+        .kp-key svg { width: 28px; height: 28px; }
+        input.kp-active { box-shadow: 0 0 0 3px rgba(37,99,235,0.45) !important; border-color: var(--primary) !important; caret-color: transparent; }
+        /* ดันโมดัลขึ้นไม่ให้แป้นทับ */
+        html.kp-open .modal-overlay.active { padding-bottom: var(--kp-h, 0px) !important; }
+        html.kp-open .modal-content { max-height: calc(100vh - var(--kp-h, 0px) - 16px) !important; max-height: calc(100dvh - var(--kp-h, 0px) - 16px) !important; }
+        @media (min-width: 701px) {
+            .kp-grid { grid-auto-rows: 66px; gap: 10px; }
+            .kp-key { font-size: 30px; }
+            .kp-sheet { padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); }
+        }
+        @media (max-height: 520px) {   /* มือถือแนวนอน: แป้นเตี้ยลง */
+            .kp-grid { grid-auto-rows: 44px; gap: 6px; }
+            .kp-head { min-height: 44px; padding: 4px 12px; margin-bottom: 6px; }
+            .kp-value { font-size: 24px; }
+        }
+        @media print { .kp-sheet { display: none !important; } }
     </style>
 </head>
 <body class="app">
@@ -1985,7 +2030,7 @@
 
         // ================= v3: การแสดงผลบนแท็บเล็ต (ขนาดตัวอักษร / เต็มจอ / ติดตั้งแอป) =================
         // ค่าพวกนี้เป็นของ "เครื่องนี้" เท่านั้น จึงเก็บแยกใน localStorage (ไม่ติดไปกับไฟล์สำรอง)
-        const APP_VERSION = '3.0';
+        const APP_VERSION = '3.1';
         const UI_KEY = 'doggyUi';
         let uiPrefs = { scale: 'normal', autoFs: true };
         let fsUserExited = false;          // ผู้ใช้กดปิดเต็มจอเองในรอบนี้ → ไม่เปิดให้อัตโนมัติอีก
@@ -2108,5 +2153,217 @@
             });
         }
     </script>
+
+<!-- ============================================================
+     แป้นตัวเลขบนจอ (Numpad) สำหรับช่องกรอกตัวเลข
+     - ทำงานเฉพาะอุปกรณ์จอสัมผัส (แท็บเล็ต/มือถือ) เท่านั้น
+     - คอมพิวเตอร์ที่ใช้เมาส์/คีย์บอร์ด = ไม่เปลี่ยนแปลงอะไร
+     ============================================================ -->
+<div class="kp-sheet" id="kpSheet" data-no-fs aria-hidden="true">
+    <div class="kp-head"><div class="kp-label" id="kpLabel">ตัวเลข</div><div class="kp-value empty" id="kpValue"><span>0</span></div></div>
+    <div class="kp-grid" id="kpGrid">
+        <div class="kp-key" data-k="1">1</div><div class="kp-key" data-k="2">2</div><div class="kp-key" data-k="3">3</div>
+        <div class="kp-key fn" data-k="back" aria-label="ลบ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H9l-6 7 6 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z"/><path d="M17 9l-6 6M11 9l6 6"/></svg></div>
+        <div class="kp-key" data-k="4">4</div><div class="kp-key" data-k="5">5</div><div class="kp-key" data-k="6">6</div>
+        <div class="kp-key fn" data-k="clear">ล้าง</div>
+        <div class="kp-key" data-k="7">7</div><div class="kp-key" data-k="8">8</div><div class="kp-key" data-k="9">9</div>
+        <div class="kp-key ok" data-k="ok">ตกลง</div>
+        <div class="kp-key zero" data-k="0">0</div><div class="kp-key" data-k=".">.</div>
+    </div>
+</div>
+<script>
+(function () {
+    const sheet = document.getElementById('kpSheet');
+    const grid = document.getElementById('kpGrid');
+    const valEl = document.getElementById('kpValue');
+    const lblEl = document.getElementById('kpLabel');
+    const dotKey = grid.querySelector('[data-k="."]');
+    const SEL = 'input[type="number"]';
+    // จอสัมผัสเป็นหลัก (แท็บเล็ต/มือถือ) — ใช้เงื่อนไขเดียวกับสไตล์แท็บเล็ตของแอป
+    const touchMQ = window.matchMedia ? matchMedia('(hover: none), (pointer: coarse)') : null;
+
+    let enabled = false, cur = null, buf = '', fresh = false, selfInput = false, padEl = null, padOld = '';
+
+    const isTarget = el => el && el.matches && el.matches(SEL) && !el.disabled && !el.readOnly;
+
+    function prep(el) {   // ปิดคีย์บอร์ดของระบบ (เก็บค่าเดิมไว้คืนตอนต่อเมาส์)
+        if (!el.hasAttribute('data-kp-orig')) el.setAttribute('data-kp-orig', el.getAttribute('inputmode') || '');
+        el.setAttribute('inputmode', 'none');
+    }
+    function unprep(el) {
+        if (!el.hasAttribute('data-kp-orig')) return;
+        const o = el.getAttribute('data-kp-orig'); el.removeAttribute('data-kp-orig');
+        o ? el.setAttribute('inputmode', o) : el.removeAttribute('inputmode');
+    }
+    function setEnabled(on) {
+        enabled = on;
+        document.querySelectorAll(SEL).forEach(on ? prep : unprep);
+        if (!on) close(false);
+    }
+
+    function decimalsOf(el) {   // step="0.01" → 2 ตำแหน่ง, ไม่มี step/จำนวนเต็ม → ห้ามจุด
+        const s = el.getAttribute('step');
+        if (!s || s === 'any') return s === 'any' ? 6 : 0;
+        const i = s.indexOf('.'); return i < 0 ? 0 : s.length - i - 1;
+    }
+    function labelOf(el) {
+        let t = '';
+        if (el.dataset.kpLabel) t = el.dataset.kpLabel;
+        else if (el.id && document.querySelector('label[for="' + el.id + '"]')) t = document.querySelector('label[for="' + el.id + '"]').textContent;
+        else {
+            const g = el.closest('.form-group'); const l = g && g.querySelector('label');
+            const r = el.closest('.set-row'); const rl = r && r.querySelector('.lbl');
+            if (l) t = l.textContent; else if (rl) t = rl.textContent;
+            else if (el.id === 'cartDiscountInput') {
+                const ty = document.getElementById('cartDiscountType');
+                t = 'ส่วนลด' + (ty ? ' (' + ty.options[ty.selectedIndex].text + ')' : '');
+            } else t = el.getAttribute('aria-label') || el.placeholder || 'ตัวเลข';
+        }
+        return t.trim() || 'ตัวเลข';
+    }
+    function fmt(b) {   // ใส่ลูกน้ำหลักพันให้อ่านง่าย (แสดงผลเท่านั้น)
+        if (b === '') return '0';
+        const [a, d] = b.split('.');
+        return a.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (d !== undefined ? '.' + d : '');
+    }
+    function render() {
+        valEl.querySelector('span').textContent = fmt(buf);
+        valEl.classList.toggle('empty', buf === '');
+        valEl.classList.toggle('fresh', fresh && buf !== '');
+    }
+    function shake() {
+        valEl.classList.remove('shake'); void valEl.offsetWidth; valEl.classList.add('shake');
+        if (navigator.vibrate) try { navigator.vibrate(30); } catch (e) {}
+    }
+    function apply() {   // เขียนค่าลงช่องจริง + ยิง event ให้ระบบเดิมคำนวณต่อ (ส่วนลด/เงินทอน ฯลฯ)
+        if (!cur) return;
+        selfInput = true;
+        cur.value = buf === '' ? '' : (buf.endsWith('.') ? buf.slice(0, -1) : buf);
+        cur.dispatchEvent(new Event('input', { bubbles: true }));
+        selfInput = false;
+        render();
+    }
+
+    function press(k) {
+        if (!cur) return;
+        if (navigator.vibrate) try { navigator.vibrate(8); } catch (e) {}
+        if (k === 'ok') { done(); return; }
+        if (k === 'clear') { buf = ''; fresh = false; apply(); return; }
+        if (k === 'back') { buf = fresh ? '' : buf.slice(0, -1); fresh = false; apply(); return; }
+        let next = fresh ? '' : buf;
+        const dec = decimalsOf(cur);
+        if (k === '.') {
+            if (!dec || next.includes('.')) { shake(); return; }
+            next = (next === '' ? '0' : next) + '.';
+        } else {
+            const [a, d] = next.split('.');
+            if (d !== undefined) { if (d.length >= dec) { shake(); return; } next += k; }
+            else if (a === '0') next = k;
+            else { if (a.length >= 9) { shake(); return; } next += k; }
+        }
+        const max = parseFloat(cur.getAttribute('max'));
+        if (isFinite(max) && parseFloat(next) > max) { shake(); return; }
+        buf = next; fresh = false; apply();
+    }
+
+    function place() {   // จอกว้าง (แท็บเล็ตแนวนอน): ย้ายแป้นไปฝั่งตรงข้ามช่องที่กรอก จะได้ไม่บังของ
+        sheet.style.left = '';
+        if (!cur || window.innerWidth < 900 || cur.closest('.modal-overlay')) return false;
+        const W = window.innerWidth;
+        let box = cur.getBoundingClientRect();   // หาแผงที่ช่องนี้อยู่ (เช่น แผงตะกร้า) แล้ววางแป้นไว้นอกแผง
+        for (let a = cur.parentElement; a && a !== document.body; a = a.parentElement) {
+            const ar = a.getBoundingClientRect(); if (ar.width > W * 0.6) break; box = ar;
+        }
+        const cx = (box.left + box.right) / 2, half = Math.min(sheet.offsetWidth || 460, W) / 2 + 12;
+        if (cx > W * 0.55 && box.left - 2 * half >= 0) { sheet.style.left = (box.left - half) + 'px'; return true; }
+        if (cx < W * 0.45 && box.right + 2 * half <= W) { sheet.style.left = (box.right + half) + 'px'; return true; }
+        return false;
+    }
+    function keepVisible() {   // เลื่อนช่องที่กำลังกรอกให้อยู่เหนือแป้น
+        if (!cur) return;
+        const h = sheet.offsetHeight;
+        if (place()) { document.documentElement.style.setProperty('--kp-h', '0px'); return; }
+        document.documentElement.style.setProperty('--kp-h', h + 'px');
+        requestAnimationFrame(() => {
+            if (!cur) return;
+            let p = cur.parentElement;
+            while (p && p !== document.body) {
+                const oy = getComputedStyle(p).overflowY;
+                if ((oy === 'auto' || oy === 'scroll') && p.scrollHeight > p.clientHeight) break;
+                p = p.parentElement;
+            }
+            if (p && p !== document.body && !p.classList.contains('modal-content') && padEl !== p) {
+                if (padEl) padEl.style.paddingBottom = padOld;
+                padEl = p; padOld = p.style.paddingBottom;
+                p.style.paddingBottom = (parseFloat(getComputedStyle(p).paddingBottom) || 0) + h + 'px';
+            }
+            const r = cur.getBoundingClientRect();
+            const limit = window.innerHeight - h - 16;
+            if (r.bottom > limit) {
+                const dy = r.bottom - limit;
+                if (p && p !== document.body) p.scrollBy({ top: dy, behavior: 'smooth' });
+                else window.scrollBy({ top: dy, behavior: 'smooth' });
+            }
+        });
+    }
+
+    function open(el) {
+        if (!enabled || !isTarget(el)) return;
+        prep(el);
+        if (cur && cur !== el) cur.classList.remove('kp-active');
+        cur = el; cur.classList.add('kp-active');
+        buf = String(el.value || ''); fresh = buf !== '';
+        dotKey.classList.toggle('off', !decimalsOf(el));
+        lblEl.textContent = labelOf(el);
+        render();
+        sheet.classList.add('open'); sheet.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('kp-open');
+        keepVisible();
+    }
+    function close(blur) {
+        if (!cur && !sheet.classList.contains('open')) return;
+        const el = cur; cur = null;
+        if (el) { el.classList.remove('kp-active'); el.dispatchEvent(new Event('change', { bubbles: true })); if (blur) el.blur(); }
+        sheet.classList.remove('open'); sheet.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('kp-open');
+        if (padEl) { padEl.style.paddingBottom = padOld; padEl = null; }
+    }
+    function done() { close(true); }
+
+    // ---- ปุ่มบนแป้น: กันไม่ให้แย่งโฟกัสจากช่องกรอก ----
+    ['touchstart', 'mousedown'].forEach(t => sheet.addEventListener(t, e => e.preventDefault(), { passive: false }));
+    sheet.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        const key = e.target.closest('.kp-key'); if (!key) return;
+        key.classList.add('pressed'); setTimeout(() => key.classList.remove('pressed'), 110);
+        press(key.dataset.k);
+    });
+
+    // ---- ตั้งค่า inputmode ก่อนเบราว์เซอร์จะโฟกัส (กันคีย์บอร์ดเด้ง) ----
+    document.addEventListener('pointerdown', e => {
+        if (!enabled) return;
+        if (isTarget(e.target)) { prep(e.target); return; }
+        if (sheet.contains(e.target)) return;
+        if (cur) close(true);   // แตะที่อื่น = ปิดแป้น (ค่าถูกบันทึกไว้แล้ว)
+    }, true);
+    document.addEventListener('focusin', e => { if (enabled && isTarget(e.target)) open(e.target); });
+    document.addEventListener('click', e => { if (enabled && isTarget(e.target) && cur !== e.target) open(e.target); });
+    document.addEventListener('focusout', e => {
+        if (e.target !== cur) return;
+        setTimeout(() => { if (cur && document.activeElement !== cur) close(false); }, 0);
+    });
+    // พิมพ์จากคีย์บอร์ดจริง/ปุ่มลัด (เช่น ปุ่มเงินด่วน) → อัปเดตตัวเลขบนแป้นตาม
+    document.addEventListener('input', e => { if (!selfInput && e.target === cur) { buf = String(cur.value || ''); fresh = false; render(); } });
+    document.addEventListener('keydown', e => { if (cur && e.key === 'Escape') done(); });
+    window.addEventListener('resize', () => { if (cur) keepVisible(); });
+
+    // ---- เปิด/ปิดตามชนิดอุปกรณ์ (และเปลี่ยนได้ทันทีถ้าต่อเมาส์/ถอดเมาส์) ----
+    setEnabled(!!(touchMQ && touchMQ.matches));
+    if (touchMQ) {
+        const onChange = ev => setEnabled(ev.matches);
+        touchMQ.addEventListener ? touchMQ.addEventListener('change', onChange) : touchMQ.addListener(onChange);
+    }
+})();
+</script>
 </body>
 </html>
