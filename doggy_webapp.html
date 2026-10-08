@@ -623,6 +623,37 @@
             .kp-value { font-size: 24px; }
         }
         @media print { .kp-sheet { display: none !important; } }
+
+        /* ============================================================
+           กล่องโชว์ข้อความที่กำลังพิมพ์ (ลอยเหนือคีย์บอร์ดของเครื่อง)
+           เฉพาะแท็บเล็ต/มือถือ (จอสัมผัส) · คอมพิวเตอร์ไม่เห็นส่วนนี้
+           ============================================================ */
+        .tp-bubble { display: none; position: fixed; top: 0; left: 8px; z-index: 5100; box-sizing: border-box;
+            background: #fff; border: 2px solid var(--primary); border-radius: 16px; box-shadow: 0 10px 30px rgba(15,23,42,0.28);
+            padding: 8px 10px 10px 14px; font-family: var(--font-ios); transition: top .12s ease;
+            user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
+        .tp-bubble.open { display: block; }
+        .tp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+        .tp-label { flex: 1 1 auto; min-width: 0; font-size: 14px; font-weight: 600; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tp-count { flex: none; font-size: 13px; color: var(--text-3, #94A3B8); font-variant-numeric: tabular-nums; }
+        .tp-count.full { color: var(--danger); font-weight: 700; }
+        .tp-done { flex: none; border: 0; background: var(--primary); color: #fff; font: inherit; font-size: 15px; font-weight: 700;
+            border-radius: 10px; padding: 6px 16px; min-height: 38px; cursor: pointer; }
+        .tp-text { position: relative; font-size: 24px; line-height: 1.4; color: var(--text); white-space: pre-wrap; overflow-wrap: anywhere;
+            min-height: 1.4em; max-height: 4.2em; overflow-y: auto; }
+        .tp-ph { color: var(--text-3, #94A3B8); }
+        .tp-sel { background: rgba(37,99,235,0.25); border-radius: 3px; }
+        .tp-caret { display: inline-block; width: 2px; height: 1.2em; margin: 0 -1px; vertical-align: -0.2em; background: var(--primary); animation: tpBlink 1s steps(1) infinite; }
+        @keyframes tpBlink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .tp-caret { animation: none; } .tp-bubble { transition: none; } }
+        input.tp-active, textarea.tp-active { box-shadow: 0 0 0 3px rgba(37,99,235,0.45) !important; border-color: var(--primary) !important; }
+        @media (max-height: 520px) {   /* มือถือแนวนอน: เตี้ยลง */
+            .tp-bubble { padding: 5px 8px 6px 12px; }
+            .tp-head { margin-bottom: 1px; }
+            .tp-text { font-size: 19px; max-height: 2.8em; }
+            .tp-done { min-height: 30px; padding: 3px 12px; }
+        }
+        @media print { .tp-bubble { display: none !important; } }
     </style>
 </head>
 <body class="app">
@@ -666,7 +697,7 @@
             <div class="pos-toolbar">
                 <div class="search">
                     <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span>
-                    <input type="text" id="posSearch" placeholder="ค้นหาชื่อสินค้า หรือ ยิงบาร์โค้ด…" autocomplete="off" enterkeyhint="search">
+                    <input type="text" id="posSearch" data-tp-label="🔍 ค้นหาสินค้า" placeholder="ค้นหาชื่อสินค้า หรือ ยิงบาร์โค้ด…" autocomplete="off" enterkeyhint="search">
                 </div>
                 <div class="cat-pills" id="posCategories"></div>
             </div>
@@ -908,7 +939,7 @@
     <div class="modal-overlay" id="rankingModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">🏆 จัดอันดับสินค้าขายดี<button class="close-btn" onclick="closeModal('rankingModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px;"><input type="date" id="rankStartDate"><input type="date" id="rankEndDate"><button class="btn-primary" style="width: auto;" onclick="renderRankingTable()">ค้นหา</button><button class="btn-cancel" style="width: auto;" onclick="resetRankingFilter()">ดูทั้งหมด</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th style="text-align:center; width: 80px;">อันดับ</th><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;">ยอดรวม (฿)</th></tr></thead><tbody id="rankingTableBody"></tbody></table></div></div></div>
     <div class="modal-overlay" id="helperModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0;">💡 คู่มือผู้ช่วยแม่ค้า</h2><div style="display: flex; gap: 10px;"><select id="helperYear" onchange="renderHelperGrid()" style="width: 120px;"></select><button class="btn-primary" style="background-color: var(--connection);" onclick="openConnectionModal()">🤝 สมุดคู่ค้า</button><button class="close-btn" onclick="closeModal('helperModal')">&times;</button></div></div><div class="calendar-grid" id="helperGridContainer"></div></div></div>
     <div class="modal-overlay" id="calendarDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📅 <span id="calDetailTitle">ปฏิทิน</span><button class="close-btn" onclick="closeModal('calendarDetailModal')">&times;</button></h2><div id="calDetailContainer" style="background: white; padding: 15px; border-radius: 16px;"></div></div></div>
-    <div class="modal-overlay" id="dayNoteModal"><div class="modal-content"><h2 class="modal-title">📝 โน้ตวันที่ <span id="dayNoteDateLabel"></span></h2><div id="dayNoteList" style="margin-bottom: 15px;"></div><form id="dayNoteForm"><div class="form-group"><input type="text" id="dayNoteInput" placeholder="พิมพ์ข้อความที่นี่..." required></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('dayNoteModal')">ปิด</button><button type="submit" class="btn-primary">เพิ่มโน้ต</button></div></form></div></div>
+    <div class="modal-overlay" id="dayNoteModal"><div class="modal-content"><h2 class="modal-title">📝 โน้ตวันที่ <span id="dayNoteDateLabel"></span></h2><div id="dayNoteList" style="margin-bottom: 15px;"></div><form id="dayNoteForm"><div class="form-group"><input type="text" id="dayNoteInput" data-tp-label="📝 โน้ต" placeholder="พิมพ์ข้อความที่นี่..." required></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('dayNoteModal')">ปิด</button><button type="submit" class="btn-primary">เพิ่มโน้ต</button></div></form></div></div>
     <div class="modal-overlay" id="connectionModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0; color: var(--connection);">🤝 สมุดคู่ค้า</h2><div style="display: flex; gap: 10px;"><button class="btn-primary" style="background-color: var(--connection);" onclick="openModal('addConnectionModal')">➕ เพิ่มคู่ค้า</button><button class="close-btn" onclick="closeModal('connectionModal')">&times;</button></div></div><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;" id="connectionListContainer"></div></div></div>
     <div class="modal-overlay" id="addConnectionModal"><div class="modal-content"><h2 class="modal-title" style="color: var(--connection);">➕ เพิ่มข้อมูลคู่ค้า</h2><form id="addConnectionForm"><div class="form-group"><label class="input-label">รูปร้านค้า</label><label class="btn-label btn-primary" style="width:100%; background: var(--connection);">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'connImagePreview')"></label><img id="connImagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px;"></div><div class="form-group"><label class="input-label">ประเภทร้านค้า</label><input type="text" id="connShopType" required></div><div class="form-group"><label class="input-label">ที่อยู่</label><textarea id="connAddress" rows="2" required></textarea></div><div class="form-group"><label class="input-label">สินค้าหลัก</label><input type="text" id="connProdType" required></div><div class="form-group"><label class="input-label">เบอร์โทร</label><input type="text" id="connPhone" required></div><div class="form-group"><label class="input-label">ชื่อเจ้าของ</label><input type="text" id="connOwner"></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('addConnectionModal')">ยกเลิก</button><button type="submit" class="btn-primary" style="background-color: var(--connection);">บันทึก</button></div></form></div></div>
     <div class="modal-overlay" id="connectionDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="connDetailTitle" style="color: var(--connection);">รายละเอียดร้านค้า</span><div style="display:flex; gap:8px; align-items:center;"><button class="btn-cancel btn-sm" style="background: var(--danger); color:#fff;" onclick="deleteConnection(currentConnId)">🗑️ ลบคู่ค้านี้</button><button class="close-btn" onclick="closeModal('connectionDetailModal')">&times;</button></div></h2><div id="connDetailInfo" style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"></div><div class="card"><h3 style="margin-top:0; color:var(--connection);">➕ เพิ่มรายการสินค้าของร้านนี้</h3><form id="addConnProductForm"><div class="form-group"><label class="input-label">รูปสินค้า</label><label class="btn-label btn-primary" style="background: var(--connection);">📁 เลือกรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'connProdImgPreview')"></label><img id="connProdImgPreview" src="" style="display:none; width: 60px; height: 60px; object-fit: cover; margin-top: 10px; border-radius: 10px;"></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="connProdName" required></div><div class="form-group"><label class="input-label">ราคาส่ง</label><input type="number" id="connProdWholesale" min="0" step="0.01" required></div><div class="form-group"><label class="input-label">ราคาปลีก</label><input type="number" id="connProdRetail" min="0" step="0.01" required></div></div><button type="submit" class="btn-primary" style="background-color: var(--connection);">บันทึกสินค้าร้านคู่ค้า</button></form></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><h3 style="margin-top:0; color:var(--connection);">📋 รายการสินค้าทั้งหมด</h3><table><thead><tr><th>รูป</th><th>ชื่อสินค้า</th><th>ราคาส่ง</th><th>ราคาปลีก</th><th style="text-align:center;">จัดการ</th></tr></thead><tbody id="connProductTableBody"></tbody></table></div></div></div>
@@ -2030,7 +2061,7 @@
 
         // ================= v3: การแสดงผลบนแท็บเล็ต (ขนาดตัวอักษร / เต็มจอ / ติดตั้งแอป) =================
         // ค่าพวกนี้เป็นของ "เครื่องนี้" เท่านั้น จึงเก็บแยกใน localStorage (ไม่ติดไปกับไฟล์สำรอง)
-        const APP_VERSION = '3.1';
+        const APP_VERSION = '3.2';
         const UI_KEY = 'doggyUi';
         let uiPrefs = { scale: 'normal', autoFs: true };
         let fsUserExited = false;          // ผู้ใช้กดปิดเต็มจอเองในรอบนี้ → ไม่เปิดให้อัตโนมัติอีก
@@ -2358,6 +2389,158 @@
     window.addEventListener('resize', () => { if (cur) keepVisible(); });
 
     // ---- เปิด/ปิดตามชนิดอุปกรณ์ (และเปลี่ยนได้ทันทีถ้าต่อเมาส์/ถอดเมาส์) ----
+    setEnabled(!!(touchMQ && touchMQ.matches));
+    if (touchMQ) {
+        const onChange = ev => setEnabled(ev.matches);
+        touchMQ.addEventListener ? touchMQ.addEventListener('change', onChange) : touchMQ.addListener(onChange);
+    }
+})();
+</script>
+<!-- ============================================================
+     กล่องโชว์ข้อความที่กำลังพิมพ์ (สำหรับช่องกรอกข้อความทุกช่อง)
+     - คีย์บอร์ดของแท็บเล็ต/มือถือมักบังช่องที่กำลังพิมพ์
+       กล่องนี้จะลอยอยู่เหนือคีย์บอร์ด บอกชื่อช่อง + ข้อความที่พิมพ์อยู่
+     - ถ้าช่องที่พิมพ์อยู่ตรงตำแหน่งกล่องพอดี กล่องจะย้ายขึ้นไปไว้ด้านบนจอแทน
+     - ทำงานเฉพาะจอสัมผัส · คอมพิวเตอร์ไม่เปลี่ยนแปลงอะไร
+     ============================================================ -->
+<div class="tp-bubble" id="tpBubble" data-no-fs aria-hidden="true">
+    <div class="tp-head">
+        <div class="tp-label" id="tpLabel">กำลังพิมพ์</div>
+        <div class="tp-count" id="tpCount"></div>
+        <button type="button" class="tp-done" id="tpDone">✓ เสร็จ</button>
+    </div>
+    <div class="tp-text" id="tpText"></div>
+</div>
+<script>
+(function () {
+    const bub = document.getElementById('tpBubble');
+    const lblEl = document.getElementById('tpLabel');
+    const txtEl = document.getElementById('tpText');
+    const cntEl = document.getElementById('tpCount');
+    const doneBtn = document.getElementById('tpDone');
+    // ชนิดช่องที่ไม่ใช่ "พิมพ์ข้อความ" (ช่องตัวเลขมีแป้นตัวเลขบนจอของตัวเองอยู่แล้ว)
+    const SKIP = /^(number|checkbox|radio|file|date|time|datetime-local|month|week|color|range|hidden|button|submit|reset|image)$/;
+    const touchMQ = window.matchMedia ? matchMedia('(hover: none), (pointer: coarse)') : null;
+    const vv = window.visualViewport || null;
+
+    let enabled = false, cur = null, lastKey = '', poll = null, rafId = 0;
+
+    const isTarget = el => !!el && !el.disabled && !el.readOnly &&
+        (el.tagName === 'TEXTAREA' || (el.tagName === 'INPUT' && !SKIP.test(String(el.type || 'text').toLowerCase())));
+
+    function labelOf(el) {
+        let t = el.dataset.tpLabel || '';
+        if (!t && el.id) { const l = document.querySelector('label[for="' + el.id + '"]'); if (l) t = l.textContent; }
+        if (!t) {
+            const g = el.closest('.form-group'); const l = g && g.querySelector('label');
+            const r = el.closest('.set-row'); const rl = r && r.querySelector('.lbl');
+            if (l && !l.contains(el)) t = l.textContent; else if (rl) t = rl.textContent;
+        }
+        if (!t) t = el.getAttribute('aria-label') || el.placeholder || '';
+        t = t.replace(/\s+/g, ' ').trim();
+        return t || 'กำลังพิมพ์';
+    }
+
+    function span(cls, text) { const s = document.createElement(cls === 'tp-caret' ? 'i' : 'span'); s.className = cls; if (text) s.textContent = text; return s; }
+
+    function render() {
+        if (!cur) return;
+        const raw = String(cur.value || '');
+        const v = cur.type === 'password' ? '•'.repeat(raw.length) : raw;
+        let a = v.length, b = v.length;
+        try { if (cur.selectionStart != null) { a = cur.selectionStart; b = cur.selectionEnd; } } catch (e) {}
+        const key = v + '|' + a + '|' + b;
+        if (key === lastKey) return;
+        lastKey = key;
+
+        txtEl.textContent = '';
+        if (!v) {
+            txtEl.appendChild(span('tp-caret'));
+            txtEl.appendChild(span('tp-ph', cur.placeholder ? cur.placeholder : 'พิมพ์ได้เลย…'));
+        } else {
+            if (a > 0) txtEl.appendChild(document.createTextNode(v.slice(0, a)));
+            if (b > a) txtEl.appendChild(span('tp-sel', v.slice(a, b)));
+            else txtEl.appendChild(span('tp-caret'));
+            if (b < v.length) txtEl.appendChild(document.createTextNode(v.slice(b)));
+        }
+        // ตัวนับ: แสดงเมื่อช่องนั้นจำกัดจำนวนตัวอักษร
+        const max = cur.maxLength;
+        if (max > 0) { cntEl.textContent = raw.length + '/' + max; cntEl.classList.toggle('full', raw.length >= max); }
+        else cntEl.textContent = '';
+        // เลื่อนให้เห็นตำแหน่งเคอร์เซอร์เสมอ (ข้อความยาวหลายบรรทัด)
+        const mark = txtEl.querySelector('.tp-caret, .tp-sel');
+        if (mark) {
+            const top = mark.offsetTop, bottom = top + mark.offsetHeight;
+            if (bottom > txtEl.scrollTop + txtEl.clientHeight) txtEl.scrollTop = bottom - txtEl.clientHeight;
+            else if (top < txtEl.scrollTop) txtEl.scrollTop = top;
+        }
+        position();
+    }
+
+    // วางกล่องไว้เหนือคีย์บอร์ดพอดี (ใช้ visualViewport = พื้นที่ที่มองเห็นจริงหลังคีย์บอร์ดขึ้น)
+    function position() {
+        if (!cur) return;
+        const vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
+        const vLeft = vv ? vv.offsetLeft : 0, vW = vv ? vv.width : window.innerWidth;
+        const w = Math.max(200, Math.min(vW - 16, 720));
+        bub.style.width = w + 'px';
+        bub.style.left = (vLeft + (vW - w) / 2) + 'px';
+        const bh = bub.offsetHeight, gap = 8;
+        let y = vTop + vH - bh - gap;                       // ปกติ: ชิดขอบบนของคีย์บอร์ด
+        const r = cur.getBoundingClientRect();
+        const fieldSeen = r.bottom > vTop && r.top < vTop + vH;
+        if (fieldSeen && r.bottom > y - 4) {               // ช่องที่พิมพ์อยู่ตรงนั้นพอดี → ย้ายกล่องไปด้านบนจอ ไม่ให้บังกันเอง
+            const yTop = vTop + gap;
+            if (r.top > yTop + bh + 4) y = yTop;
+        }
+        bub.style.top = Math.max(vTop + gap, y) + 'px';
+    }
+    function schedule() {
+        if (!cur || rafId) return;
+        rafId = requestAnimationFrame(() => { rafId = 0; render(); position(); });
+    }
+
+    function open(el) {
+        if (!enabled || !isTarget(el)) return;
+        if (cur && cur !== el) cur.classList.remove('tp-active');
+        cur = el; lastKey = '';
+        cur.classList.add('tp-active');
+        lblEl.textContent = labelOf(el);
+        bub.classList.add('open'); bub.setAttribute('aria-hidden', 'false');
+        render(); position();
+        clearInterval(poll);
+        // กันพลาด: คีย์บอร์ดภาษาไทย/คำแนะนำคำ บางเครื่องไม่ส่ง event ครบ → เช็คซ้ำทุก 0.2 วิ
+        poll = setInterval(() => { if (cur) { render(); position(); } }, 200);
+    }
+    function close() {
+        if (cur) cur.classList.remove('tp-active');
+        cur = null; lastKey = '';
+        clearInterval(poll); poll = null;
+        bub.classList.remove('open'); bub.setAttribute('aria-hidden', 'true');
+    }
+
+    // ---- แตะกล่อง: ไม่แย่งโฟกัสจากช่องที่พิมพ์ · ปุ่ม "เสร็จ" = ปิดคีย์บอร์ด ----
+    ['touchstart', 'mousedown'].forEach(t => bub.addEventListener(t, e => e.preventDefault(), { passive: false }));
+    bub.addEventListener('pointerdown', e => {
+        e.preventDefault();
+        if (e.target.closest('#tpDone') && cur) { const el = cur; close(); el.blur(); }
+    });
+    doneBtn.addEventListener('click', () => { if (cur) { const el = cur; close(); el.blur(); } });
+
+    document.addEventListener('focusin', e => { if (enabled && isTarget(e.target)) open(e.target); else if (cur && e.target !== cur) close(); });
+    document.addEventListener('focusout', e => {
+        if (e.target !== cur) return;
+        setTimeout(() => { if (cur && document.activeElement !== cur) close(); }, 0);
+    });
+    ['input', 'keyup', 'select', 'compositionupdate', 'compositionend', 'click'].forEach(t =>
+        document.addEventListener(t, e => { if (cur && e.target === cur) schedule(); }, true));
+    document.addEventListener('selectionchange', () => { if (cur) schedule(); });
+    if (vv) { vv.addEventListener('resize', schedule); vv.addEventListener('scroll', schedule); }
+    window.addEventListener('resize', schedule);
+    document.addEventListener('scroll', schedule, true);   // เลื่อนในโมดัล → เช็คว่ากล่องบังช่องหรือไม่
+
+    // ---- เปิด/ปิดตามชนิดอุปกรณ์ (เหมือนแป้นตัวเลข) ----
+    function setEnabled(on) { enabled = on; if (!on) close(); }
     setEnabled(!!(touchMQ && touchMQ.matches));
     if (touchMQ) {
         const onChange = ev => setEnabled(ev.matches);
