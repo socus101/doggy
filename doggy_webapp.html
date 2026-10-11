@@ -580,6 +580,56 @@
         }
 
         /* ============================================================
+           เติมของ / หมวดสินค้าหมด / ล็อตใหม่
+           ============================================================ */
+        .btn-restock { background: #DCFCE7 !important; color: #166534 !important; font-weight: 700; border-radius: 9px; }
+        tr.inv-sec td { background: #F1F5F9; color: var(--text-2); font-weight: 700; font-size: 14px; padding: 10px 12px; }
+        tr.inv-sec.out td { background: #FFF1F2; color: #9F1239; border-top: 2px solid #FECDD3; }
+        tr.inv-out td { color: var(--text-2); }
+        tr.inv-out img { filter: grayscale(1); opacity: .6; }
+        .stock-out { color: var(--danger); font-weight: 800; }
+        .lot-tag { display: inline-block; font-size: 11px; font-weight: 700; background: #EDE9FE; color: #5B21B6; border-radius: 6px; padding: 1px 6px; margin-left: 4px; vertical-align: 1px; }
+        .cat-pill.out-pill { color: #9F1239; border-color: #FECDD3; }
+        .cat-pill.out-pill.on { background: var(--danger); border-color: var(--danger); color: #fff; }
+        .pcard.out.restockable { cursor: pointer; }
+        .rs-head { display: flex; gap: 12px; align-items: center; background: var(--fill); border-radius: 14px; padding: 10px 12px; margin-bottom: 14px; }
+        .rs-head img { width: 56px; height: 56px; border-radius: 10px; object-fit: cover; flex: none; background: #fff; }
+        .rs-head b { font-size: 17px; display: block; }
+        .rs-head small { display: block; color: var(--text-2); font-size: 13.5px; margin-top: 2px; }
+        .rs-box { border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; font-size: 14.5px; line-height: 1.5; }
+        .rs-box.warn { background: #FFFBEB; border: 2px solid #FDE68A; }
+        .rs-box.info { background: #EFF6FF; border: 2px solid #BFDBFE; }
+        .rs-box .radio-line { margin-top: 6px; }
+        .rs-total { background: #F8FAFC; border: 1px solid var(--line, #E2E8F0); border-radius: 12px; padding: 10px 12px; font-size: 15px; line-height: 1.6; margin-bottom: 4px; }
+        .rs-total b.money { color: var(--danger); font-size: 17px; }
+        .profit-note { margin-top: 8px; font-size: 13.5px; color: var(--text-2); text-align: right; line-height: 1.7; }
+        .profit-note b { color: var(--text); }
+
+        /* ============================================================
+           ปุ่มเครื่องคิดเลขข้างหัวข้อ: คิดต้นทุนต่อชิ้น / ดูกำไร
+           ============================================================ */
+        .lbl-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; min-height: 30px; }
+        .lbl-row label { margin: 0 !important; min-width: 0; }
+        .mini-tool { flex: none; border: 1.5px solid #BFDBFE; background: #EFF6FF; color: #1D4ED8; font: inherit; font-size: 13px; font-weight: 700;
+            border-radius: 9px; padding: 4px 10px; min-height: 30px; cursor: pointer; white-space: nowrap; box-shadow: none; }
+        @media (hover: none), (pointer: coarse) { .mini-tool { font-size: 14.5px; min-height: 36px; padding: 4px 12px; } }
+        .mini-tool.profit { border-color: #BBF7D0; background: #F0FDF4; color: #15803D; }
+        .mini-tool:active { transform: scale(.96); }
+        .pc-result { background: #EFF6FF; border: 2px solid #BFDBFE; border-radius: 14px; padding: 12px 14px; margin: 4px 0 12px; text-align: center; }
+        .pc-result .big { font-size: 30px; font-weight: 800; color: #1D4ED8; font-variant-numeric: tabular-nums; line-height: 1.2; }
+        .pc-result small { display: block; color: var(--text-2); font-size: 13.5px; margin-top: 4px; line-height: 1.5; }
+        .pf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .pf-cell { background: var(--fill); border-radius: 14px; padding: 10px 12px; }
+        .pf-cell span { display: block; font-size: 13px; color: var(--text-2); font-weight: 600; }
+        .pf-cell b { display: block; font-size: 21px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+        .pf-cell.hero { grid-column: span 2; background: #F0FDF4; border: 2px solid #BBF7D0; }
+        .pf-cell.hero b { font-size: 28px; color: #15803D; }
+        .pf-cell.loss { background: #FFF1F2; border-color: #FECDD3; } .pf-cell.loss b { color: var(--danger); }
+        .pf-head { font-weight: 700; font-size: 14.5px; margin: 4px 0 8px; color: var(--text); }
+        .pf-note { font-size: 13px; color: var(--text-2); line-height: 1.6; margin-bottom: 8px; }
+        .pf-empty { background: #FFFBEB; border: 2px solid #FDE68A; border-radius: 14px; padding: 14px; font-size: 15px; margin-bottom: 12px; }
+
+        /* ============================================================
            แป้นตัวเลขบนจอ (Numpad) — เฉพาะแท็บเล็ต/มือถือ (จอสัมผัส)
            คอมพิวเตอร์ (มีเมาส์) จะไม่เห็นส่วนนี้เลย
            ============================================================ */
@@ -625,7 +675,7 @@
         @media print { .kp-sheet { display: none !important; } }
 
         /* ============================================================
-           กล่องโชว์ข้อความที่กำลังพิมพ์ (ลอยเหนือคีย์บอร์ดของเครื่อง)
+           กล่องโชว์ข้อความที่กำลังพิมพ์ (ลอยชิดขอบบนจอ)
            เฉพาะแท็บเล็ต/มือถือ (จอสัมผัส) · คอมพิวเตอร์ไม่เห็นส่วนนี้
            ============================================================ */
         .tp-bubble { display: none; position: fixed; top: 0; left: 8px; z-index: 5100; box-sizing: border-box;
@@ -755,7 +805,7 @@
                 <form id="addProductForm">
                     <div class="form-group"><label class="input-label">รูปสินค้า (ตัดภาพ 1:1 ให้อัตโนมัติ)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1;">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label></div><img id="imagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="prodName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="prodStock" min="1" required></div></div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ต้นทุน (บาท/ต่อชิ้น)</label><input type="number" id="prodCost" min="0" step="0.01" required></div><div class="form-group"><label class="input-label">ราคาขาย (บาท/ต่อชิ้น)</label><input type="number" id="prodPrice" min="0" step="0.01" required></div></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุน (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('prodCost','prodStock')">🧮 คิดต่อชิ้น</button></div><input type="number" id="prodCost" min="0" step="0.01" required></div><div class="form-group"><div class="lbl-row"><label class="input-label">ราคาขาย (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('prodCost','prodPrice','prodStock','จำนวนนำเข้า')">📈 ดูกำไร</button></div><input type="number" id="prodPrice" min="0" step="0.01" required></div></div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">หมวดหมู่ (ไม่ใส่ก็ได้)</label><input type="text" id="prodCategory" list="categoryList" placeholder="เช่น อาหาร, ขนม, ของเล่น"></div><div class="form-group"><label class="input-label">รหัส / บาร์โค้ด (ไม่ใส่ก็ได้)</label><input type="text" id="prodBarcode" autocomplete="off"></div></div>
                     <datalist id="categoryList"></datalist>
                     <button type="submit" class="btn-primary">บันทึกสินค้าลงคลัง</button>
@@ -776,7 +826,7 @@
                 <form id="addRawMaterialForm">
                     <div class="form-group"><label class="input-label">รูปภาพวัตถุดิบ (ตัดภาพ 1:1)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1; background-color: var(--raw);">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label></div><img id="rawImagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อวัตถุดิบ</label><input type="text" id="rawName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="rawStock" min="1" required></div></div>
-                    <div class="form-group"><label class="input-label">ต้นทุนที่ซื้อมา (บาท/ต่อชิ้น)</label><input type="number" id="rawCost" min="0" step="0.01" required></div>
+                    <div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุนที่ซื้อมา (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('rawCost','rawStock')">🧮 คิดต่อชิ้น</button></div><input type="number" id="rawCost" min="0" step="0.01" required></div>
                     <button type="submit" class="btn-primary" style="background-color: var(--raw);">บันทึกวัตถุดิบลงคลัง</button>
                 </form>
             </div>
@@ -817,6 +867,7 @@
                         <div class="stat stat-profit" id="profitStatBox" onclick="openSummaryDetail('profit')">กำไรเงินสด<span id="totalProfit">0 ฿</span></div>
                     </div>
                     <div class="tax-note" id="taxNote" style="display:none;"></div>
+                    <div class="profit-note" id="profitNote" style="display:none;"></div>
                     <div class="period-hint" id="summaryEmptyHint" data-html2canvas-ignore="true" style="display:none;"></div>
                     <div class="data-overview" id="dataOverview" data-html2canvas-ignore="true"></div>
                 </div>
@@ -934,7 +985,42 @@
     <div class="modal-overlay" id="summaryDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="summaryDetailTitle">รายละเอียด</span><button class="close-btn" onclick="closeModal('summaryDetailModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;" id="summaryDetailValueHeader">มูลค่า</th></tr></thead><tbody id="summaryDetailTableBody"></tbody><tfoot style="font-weight:bold; background-color:#F2F2F7;"><tr><td colspan="2" style="text-align:right; padding: 15px;">รวมทั้งหมด:</td><td style="text-align:center; padding: 15px;" id="summaryDetailTotalQty">0</td><td style="text-align:right; padding: 15px; color:var(--primary);" id="summaryDetailTotalValue">0 ฿</td></tr></tfoot></table></div></div></div>
     <div class="modal-overlay" id="stockHistoryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="stockHistoryTitle">📦 ประวัติสต็อก</span><button class="close-btn" onclick="closeModal('stockHistoryModal')">&times;</button></h2><div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;"><select id="stockHistoryFilter" onchange="renderStockHistory()" style="width: auto; flex-grow: 1;"><option value="today">วันนี้</option><option value="week">สัปดาห์นี้</option><option value="month">เดือนนี้</option><option value="all" selected>ประวัติทั้งหมด</option></select><button class="btn-sell" onclick="saveStockHistoryAsImage()">📸 เซฟเป็นรูป</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;" id="stockCaptureArea"><h3 style="text-align:center; margin-top:0; display:none;" id="watermarkTitle">รายงานประวัติสต็อก</h3><table><thead><tr><th>วัน-เวลา</th><th>รายการ</th><th style="text-align:center;">เคลื่อนไหว</th><th style="text-align:center;">คงเหลือ</th><th>หมายเหตุ</th></tr></thead><tbody id="stockHistoryTableBody"></tbody></table></div></div></div>
     <div class="modal-overlay" id="rawSummaryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📊 สรุปยอดใช้วัตถุดิบ<button class="close-btn" onclick="closeModal('rawSummaryModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card" style="border-color: var(--danger); background-color: #FFEDEB;"><div class="kpi-title">💸 จ่ายเยอะสุด</div><div class="kpi-value" style="color: var(--danger); font-size: 1.2em;" id="rawHighestCost">-</div></div><div class="kpi-card" style="border-color: var(--secondary); background-color: #EAF6FF;"><div class="kpi-title">🛒 ซื้อบ่อยสุด</div><div class="kpi-value" style="color: var(--secondary); font-size: 1.2em;" id="rawHighestFreq">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th>วัตถุดิบ</th><th style="text-align:center;">ความถี่</th><th style="text-align:right;">เงินที่จ่ายไป</th></tr></thead><tbody id="rawSummaryTableBody"></tbody></table></div></div></div>
-    <div class="modal-overlay" id="editModal"><div class="modal-content"><h2 class="modal-title">แก้ไขรายการ</h2><form id="editForm"><div class="form-group"><label>ชื่อรายการ</label><input type="text" id="editName" required></div><div class="form-group"><label>จำนวนสต็อก</label><input type="number" id="editStock" min="0" required></div><div class="form-group"><label>ต้นทุน (ต่อชิ้น)</label><input type="number" id="editCost" min="0" step="0.01" required></div><div id="editPriceContainer"><div class="form-group"><label>ราคาขาย (ต่อชิ้น)</label><input type="number" id="editPrice" min="0" step="0.01"></div><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><div class="form-group"><label>หมวดหมู่</label><input type="text" id="editCategory" list="categoryList"></div><div class="form-group"><label>รหัส / บาร์โค้ด</label><input type="text" id="editBarcode" autocomplete="off"></div></div></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('editModal')">ยกเลิก</button><button type="submit" class="btn-primary">บันทึก</button></div></form></div></div>
+    <div class="modal-overlay" id="editModal"><div class="modal-content"><h2 class="modal-title">แก้ไขรายการ</h2><form id="editForm"><div class="form-group"><label>ชื่อรายการ</label><input type="text" id="editName" required></div><div class="form-group"><label>จำนวนสต็อก</label><input type="number" id="editStock" min="0" required></div><div class="form-group"><div class="lbl-row"><label>ต้นทุน (ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('editCost','')">🧮 คิดต่อชิ้น</button></div><input type="number" id="editCost" min="0" step="0.01" required></div><div id="editPriceContainer"><div class="form-group"><div class="lbl-row"><label>ราคาขาย (ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('editCost','editPrice','editStock','คงเหลือ')">📈 ดูกำไร</button></div><input type="number" id="editPrice" min="0" step="0.01"></div><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><div class="form-group"><label>หมวดหมู่</label><input type="text" id="editCategory" list="categoryList"></div><div class="form-group"><label>รหัส / บาร์โค้ด</label><input type="text" id="editBarcode" autocomplete="off"></div></div></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('editModal')">ยกเลิก</button><button type="submit" class="btn-primary">บันทึก</button></div></form></div></div>
+    <div class="modal-overlay" id="restockModal"><div class="modal-content"><h2 class="modal-title">➕ เติมของเข้าสต็อก<button class="close-btn" type="button" onclick="closeModal('restockModal')">&times;</button></h2>
+        <div class="rs-head"><img id="rsImg" src="" alt=""><div><b id="rsName">-</b><small id="rsInfo"></small></div></div>
+        <form id="restockForm">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="form-group"><label class="input-label">จำนวนที่เติม (ชิ้น)</label><input type="number" id="rsQty" min="1" required oninput="updateRestockPreview()"></div>
+                <div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุนรอบนี้ (บาท/ชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('rsCost','rsQty')">🧮 คิดต่อชิ้น</button></div><input type="number" id="rsCost" min="0" step="0.01" required oninput="updateRestockPreview()"></div>
+            </div>
+            <div class="form-group" id="rsPriceGroup"><div class="lbl-row"><label class="input-label">ราคาขาย (บาท/ชิ้น) — ไม่เปลี่ยนก็ได้</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('rsCost','rsPrice','rsQty','ที่เติมรอบนี้')">📈 ดูกำไร</button></div><input type="number" id="rsPrice" min="0" step="0.01" oninput="updateRestockPreview()"></div>
+            <div class="rs-box warn" id="rsChoice" style="display:none;">
+                <div id="rsChoiceText"></div>
+                <label class="radio-line"><input type="radio" name="rsMode" value="split" checked onchange="updateRestockPreview()"><span>แยกเป็นรายการใหม่ (ล็อตใหม่)<small>ของเดิมที่เหลือขายต่อด้วยทุนเดิม ของใหม่ใช้ทุนใหม่ · ต้นทุนแม่นที่สุด</small></span></label>
+                <label class="radio-line"><input type="radio" name="rsMode" value="avg" onchange="updateRestockPreview()"><span>รวมกับรายการเดิม (เฉลี่ยต้นทุน)<small id="rsAvgText">ใช้รายการเดียว ต้นทุนต่อชิ้นจะเป็นค่าเฉลี่ย</small></span></label>
+            </div>
+            <div class="rs-box info" id="rsUpdateNote" style="display:none;"></div>
+            <div class="rs-total" id="rsTotal"></div>
+            <div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('restockModal')">ยกเลิก</button><button type="submit" class="btn-primary" style="background-color: var(--success);">✅ บันทึกการเติมของ</button></div>
+        </form>
+    </div></div>
+    <div class="modal-overlay" id="packCalcModal"><div class="modal-content"><h2 class="modal-title">🧮 คิดต้นทุนต่อชิ้น<button class="close-btn" type="button" onclick="closeModal('packCalcModal')">&times;</button></h2>
+        <p style="margin:-6px 0 12px; font-size:14px; color:var(--text-2);">ซื้อมาเป็นแพ็ก/โหล/ลัง ใส่ราคาเต็มกับจำนวนชิ้นในแพ็ก ระบบจะหารให้</p>
+        <form id="packCalcForm">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                <div class="form-group"><label class="input-label">ราคาเต็มต่อแพ็ก (บาท)</label><input type="number" id="pcPrice" min="0" step="0.01" required oninput="updatePackCalc()"></div>
+                <div class="form-group"><label class="input-label">ในแพ็กมีกี่ชิ้น</label><input type="number" id="pcPer" min="1" required oninput="updatePackCalc()"></div>
+            </div>
+            <div class="form-group"><label class="input-label">ซื้อมากี่แพ็ก</label><input type="number" id="pcPacks" min="1" required oninput="updatePackCalc()"></div>
+            <div class="pc-result" id="pcResult"></div>
+            <label class="radio-line" id="pcFillWrap" style="margin-bottom:6px;"><input type="checkbox" id="pcFillStock"><span id="pcFillText">ใส่จำนวนชิ้นในช่องจำนวนด้วย</span></label>
+            <div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('packCalcModal')">ยกเลิก</button><button type="submit" class="btn-primary" id="pcApply">ใส่ต้นทุนนี้</button></div>
+        </form>
+    </div></div>
+    <div class="modal-overlay" id="profitCalcModal"><div class="modal-content"><h2 class="modal-title">📈 กำไรของรายการนี้<button class="close-btn" type="button" onclick="closeModal('profitCalcModal')">&times;</button></h2>
+        <div id="pfBody"></div>
+        <div class="modal-actions" style="display:block;"><button type="button" class="btn-primary" style="width:100%;" onclick="closeModal('profitCalcModal')">ปิด</button></div>
+    </div></div>
     <div class="modal-overlay" id="analyticsModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📈 กราฟวิเคราะห์<button class="close-btn" onclick="closeModal('analyticsModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card"><div class="kpi-title">อัตรากำไร</div><div class="kpi-value" id="kpiMargin">0%</div></div><div class="kpi-card"><div class="kpi-title">ยอดขายเฉลี่ยบิล</div><div class="kpi-value" id="kpiAOV">0 ฿</div></div><div class="kpi-card" style="border-color: var(--raw); background-color: #FFF4E6;"><div class="kpi-title">🛒 ต้นทุนรวม</div><div class="kpi-value" style="color: var(--raw);" id="kpiRawCost">0 ฿</div></div><div class="kpi-card clickable" style="border-color: var(--warning); background-color: #FFF8E1;" onclick="openRankingModal()"><div class="kpi-title">🔥 สินค้าทำเงินอันดับ 1</div><div class="kpi-value" style="color: var(--warning); font-size: 1.2em;" id="kpiBestSeller">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; height: 400px;"><canvas id="salesChart"></canvas></div></div></div>
     <div class="modal-overlay" id="rankingModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">🏆 จัดอันดับสินค้าขายดี<button class="close-btn" onclick="closeModal('rankingModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px;"><input type="date" id="rankStartDate"><input type="date" id="rankEndDate"><button class="btn-primary" style="width: auto;" onclick="renderRankingTable()">ค้นหา</button><button class="btn-cancel" style="width: auto;" onclick="resetRankingFilter()">ดูทั้งหมด</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th style="text-align:center; width: 80px;">อันดับ</th><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;">ยอดรวม (฿)</th></tr></thead><tbody id="rankingTableBody"></tbody></table></div></div></div>
     <div class="modal-overlay" id="helperModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0;">💡 คู่มือผู้ช่วยแม่ค้า</h2><div style="display: flex; gap: 10px;"><select id="helperYear" onchange="renderHelperGrid()" style="width: 120px;"></select><button class="btn-primary" style="background-color: var(--connection);" onclick="openConnectionModal()">🤝 สมุดคู่ค้า</button><button class="close-btn" onclick="closeModal('helperModal')">&times;</button></div></div><div class="calendar-grid" id="helperGridContainer"></div></div></div>
@@ -1351,8 +1437,9 @@
         document.getElementById('notifyToggle').addEventListener('change', function(e) { isNotifyEnabled = e.target.checked; updateNotifications(); });
 
         // ================= History & Stock Logging =================
-        function logStockChange(productName, changeAmount, currentStock, note, isRaw, itemCost, investChange) {
+        function logStockChange(productName, changeAmount, currentStock, note, isRaw, itemCost, investChange, productId) {
             const newLog = { dateObj: new Date(), time: new Date().toLocaleString('th-TH'), name: productName, change: changeAmount, balance: currentStock, note: note, isRawMaterial: isRaw || false, cost: itemCost || 0, investChange: investChange || 0 };
+            if (productId) newLog.productId = productId;
             stockLogs.unshift(newLog);
             if(document.getElementById('stockHistoryModal').classList.contains('active')) renderStockHistory();
             calculateSummary(); 
@@ -1376,7 +1463,7 @@
             const p = products.find(x => x.id === id); 
             // เปลี่ยนใหม่: การลบสินค้าจะ "ไม่คืนเงิน" ลงในระบบแล้ว เพื่อป้องกันยอดติดลบ (ให้ไปลบประวัติรายจ่ายเองถ้าต้องการ)
             if (p && confirm("ลบรายการสินค้านี้ถาวรใช่หรือไม่?\n\n(การลบนี้จะไม่ลบยอดเงินที่เคยจ่ายไป หากคุณต้องการลบต้นทุน/รายจ่ายที่กดพลาด ให้ไปลบในตาราง [ประวัติซื้อเข้า] ที่หน้าสรุปยอด)")) { 
-                logStockChange(p.name, -p.stock, 0, 'ลบรายการออกจากระบบ 🗑️', p.isRawMaterial, p.cost, 0); // investChange = 0 (ไม่กระทบยอดเงิน)
+                logStockChange(p.name, -p.stock, 0, 'ลบรายการออกจากระบบ 🗑️', p.isRawMaterial, p.cost, 0, p.id); // investChange = 0 (ไม่กระทบยอดเงิน)
                 products = products.filter(x => x.id !== id); 
                 saveDataLocally(); 
                 updateUI(); 
@@ -1390,8 +1477,9 @@
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
             e.preventDefault(); const name = document.getElementById('prodName').value; const cost = parseFloat(document.getElementById('prodCost').value); const price = parseFloat(document.getElementById('prodPrice').value); const stock = parseInt(document.getElementById('prodStock').value); const category = document.getElementById('prodCategory').value.trim(); const barcode = document.getElementById('prodBarcode').value.trim();
             const handleAddition = (imgData) => { 
-                products.push({ id: Date.now(), name, cost, price, stock, category, barcode, image: imgData, isRawMaterial: false }); 
-                logStockChange(name, stock, stock, 'นำเข้าสินค้าล็อตใหม่', false, cost, (stock * cost)); 
+                const nid = Date.now();
+                products.push({ id: nid, name, cost, price, stock, category, barcode, image: imgData, isRawMaterial: false }); 
+                logStockChange(name, stock, stock, 'นำเข้าสินค้าล็อตใหม่', false, cost, r2(stock * cost), nid); 
                 saveDataLocally(); 
                 selectedImageFile = null; currentCopyImage = null; document.getElementById('imagePreview').style.display = 'none'; this.reset(); updateUI(); 
             };
@@ -1401,8 +1489,9 @@
         document.getElementById('addRawMaterialForm').addEventListener('submit', function(e) {
             e.preventDefault(); const name = document.getElementById('rawName').value; const cost = parseFloat(document.getElementById('rawCost').value); const stock = parseInt(document.getElementById('rawStock').value);
             const handleAddition = (imgData) => { 
-                products.push({ id: Date.now(), name, cost, price: 0, stock, image: imgData, isRawMaterial: true }); 
-                logStockChange(name, stock, stock, 'นำเข้าวัตถุดิบล็อตใหม่', true, cost, (stock * cost)); 
+                const nid = Date.now();
+                products.push({ id: nid, name, cost, price: 0, stock, image: imgData, isRawMaterial: true }); 
+                logStockChange(name, stock, stock, 'นำเข้าวัตถุดิบล็อตใหม่', true, cost, r2(stock * cost), nid); 
                 saveDataLocally(); 
                 selectedImageFile = null; currentCopyImage = null; document.getElementById('rawImagePreview').style.display = 'none'; this.reset(); updateUI(); 
             };
@@ -1440,13 +1529,19 @@
         function catOf(p) { return (p.category || '').trim() || 'ทั่วไป'; }
         function cartQtyOf(id) { const l = cart.find(x => x.id === id); return l ? l.qty : 0; }
 
+        const OUT_CAT = '__OUT__';   // หมวดพิเศษ "สินค้าหมด"
         function renderPosCategories() {
             const el = document.getElementById('posCategories');
-            const cats = [...new Set(sellableProducts().map(catOf))];
-            if (cats.length <= 1) { el.style.display = 'none'; posCategory = 'ALL'; return; }
-            if (posCategory !== 'ALL' && !cats.includes(posCategory)) posCategory = 'ALL';
+            const all = sellableProducts();
+            const inStock = all.filter(p => num(p.stock) > 0);
+            const outN = all.length - inStock.length;
+            const cats = [...new Set(inStock.map(catOf))];
+            if (cats.length <= 1 && !outN) { el.style.display = 'none'; posCategory = 'ALL'; return; }
+            if (posCategory === OUT_CAT ? !outN : (posCategory !== 'ALL' && !cats.includes(posCategory))) posCategory = 'ALL';
             el.style.display = '';
-            el.innerHTML = ['ALL', ...cats].map(c => `<button type="button" class="cat-pill ${c === posCategory ? 'on' : ''}" data-cat="${esc(c)}">${c === 'ALL' ? 'ทั้งหมด' : esc(c)}</button>`).join('');
+            const pills = ['ALL', ...(cats.length > 1 ? cats : [])];
+            el.innerHTML = pills.map(c => `<button type="button" class="cat-pill ${c === posCategory ? 'on' : ''}" data-cat="${esc(c)}">${c === 'ALL' ? 'ทั้งหมด' : esc(c)}</button>`).join('')
+                + (outN ? `<button type="button" class="cat-pill out-pill ${posCategory === OUT_CAT ? 'on' : ''}" data-cat="${OUT_CAT}">🚫 สินค้าหมด (${outN})</button>` : '');
         }
         document.getElementById('posCategories').addEventListener('click', e => {
             const b = e.target.closest('[data-cat]'); if (!b) return;
@@ -1458,16 +1553,25 @@
             const all = sellableProducts();
             if (all.length === 0) { grid.innerHTML = `<div class="pos-empty">ยังไม่มีสินค้าในร้าน<br><button class="btn-primary" style="width:auto; margin-top:14px;" onclick="openModal('inventoryModal')">📦 เพิ่มสินค้าแรก</button></div>`; return; }
             const q = document.getElementById('posSearch').value.trim().toLowerCase();
-            const list = all.filter(p => (posCategory === 'ALL' || catOf(p) === posCategory) && (!q || p.name.toLowerCase().includes(q) || String(p.barcode || '').toLowerCase().includes(q)));
-            if (list.length === 0) { grid.innerHTML = `<div class="pos-empty">ไม่พบสินค้า "${esc(q)}"</div>`; return; }
+            const match = p => !q || p.name.toLowerCase().includes(q) || String(p.barcode || '').toLowerCase().includes(q);
+            let list;
+            if (posCategory === OUT_CAT) list = all.filter(p => num(p.stock) <= 0 && match(p));
+            else if (q) list = all.filter(p => (posCategory === 'ALL' || catOf(p) === posCategory) && match(p)).sort((a, b) => (num(a.stock) <= 0) - (num(b.stock) <= 0));   // ค้นหา: โชว์ของหมดไว้ท้าย
+            else list = all.filter(p => num(p.stock) > 0 && (posCategory === 'ALL' || catOf(p) === posCategory));
+            if (list.length === 0) {
+                grid.innerHTML = q ? `<div class="pos-empty">ไม่พบสินค้า "${esc(q)}"</div>`
+                    : `<div class="pos-empty">ของหมดทุกรายการแล้ว<br><button class="btn-primary" style="width:auto; margin-top:14px; background:var(--danger);" onclick="posCategory=OUT_CAT; renderPosCategories(); renderPosProducts();">🚫 ดูสินค้าหมด / เติมของ</button></div>`;
+                return;
+            }
             grid.innerHTML = list.map(p => {
-                const out = p.stock <= 0;
-                return `<button type="button" class="pcard ${out ? 'out' : ''}" data-id="${p.id}" onclick="addToCart(${p.id})" ${out ? 'disabled' : ''}>
+                const out = num(p.stock) <= 0;
+                const meta = [p.barcode ? `รหัส ${esc(p.barcode)}` : '', p.lotOf ? 'ล็อตใหม่' : ''].filter(Boolean).join(' · ');
+                return `<button type="button" class="pcard ${out ? 'out restockable' : ''}" data-id="${p.id}" onclick="${out ? `openRestock(${p.id})` : `addToCart(${p.id})`}">
                     <span class="incart" style="display:none"></span>
                     <img src="${p.image || PLACEHOLDER_IMAGE}" alt="" loading="lazy">
                     <div class="pname">${esc(p.name)}</div>
-                    ${p.barcode ? `<div class="pmeta">รหัส ${esc(p.barcode)}</div>` : ''}
-                    <div class="prow"><span class="pprice">${money(p.price)}</span><span class="stock-pill ${p.stock <= 5 ? 'low' : ''}">${out ? 'หมด' : 'เหลือ ' + p.stock}</span></div>
+                    ${meta ? `<div class="pmeta">${meta}</div>` : ''}
+                    <div class="prow"><span class="pprice">${money(p.price)}</span><span class="stock-pill ${p.stock <= 5 ? 'low' : ''}">${out ? 'หมด · แตะเติมของ' : 'เหลือ ' + p.stock}</span></div>
                 </button>`;
             }).join('');
             updateCardBadges();
@@ -1667,7 +1771,7 @@
                 received: r2(received), change: r2(received - t.total)
             };
             bills.unshift(bill);
-            t.lines.forEach(l => logStockChange(l.p.name, -l.qty, l.p.stock, `ขาย บิล ${billNo}${t.discount > 0 ? ` (บิลลดไป ${t.discount}฿)` : ''}`, false, l.p.cost, 0));
+            t.lines.forEach(l => logStockChange(l.p.name, -l.qty, l.p.stock, `ขาย บิล ${billNo}${t.discount > 0 ? ` (บิลลดไป ${t.discount}฿)` : ''}`, false, l.p.cost, 0, l.p.id));
             saveDataLocally(); saveSettings();
             newTxs.forEach(tx => sendToGoogleSheets('transaction', tx));
 
@@ -1781,6 +1885,17 @@
             stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += num(log.investChange); } });
             sumRev = r2(sumRev); totalInvested = r2(totalInvested); sumTax = r2(sumTax);
             const profit = r2(sumRev - totalInvested); 
+            // ต้นทุนของที่ขายไปจริง (คิดตามทุนต่อชิ้นตอนขาย) + มูลค่าของที่ยังค้างสต็อก
+            let cogs = 0; transactions.forEach(t => { if (isWithinFilter(t.dateObj, filter, now)) cogs += num(t.cost); }); cogs = r2(cogs);
+            const stockValue = r2(products.reduce((a, p) => a + Math.max(0, num(p.stock)) * num(p.cost), 0));
+            const pn = document.getElementById('profitNote');
+            if (pn) {
+                if (sumRev > 0 || stockValue > 0) {
+                    pn.style.display = '';
+                    pn.innerHTML = (sumRev > 0 ? `ต้นทุนของที่ขายไป ${money(cogs)} → กำไรจากของที่ขายได้ <b>${money(r2(sumRev - cogs))}</b><br>` : '')
+                        + `ของที่ยังเหลือในสต็อกตอนนี้ คิดเป็นทุน <b>${money(stockValue)}</b> (จ่ายไปแล้ว รอขาย)`;
+                } else pn.style.display = 'none';
+            }
             updateSummaryEmptyHint(filter, sumRev, totalInvested); renderDataOverview(); renderPeriodSeg();
             document.getElementById('totalRevenue').innerText = sumRev.toLocaleString() + ' ฿'; document.getElementById('totalCost').innerText = totalInvested.toLocaleString() + ' ฿';
             const pEl = document.getElementById('totalProfit'); pEl.innerText = profit.toLocaleString() + ' ฿'; const box = document.getElementById('profitStatBox'); if(profit > 0) box.style.backgroundColor = 'var(--success)'; else if(profit < 0) box.style.backgroundColor = 'var(--danger)'; else box.style.backgroundColor = '#98989D';
@@ -1939,7 +2054,7 @@
                 const index = stockLogs.findIndex(l => l.dateObj.getTime() === ts && l.investChange > 0);
                 if(index > -1) {
                     const log = stockLogs[index];
-                    const p = products.find(x => x.name === log.name && x.isRawMaterial === log.isRawMaterial);
+                    const p = (log.productId && products.find(x => x.id === log.productId)) || products.find(x => x.name === log.name && x.isRawMaterial === log.isRawMaterial);
 
                     if (!p) {
                         if (!confirm(`⚠️ ไม่พบ "${log.name}" ในคลังแล้ว\n\nระบบจะลบได้เฉพาะ "ประวัติรายจ่าย ${log.investChange.toLocaleString()}฿" โดยไม่มีการหักสต็อก\n\nยืนยันลบต่อหรือไม่?`)) return;
@@ -1962,7 +2077,7 @@
                     p.stock -= deductQty;
                     stockLogs.splice(index, 1);
                     // บันทึกการหักของลงประวัติ เพื่อให้ยอดเคลื่อนไหวตรวจสอบย้อนหลังได้ (เงินถูกหักไปแล้วจากการลบลอคด้านบน จึงใส่ investChange = 0)
-                    if (deductQty > 0) logStockChange(p.name, -deductQty, p.stock, `ยกเลิกรายการนำเข้า หักของออก ↩️ (รายจ่ายเดิม ${log.investChange.toLocaleString()}฿)`, p.isRawMaterial, log.cost, 0);
+                    if (deductQty > 0) logStockChange(p.name, -deductQty, p.stock, `ยกเลิกรายการนำเข้า หักของออก ↩️ (รายจ่ายเดิม ${log.investChange.toLocaleString()}฿)`, p.isRawMaterial, log.cost, 0, p.id);
                     saveDataLocally();
                     sendToGoogleSheets('deleteStockLog', log);
                     updateUI();
@@ -2002,11 +2117,9 @@
             pruneCart(); renderPos();
             document.getElementById('categoryList').innerHTML = [...new Set(sellableProducts.map(p => (p.category || '').trim()).filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('');
 
-            const invBody = document.getElementById('inventoryTable'); invBody.innerHTML = sellableProducts.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีสินค้า</td></tr>' : '';
-            sellableProducts.forEach(p => { invBody.innerHTML += `<tr><td><img src="${p.image || PLACEHOLDER_IMAGE}" class="inventory-img" alt=""></td><td><b>${esc(p.name)}</b><br><span style="font-size:0.8em; color:#8E8E93;">ทุน: ${p.cost}฿${p.category ? ` · ${esc(p.category)}` : ''}${p.barcode ? ` · รหัส ${esc(p.barcode)}` : ''}</span></td><td>${p.price.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold; color: ${p.stock<=5?'#FF3B30':'#1C1C1E'}">${p.stock}</td><td><button class="btn-cancel btn-sm" style="background:#32ADE6;" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`; });
+            renderInvTable('inventoryTable', sellableProducts, 'ไม่มีสินค้า', 'สินค้าหมด');
 
-            const rawBody = document.getElementById('rawMaterialTable'); const rawProducts = products.filter(p => p.isRawMaterial); rawBody.innerHTML = rawProducts.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีวัตถุดิบ</td></tr>' : '';
-            rawProducts.forEach(p => { rawBody.innerHTML += `<tr><td><img src="${p.image || PLACEHOLDER_IMAGE}" class="inventory-img" alt=""></td><td><b>${p.name}</b><br><span style="font-size:0.8em; color:#8E8E93;">ทุน: ${p.cost}฿</span></td><td>${p.cost.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold; color: ${p.stock<=5?'#FF3B30':'#1C1C1E'}">${p.stock}</td><td><button class="btn-cancel btn-sm" style="background:var(--raw);" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`; });
+            renderInvTable('rawMaterialTable', products.filter(p => p.isRawMaterial), 'ไม่มีวัตถุดิบ', 'วัตถุดิบหมด');
 
             const filter = document.getElementById('timeframeFilter').value; const now = new Date();
             
@@ -2028,31 +2141,222 @@
             calculateSummary(); updateNotifications();
         }
         
+
+
+        // ================= 🧮 คิดต้นทุนต่อชิ้น (ซื้อเป็นแพ็ก) =================
+        let pcTarget = null, pcStockTarget = null;
+        function openPackCalc(costId, stockId) {
+            pcTarget = costId; pcStockTarget = stockId || null;
+            ['pcPrice', 'pcPer'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('pcPacks').value = 1;
+            const st = pcStockTarget && document.getElementById(pcStockTarget);
+            document.getElementById('pcFillWrap').style.display = st ? '' : 'none';
+            document.getElementById('pcFillStock').checked = !!st && !String(st.value || '').trim();
+            updatePackCalc();
+            openModal('packCalcModal');
+        }
+        function packCalcState() {
+            const price = parseFloat(document.getElementById('pcPrice').value);
+            const per = parseInt(document.getElementById('pcPer').value);
+            const packs = Math.max(1, parseInt(document.getElementById('pcPacks').value) || 1);
+            if (!(price >= 0) || !(per >= 1)) return null;
+            const unit = r2(price / per);
+            return { price, per, packs, unit, pieces: per * packs, paid: r2(price * packs), exact: Math.abs(unit * per - price) < 0.005 };
+        }
+        function updatePackCalc() {
+            const st = packCalcState(); const out = document.getElementById('pcResult');
+            document.getElementById('pcApply').disabled = !st;
+            if (!st) { out.innerHTML = '<div class="big" style="color:var(--text-3);">฿0.00</div><small>ใส่ราคาเต็มและจำนวนชิ้นในแพ็ก</small>'; document.getElementById('pcFillText').textContent = 'ใส่จำนวนชิ้นในช่องจำนวนด้วย'; return; }
+            out.innerHTML = `<div class="big">${money(st.unit)} <span style="font-size:16px; font-weight:600; color:var(--text-2);">/ชิ้น</span></div>`
+                + `<small>${money(st.price)} ÷ ${st.per} ชิ้น${st.exact ? '' : ` = ${(st.price / st.per).toFixed(4)} (ปัดเป็น ${money(st.unit)})`}`
+                + `${st.packs > 1 ? `<br>ซื้อ ${st.packs} แพ็ก = ${st.pieces} ชิ้น · จ่ายรวม ${money(st.paid)}` : ''}</small>`;
+            document.getElementById('pcFillText').textContent = `ใส่ ${st.pieces} ชิ้น ในช่องจำนวนด้วย`;
+        }
+        document.getElementById('packCalcForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const st = packCalcState(); if (!st || !pcTarget) return;
+            const setVal = (id, v) => { const el = document.getElementById(id); if (!el) return; el.value = v; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); };
+            setVal(pcTarget, st.unit);
+            if (pcStockTarget && document.getElementById('pcFillStock').checked) setVal(pcStockTarget, st.pieces);
+            closeModal('packCalcModal');
+            if (typeof toast === 'function') toast(`✅ ใส่ต้นทุน ${money(st.unit)}/ชิ้น แล้ว`);
+        });
+
+        // ================= 📈 ดูกำไร (ต่อชิ้น / ถ้าขายหมด) =================
+        function openProfitCalc(costId, priceId, stockId, stockWord) {
+            const val = id => { const el = document.getElementById(id); const v = el ? parseFloat(el.value) : NaN; return isFinite(v) ? v : NaN; };
+            const cost = val(costId), price = val(priceId), qty = Math.max(0, Math.floor(val(stockId) || 0));
+            const body = document.getElementById('pfBody');
+            if (!isFinite(cost) || !isFinite(price)) {
+                body.innerHTML = `<div class="pf-empty">กรุณาใส่ <b>${!isFinite(cost) ? 'ต้นทุน' : ''}${!isFinite(cost) && !isFinite(price) ? ' และ ' : ''}${!isFinite(price) ? 'ราคาขาย' : ''}</b> ก่อน แล้วกดดูกำไรอีกครั้ง</div>`;
+                openModal('profitCalcModal'); return;
+            }
+            // ราคารวมภาษีแล้ว → รายได้จริงของร้านคือราคาหลังหักภาษี
+            const rate = settings.taxEnabled ? Math.max(0, Number(settings.taxRate) || 0) : 0;
+            const inclusive = rate > 0 && settings.taxMode === 'inclusive';
+            const net = inclusive ? r2(price * 100 / (100 + rate)) : price;
+            const unitProfit = r2(net - cost);
+            const margin = net > 0 ? (unitProfit / net * 100) : 0;
+            const markup = cost > 0 ? (unitProfit / cost * 100) : 0;
+            const loss = unitProfit < 0;
+            const pct = v => (Math.round(v * 10) / 10).toLocaleString('th-TH') + '%';
+            let h = `<div class="pf-grid">
+                <div class="pf-cell"><span>ต้นทุน/ชิ้น</span><b>${money(cost)}</b></div>
+                <div class="pf-cell"><span>ราคาขาย/ชิ้น</span><b>${money(price)}</b></div>
+                <div class="pf-cell hero ${loss ? 'loss' : ''}"><span>${loss ? '⚠️ ขาดทุนต่อชิ้น' : 'กำไรต่อชิ้น'}</span><b>${money(unitProfit)}</b>
+                    <span style="font-weight:500; margin-top:2px;">${net > 0 ? `คิดเป็น ${pct(margin)} ของราคาขาย` : ''}${cost > 0 ? ` · บวกเพิ่มจากทุน ${pct(markup)}` : ''}</span></div>
+            </div>`;
+            if (inclusive) h += `<div class="pf-note">🧾 ราคาขายรวมภาษี ${rate}% แล้ว → ร้านได้จริง ${money(net)}/ชิ้น (ภาษี ${money(r2(price - net))} เก็บแทนรัฐ)</div>`;
+            else if (rate > 0) h += `<div class="pf-note">🧾 ลูกค้าจ่ายภาษี ${rate}% เพิ่มจากราคาขาย ภาษีไม่นับเป็นกำไร</div>`;
+            if (qty > 0) {
+                const rev = r2(net * qty), tc = r2(cost * qty), tp = r2(rev - tc);
+                h += `<div class="pf-head">ถ้าขายหมด ${qty.toLocaleString()} ชิ้น (${stockWord})</div>
+                <div class="pf-grid">
+                    <div class="pf-cell"><span>ยอดขายรวม</span><b>${money(rev)}</b></div>
+                    <div class="pf-cell"><span>ต้นทุนรวม</span><b>${money(tc)}</b></div>
+                    <div class="pf-cell hero ${tp < 0 ? 'loss' : ''}"><span>${tp < 0 ? '⚠️ ขาดทุนรวม' : 'กำไรรวมถ้าขายหมด'}</span><b>${money(tp)}</b></div>
+                </div>`;
+                if (net > 0 && !loss) {
+                    const be = Math.ceil(tc / net - 1e-9);
+                    h += `<div class="pf-note">💡 ต้องขายอย่างน้อย <b>${be.toLocaleString()}</b> จาก ${qty.toLocaleString()} ชิ้น ถึงจะได้ทุนคืน ที่เหลือ ${Math.max(0, qty - be).toLocaleString()} ชิ้นคือกำไร</div>`;
+                }
+            } else {
+                h += `<div class="pf-note">💡 ใส่จำนวนชิ้น (${stockWord}) ด้วย จะเห็นกำไรรวมถ้าขายหมด</div>`;
+            }
+            if (loss) h += `<div class="pf-empty" style="background:#FFF1F2; border-color:#FECDD3;">ราคาขายต่ำกว่าต้นทุน ลองตั้งราคาอย่างน้อย <b>${money(inclusive ? r2(cost * (100 + rate) / 100) : cost)}</b> ถึงจะไม่ขาดทุน</div>`;
+            body.innerHTML = h;
+            openModal('profitCalcModal');
+        }
+
+        // ================= ตารางคลัง: แยก "ของหมด" ไว้ท้ายตาราง =================
+        function lotTag(p) { return p.lotOf ? `<span class="lot-tag">ล็อตใหม่${p.lotDate ? ' ' + new Date(p.lotDate).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }) : ''}</span>` : ''; }
+        function invRowHtml(p) {
+            const raw = p.isRawMaterial, out = num(p.stock) <= 0;
+            const sub = raw ? `ทุน: ${p.cost}฿` : `ทุน: ${p.cost}฿${p.category ? ` · ${esc(p.category)}` : ''}${p.barcode ? ` · รหัส ${esc(p.barcode)}` : ''}`;
+            const val = raw ? num(p.cost) : num(p.price);
+            const stockCell = out ? '<span class="stock-out">หมด</span>' : `<span style="color:${p.stock <= 5 ? '#FF3B30' : '#1C1C1E'}">${p.stock}</span>`;
+            return `<tr class="${out ? 'inv-out' : ''}"><td><img src="${p.image || PLACEHOLDER_IMAGE}" class="inventory-img" alt=""></td><td><b>${esc(p.name)}</b>${lotTag(p)}<br><span style="font-size:0.8em; color:#8E8E93;">${sub}</span></td><td>${val.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold;">${stockCell}</td><td style="white-space:nowrap;"><button class="btn-sm btn-restock" onclick="openRestock(${p.id})">➕ เติมของ</button> <button class="btn-cancel btn-sm" style="background:${raw ? 'var(--raw)' : '#32ADE6'};" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`;
+        }
+        function renderInvTable(bodyId, list, emptyText, outLabel) {
+            const body = document.getElementById(bodyId); if (!body) return;
+            if (!list.length) { body.innerHTML = `<tr><td colspan="5" style="text-align: center; color:#8E8E93;">${emptyText}</td></tr>`; return; }
+            const inStock = list.filter(p => num(p.stock) > 0), outStock = list.filter(p => num(p.stock) <= 0);
+            let h = inStock.length ? inStock.map(invRowHtml).join('') : `<tr class="inv-sec"><td colspan="5">ตอนนี้ของหมดทุกรายการ — กด ➕ เติมของ ในหมวด "${outLabel}" ด้านล่าง</td></tr>`;
+            if (outStock.length) h += `<tr class="inv-sec out"><td colspan="5">🚫 ${outLabel} (${outStock.length} รายการ) · เติมของแล้วจะย้ายกลับขึ้นไปรายการปกติเอง</td></tr>` + outStock.map(invRowHtml).join('');
+            body.innerHTML = h;
+        }
+
+        // ================= เติมของเข้ารายการเดิม (บันทึกต้นทุนทุกครั้ง) =================
+        let restockId = null;
+        function openRestock(id) {
+            const p = products.find(x => x.id === id); if (!p) return;
+            restockId = id;
+            document.getElementById('rsImg').src = p.image || PLACEHOLDER_IMAGE;
+            document.getElementById('rsName').innerHTML = esc(p.name) + lotTag(p);
+            document.getElementById('rsInfo').textContent = `คงเหลือ ${num(p.stock) <= 0 ? '0 (หมด)' : p.stock} · ทุน ${money(p.cost)}/ชิ้น` + (p.isRawMaterial ? '' : ` · ขาย ${money(p.price)}`);
+            document.getElementById('rsQty').value = '';
+            document.getElementById('rsCost').value = p.cost;
+            document.getElementById('rsPriceGroup').style.display = p.isRawMaterial ? 'none' : '';
+            document.getElementById('rsPrice').value = p.isRawMaterial ? '' : p.price;
+            document.querySelector('input[name="rsMode"][value="split"]').checked = true;
+            updateRestockPreview();
+            openModal('restockModal');
+        }
+        function restockState() {
+            const p = products.find(x => x.id === restockId); if (!p) return null;
+            const qty = parseInt(document.getElementById('rsQty').value) || 0;
+            const costIn = parseFloat(document.getElementById('rsCost').value);
+            const cost = isFinite(costIn) ? r2(costIn) : num(p.cost);
+            const priceIn = parseFloat(document.getElementById('rsPrice').value);
+            const price = p.isRawMaterial ? 0 : (isFinite(priceIn) ? r2(priceIn) : num(p.price));
+            const oldStock = Math.max(0, num(p.stock));
+            const costChanged = Math.abs(cost - num(p.cost)) > 0.0001;
+            const picked = (document.querySelector('input[name="rsMode"]:checked') || {}).value || 'split';
+            const mode = !costChanged ? 'same' : (oldStock <= 0 ? 'update' : picked);
+            const avg = oldStock + qty > 0 ? r2((oldStock * num(p.cost) + qty * cost) / (oldStock + qty)) : cost;
+            return { p, qty, cost, price, oldStock, costChanged, mode, avg, invest: r2(qty * cost), priceChanged: !p.isRawMaterial && Math.abs(price - num(p.price)) > 0.0001 };
+        }
+        function updateRestockPreview() {
+            const st = restockState(); if (!st) return;
+            const { p, qty, cost, oldStock, mode, avg, invest } = st;
+            const choice = document.getElementById('rsChoice'), upd = document.getElementById('rsUpdateNote');
+            choice.style.display = (st.costChanged && oldStock > 0) ? '' : 'none';
+            upd.style.display = (st.costChanged && oldStock <= 0) ? '' : 'none';
+            if (st.costChanged && oldStock > 0) {
+                document.getElementById('rsChoiceText').innerHTML = `⚠️ ต้นทุนรอบนี้ <b>${money(cost)}</b> ไม่เท่าของเดิม (<b>${money(p.cost)}</b>) และยังมีของเดิมเหลือ ${oldStock} ชิ้น`;
+                document.getElementById('rsAvgText').textContent = qty > 0 ? `ต้นทุนเฉลี่ยใหม่ ${money(avg)}/ชิ้น · ใช้รายการเดียว` : 'ใช้รายการเดียว ต้นทุนต่อชิ้นจะเป็นค่าเฉลี่ย';
+            }
+            if (st.costChanged && oldStock <= 0) upd.innerHTML = `ℹ️ ของเดิมหมดแล้ว → อัปเดตต้นทุนของรายการนี้จาก ${money(p.cost)} เป็น <b>${money(cost)}</b>/ชิ้น (ประวัติต้นทุนเดิมยังเก็บไว้ครบ)`;
+            let after;
+            if (mode === 'split') after = `สร้างรายการใหม่ <b>${qty}</b> ชิ้น (ทุน ${money(cost)}) · ของเดิมเหลือ ${oldStock} ชิ้น (ทุน ${money(p.cost)})`;
+            else after = `คงเหลือหลังเติม <b>${oldStock + qty}</b> ชิ้น` + (mode === 'avg' ? ` · ทุนเฉลี่ย ${money(avg)}/ชิ้น` : '');
+            if (st.priceChanged) after += `<br>ราคาขายเปลี่ยน ${money(p.price)} → <b>${money(st.price)}</b>`;
+            document.getElementById('rsTotal').innerHTML = `💸 จ่ายรอบนี้ ${qty} × ${money(cost)} = <b class="money">${money(invest)}</b> <span style="color:var(--text-2); font-size:13px;">(บันทึกลงหน้าสรุปยอด)</span><br>${after}`;
+        }
+        document.getElementById('restockForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const st = restockState(); if (!st) return;
+            const { p, qty, cost, price, oldStock, mode, avg, invest } = st;
+            if (qty < 1) { alert('กรุณาใส่จำนวนที่เติม'); return; }
+            const priceNote = st.priceChanged ? ` · ราคาขาย ${p.price}→${price}฿` : '';
+            let shownName = p.name;
+            if (mode === 'split') {
+                const np = { ...p, id: Date.now(), stock: qty, cost, price: p.isRawMaterial ? 0 : price, lotOf: p.lotOf || p.id, lotDate: new Date().toISOString() };
+                const idx = products.indexOf(p); products.splice(idx + 1, 0, np);
+                logStockChange(np.name, qty, qty, `➕ เติมของ แยกเป็นล็อตใหม่ ทุน ${cost}฿/ชิ้น (ล็อตเดิมทุน ${p.cost}฿ เหลือ ${oldStock})${priceNote}`, p.isRawMaterial, cost, invest, np.id);
+            } else {
+                const oldCost = p.cost;
+                if (mode === 'avg') p.cost = avg; else if (mode === 'update') p.cost = cost;
+                p.stock = oldStock + qty;
+                if (st.priceChanged) p.price = price;
+                const note = mode === 'same' ? `➕ เติมของ (ต้นทุนเดิม ${cost}฿/ชิ้น)`
+                    : mode === 'update' ? `➕ เติมของ ต้นทุนใหม่ ${cost}฿/ชิ้น (เดิม ${oldCost}฿ · ของเดิมหมดแล้ว)`
+                    : `➕ เติมของ ทุน ${cost}฿/ชิ้น รวมกับของเดิม → ทุนเฉลี่ย ${avg}฿/ชิ้น (เดิม ${oldCost}฿)`;
+                logStockChange(p.name, qty, p.stock, note + priceNote, p.isRawMaterial, cost, invest, p.id);
+            }
+            saveDataLocally();
+            closeModal('restockModal');
+            updateUI();
+            if (typeof toast === 'function') toast(`✅ เติม ${shownName} +${qty} · บันทึกต้นทุน ${money(invest)}`);
+        });
+
         function openEditModal(id) { const p = products.find(x => x.id === id); if(p) { currentEditId = id; document.getElementById('editName').value = p.name; document.getElementById('editStock').value = p.stock; document.getElementById('editCost').value = p.cost; if (p.isRawMaterial) { document.getElementById('editPriceContainer').style.display = 'none'; } else { document.getElementById('editPriceContainer').style.display = 'block'; document.getElementById('editPrice').value = p.price; document.getElementById('editCategory').value = p.category || ''; document.getElementById('editBarcode').value = p.barcode || ''; } openModal('editModal'); } }
         
         // แก้ไขฟังก์ชัน Edit ไม่ให้ไปกวนยอดเงินลงทุน
         document.getElementById('editForm').addEventListener('submit', function(e) { 
             e.preventDefault(); 
-            const p = products.find(x => x.id === currentEditId); 
-            const oldStock = p.stock; 
+            const p = products.find(x => x.id === currentEditId); if (!p) return;
+            const oldStock = num(p.stock); 
             const newStock = parseInt(document.getElementById('editStock').value); 
             const newCost = parseFloat(document.getElementById('editCost').value); 
-            
-            p.name = document.getElementById('editName').value; 
-            p.stock = newStock; 
-            p.cost = newCost;
-            
-            if (!p.isRawMaterial) { p.price = parseFloat(document.getElementById('editPrice').value) || 0; p.category = document.getElementById('editCategory').value.trim(); p.barcode = document.getElementById('editBarcode').value.trim(); } 
-            
-            // บันทึกเฉพาะจำนวนสต็อกที่เปลี่ยน ไม่บันทึกยอดเงิน (เพื่อป้องกันตัวเลขรวน)
-            if(oldStock !== newStock) { 
-                // กันช่องโหว่ "เติมของฟรี": การเพิ่มจำนวนผ่านหน้าแก้ไขจะไม่บันทึกต้นทุน → กำไรเงินสดจะสูงเกินจริง
-                if (newStock > oldStock) {
-                    if (!confirm(`⚠️ คุณกำลังเพิ่มสต็อก +${newStock - oldStock} ชิ้นผ่านหน้า "แก้ไข"\n\nการเพิ่มทางนี้จะ "ไม่บันทึกต้นทุน" ลงระบบ (เหมาะกับการแก้ตัวเลขที่นับพลาดเท่านั้น)\n\nหากเป็นการซื้อของเข้าจริง กรุณายกเลิกแล้วใช้ปุ่ม "📄 Copy" หรือฟอร์ม "➕ เพิ่มสินค้า/วัตถุดิบ" แทน เพื่อให้ต้นทุนถูกบันทึก\n\nยืนยันเพิ่มโดยไม่บันทึกต้นทุนหรือไม่?`)) return;
-                }
-                logStockChange(p.name, newStock - oldStock, newStock, newStock > oldStock ? 'แก้ไขปรับปรุงจำนวนสต็อก (ไม่บันทึกต้นทุน)' : 'แก้ไข/ปรับปรุงข้อมูลจำนวนสต็อก', p.isRawMaterial, newCost, 0); 
-            }
-            
+            const before = { name: p.name, cost: num(p.cost), price: num(p.price), category: p.category || '', barcode: p.barcode || '' };
+            const after = { name: document.getElementById('editName').value.trim() || p.name, cost: newCost, price: before.price, category: before.category, barcode: before.barcode };
+            if (!p.isRawMaterial) { after.price = parseFloat(document.getElementById('editPrice').value) || 0; after.category = document.getElementById('editCategory').value.trim(); after.barcode = document.getElementById('editBarcode').value.trim(); }
+
+            // เพิ่มจำนวนผ่านหน้าแก้ไข → ถามว่าเป็นการซื้อของเข้าจริงไหม (ถ้าใช่ บันทึกต้นทุนให้เลย)
+            let invest = 0, stockNote = '';
+            if (newStock > oldStock) {
+                const add = newStock - oldStock;
+                const asPurchase = confirm(`คุณเพิ่มสต็อก +${add} ชิ้น\n\nเป็น "การซื้อของเข้า" ใช่ไหม?\n\n• ตกลง = บันทึกต้นทุน ${add} × ${newCost}฿ = ${r2(add * newCost).toLocaleString()}฿ ลงหน้าสรุปยอด\n• ยกเลิก = แค่แก้ตัวเลขที่นับพลาด (ไม่บันทึกต้นทุน)\n\n💡 ครั้งหน้าใช้ปุ่ม "➕ เติมของ" ได้เลย สะดวกกว่า`);
+                if (asPurchase) { invest = r2(add * newCost); stockNote = `➕ เติมของ (ผ่านหน้าแก้ไข) ทุน ${newCost}฿/ชิ้น`; }
+                else stockNote = 'แก้ไขจำนวนสต็อกที่นับพลาด (ไม่บันทึกต้นทุน)';
+            } else if (newStock < oldStock) stockNote = 'แก้ไข/ปรับลดจำนวนสต็อก';
+
+            const changes = [];
+            if (after.name !== before.name) changes.push(`ชื่อ "${before.name}" → "${after.name}"`);
+            if (Math.abs(after.cost - before.cost) > 0.0001) changes.push(`ต้นทุน ${before.cost}→${after.cost}฿`);
+            if (!p.isRawMaterial && Math.abs(after.price - before.price) > 0.0001) changes.push(`ราคาขาย ${before.price}→${after.price}฿`);
+            if (after.category !== before.category) changes.push(`หมวด "${before.category || '-'}" → "${after.category || '-'}"`);
+            if (after.barcode !== before.barcode) changes.push(`รหัส "${before.barcode || '-'}" → "${after.barcode || '-'}"`);
+
+            p.name = after.name; p.stock = newStock; p.cost = newCost;
+            if (!p.isRawMaterial) { p.price = after.price; p.category = after.category; p.barcode = after.barcode; }
+
+            // บันทึกทุกการแก้ไขลงประวัติสต็อก (ทั้งจำนวน และข้อมูลอื่น ๆ)
+            const detail = changes.length ? `✏️ แก้ไข: ${changes.join(', ')}` : '';
+            if (oldStock !== newStock) logStockChange(p.name, newStock - oldStock, newStock, stockNote + (detail ? ' · ' + detail : ''), p.isRawMaterial, newCost, invest, p.id);
+            else if (detail) logStockChange(p.name, 0, newStock, detail, p.isRawMaterial, newCost, 0, p.id);
+
             saveDataLocally(); 
             closeModal('editModal'); 
             updateUI(); 
@@ -2061,7 +2365,7 @@
 
         // ================= v3: การแสดงผลบนแท็บเล็ต (ขนาดตัวอักษร / เต็มจอ / ติดตั้งแอป) =================
         // ค่าพวกนี้เป็นของ "เครื่องนี้" เท่านั้น จึงเก็บแยกใน localStorage (ไม่ติดไปกับไฟล์สำรอง)
-        const APP_VERSION = '3.2';
+        const APP_VERSION = '3.5';
         const UI_KEY = 'doggyUi';
         let uiPrefs = { scale: 'normal', autoFs: true };
         let fsUserExited = false;          // ผู้ใช้กดปิดเต็มจอเองในรอบนี้ → ไม่เปิดให้อัตโนมัติอีก
@@ -2213,19 +2517,29 @@
     // จอสัมผัสเป็นหลัก (แท็บเล็ต/มือถือ) — ใช้เงื่อนไขเดียวกับสไตล์แท็บเล็ตของแอป
     const touchMQ = window.matchMedia ? matchMedia('(hover: none), (pointer: coarse)') : null;
 
-    let enabled = false, cur = null, buf = '', fresh = false, selfInput = false, padEl = null, padOld = '';
+    let enabled = false, cur = null, buf = '', fresh = false, selfInput = false, padEl = null, padOld = '', refocusing = false;
 
-    const isTarget = el => el && el.matches && el.matches(SEL) && !el.disabled && !el.readOnly;
+    // ช่องที่เราใส่ readonly เอง (data-kp-ro) ยังนับเป็นช่องของแป้นตัวเลข
+    const isTarget = el => el && el.matches && el.matches(SEL) && !el.disabled && (!el.readOnly || el.hasAttribute('data-kp-ro'));
 
-    function prep(el) {   // ปิดคีย์บอร์ดของระบบ (เก็บค่าเดิมไว้คืนตอนต่อเมาส์)
+    // ปิดคีย์บอร์ดของเครื่อง: inputmode="none" อย่างเดียวไม่พอ (คีย์บอร์ดบางยี่ห้อไม่สนใจ)
+    // จึงใส่ readonly ด้วย — ช่อง readonly ยังแตะ/โฟกัสได้ แต่เครื่องจะไม่เด้งคีย์บอร์ดขึ้นมาเลย
+    // คืนค่าทุกอย่างเมื่อต่อเมาส์ (กลับเป็นโหมดคอมพิวเตอร์)
+    function prep(el) {
         if (!el.hasAttribute('data-kp-orig')) el.setAttribute('data-kp-orig', el.getAttribute('inputmode') || '');
         el.setAttribute('inputmode', 'none');
+        if (!el.readOnly) { el.readOnly = true; el.setAttribute('data-kp-ro', '1'); }
     }
     function unprep(el) {
+        release(el);
+        el.removeAttribute('data-kp-ro');
         if (!el.hasAttribute('data-kp-orig')) return;
         const o = el.getAttribute('data-kp-orig'); el.removeAttribute('data-kp-orig');
         o ? el.setAttribute('inputmode', o) : el.removeAttribute('inputmode');
     }
+    // ช่อง readonly จะไม่ถูกตรวจ "ต้องกรอก" ตอนกดบันทึก → ปลด readonly ชั่วคราวก่อนฟอร์มตรวจ
+    function release(el) { if (el.hasAttribute('data-kp-ro')) el.readOnly = false; }
+    function releaseForm(form) { if (form) form.querySelectorAll(SEL + '[data-kp-ro]').forEach(release); }
     function setEnabled(on) {
         enabled = on;
         document.querySelectorAll(SEL).forEach(on ? prep : unprep);
@@ -2374,13 +2688,28 @@
     document.addEventListener('pointerdown', e => {
         if (!enabled) return;
         if (isTarget(e.target)) { prep(e.target); return; }
+        const sub = e.target.closest && e.target.closest('button[type="submit"], button:not([type]), input[type="submit"]');
+        if (sub && sub.form) releaseForm(sub.form);   // กำลังจะกดบันทึก → ให้ฟอร์มตรวจช่องตัวเลขได้ตามปกติ
         if (sheet.contains(e.target)) return;
         if (cur) close(true);   // แตะที่อื่น = ปิดแป้น (ค่าถูกบันทึกไว้แล้ว)
     }, true);
-    document.addEventListener('focusin', e => { if (enabled && isTarget(e.target)) open(e.target); });
+    document.addEventListener('focusin', e => {
+        if (!enabled || !isTarget(e.target)) return;
+        const el = e.target;
+        if (!el.readOnly) {   // โฟกัสมาโดยไม่ได้แตะ (เช่น กด "ถัดไป" จากคีย์บอร์ด) → ล็อก แล้วโฟกัสใหม่ให้คีย์บอร์ดเครื่องหุบ
+            prep(el); refocusing = true; el.blur();
+            setTimeout(() => { refocusing = false; el.focus({ preventScroll: true }); open(el); }, 0);
+            return;
+        }
+        open(el);
+    });
+    // กดบันทึกแล้วช่องตัวเลขยังว่าง → เบราว์เซอร์จะโฟกัสช่องนั้น: ล็อกไว้ก่อน คีย์บอร์ดเครื่องจะได้ไม่เด้ง
+    document.addEventListener('invalid', e => { if (enabled && e.target.matches && e.target.matches(SEL) && e.target.hasAttribute('data-kp-orig')) prep(e.target); }, true);
+    // กด Enter ในช่องข้อความเพื่อบันทึกฟอร์ม → ปลดล็อกช่องตัวเลขให้ตรวจ "ต้องกรอก" ได้
+    document.addEventListener('keydown', e => { if (enabled && e.key === 'Enter' && e.target.form) releaseForm(e.target.form); }, true);
     document.addEventListener('click', e => { if (enabled && isTarget(e.target) && cur !== e.target) open(e.target); });
     document.addEventListener('focusout', e => {
-        if (e.target !== cur) return;
+        if (refocusing || e.target !== cur) return;
         setTimeout(() => { if (cur && document.activeElement !== cur) close(false); }, 0);
     });
     // พิมพ์จากคีย์บอร์ดจริง/ปุ่มลัด (เช่น ปุ่มเงินด่วน) → อัปเดตตัวเลขบนแป้นตาม
@@ -2399,8 +2728,7 @@
 <!-- ============================================================
      กล่องโชว์ข้อความที่กำลังพิมพ์ (สำหรับช่องกรอกข้อความทุกช่อง)
      - คีย์บอร์ดของแท็บเล็ต/มือถือมักบังช่องที่กำลังพิมพ์
-       กล่องนี้จะลอยอยู่เหนือคีย์บอร์ด บอกชื่อช่อง + ข้อความที่พิมพ์อยู่
-     - ถ้าช่องที่พิมพ์อยู่ตรงตำแหน่งกล่องพอดี กล่องจะย้ายขึ้นไปไว้ด้านบนจอแทน
+       กล่องนี้จะลอยชิดขอบบนจอ บอกชื่อช่อง + ข้อความที่พิมพ์อยู่
      - ทำงานเฉพาะจอสัมผัส · คอมพิวเตอร์ไม่เปลี่ยนแปลงอะไร
      ============================================================ -->
 <div class="tp-bubble" id="tpBubble" data-no-fs aria-hidden="true">
@@ -2477,7 +2805,7 @@
         position();
     }
 
-    // วางกล่องไว้เหนือคีย์บอร์ดพอดี (ใช้ visualViewport = พื้นที่ที่มองเห็นจริงหลังคีย์บอร์ดขึ้น)
+    // วางกล่องไว้ชิดขอบบนของพื้นที่ที่มองเห็น
     function position() {
         if (!cur) return;
         const vTop = vv ? vv.offsetTop : 0, vH = vv ? vv.height : window.innerHeight;
@@ -2485,15 +2813,8 @@
         const w = Math.max(200, Math.min(vW - 16, 720));
         bub.style.width = w + 'px';
         bub.style.left = (vLeft + (vW - w) / 2) + 'px';
-        const bh = bub.offsetHeight, gap = 8;
-        let y = vTop + vH - bh - gap;                       // ปกติ: ชิดขอบบนของคีย์บอร์ด
-        const r = cur.getBoundingClientRect();
-        const fieldSeen = r.bottom > vTop && r.top < vTop + vH;
-        if (fieldSeen && r.bottom > y - 4) {               // ช่องที่พิมพ์อยู่ตรงนั้นพอดี → ย้ายกล่องไปด้านบนจอ ไม่ให้บังกันเอง
-            const yTop = vTop + gap;
-            if (r.top > yTop + bh + 4) y = yTop;
-        }
-        bub.style.top = Math.max(vTop + gap, y) + 'px';
+        // ชิดขอบบนจอเสมอ — คีย์บอร์ดของเครื่องอยู่ด้านล่าง จึงไม่มีทางบังกล่องนี้
+        bub.style.top = 'calc(' + (vTop + 8) + 'px + env(safe-area-inset-top, 0px))';
     }
     function schedule() {
         if (!cur || rafId) return;

@@ -7,7 +7,7 @@
       ไม่งั้นแท็บเล็ตจะยังใช้ไฟล์เก่าที่แคชไว้
    ============================================================ */
 
-const CACHE_VERSION = 'doggy-v6';
+const CACHE_VERSION = 'doggy-v9';
 
 const PRECACHE_URLS = [
   './',
