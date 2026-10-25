@@ -606,6 +606,57 @@
         .profit-note b { color: var(--text); }
 
         /* ============================================================
+           v3.6 · แหล่งเงิน / กระเป๋าเงินร้าน / กระปุกออมสิน / สูตรวัตถุดิบ
+           ============================================================ */
+        .kind-seg { display: flex; gap: 8px; margin-bottom: 14px; }
+        .kind-seg label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; min-height: 48px; border: 2px solid var(--line, #E2E8F0); border-radius: 12px; font-weight: 700; cursor: pointer; background: #fff; color: var(--text-2); text-align: center; }
+        .kind-seg input { position: absolute; opacity: 0; pointer-events: none; }
+        .kind-seg label.on { border-color: var(--primary); background: #EFF6FF; color: var(--primary); }
+        .fund-pick { border: 2px solid #E2E8F0; border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; background: #F8FAFC; }
+        .fund-pick .fp-title { font-weight: 700; font-size: 14.5px; }
+        .fund-pick .radio-line { margin-top: 6px; background: #fff; }
+        .fp-warn { margin-top: 8px; font-size: 13.5px; color: #9A3412; background: #FFF7ED; border: 1px solid #FED7AA; border-radius: 10px; padding: 8px 10px; line-height: 1.55; }
+        .fp-warn.bad { color: #9F1239; background: #FFF1F2; border-color: #FECDD3; }
+        .fp-warn.ok { color: #166534; background: #F0FDF4; border-color: #BBF7D0; }
+        .fund-chip { display: inline-block; margin-top: 4px; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 3px 9px; border: 1px solid; cursor: pointer; min-height: 0; min-width: 0; box-shadow: none; white-space: nowrap; }
+        .fund-chip.sales { color: #166534; border-color: #BBF7D0; background: #F0FDF4; }
+        .fund-chip.capital { color: #9A3412; border-color: #FED7AA; background: #FFF7ED; }
+        span.fund-chip { cursor: default; }
+        .kind-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 6px; padding: 1px 6px; margin-left: 4px; vertical-align: 1px; background: #FCE7F3; color: #9D174D; }
+        .btn-out { background: #FFE4E6 !important; color: #9F1239 !important; font-weight: 700; border-radius: 9px; }
+        .btn-recipe { background: #FCE7F3 !important; color: #9D174D !important; font-weight: 700; border-radius: 9px; }
+        tr.inv-sec.made td { background: #FDF2F8; color: #9D174D; }
+        tr.inv-sec.buy td { background: #EFF6FF; color: #1D4ED8; }
+        .recipe-sum { background: #FDF2F8; border: 2px solid #FBCFE8; border-radius: 14px; padding: 10px 12px; margin-bottom: 12px; }
+        .recipe-sum .rs-line { font-size: 14.5px; line-height: 1.6; color: var(--text); }
+        .rc-row { border: 1.5px solid var(--line, #E2E8F0); border-radius: 14px; padding: 10px 12px; margin-bottom: 10px; background: #fff; }
+        .rc-top { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+        .rc-top select { flex: 1; min-width: 0; }
+        .rc-nums { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .rc-nums .form-group { margin-bottom: 0; }
+        .rc-cost { text-align: right; font-weight: 700; color: #9D174D; margin-top: 6px; font-size: 14.5px; }
+        .wallet { margin-top: 14px; border-top: 1px dashed #CBD5E1; padding-top: 12px; }
+        .wallet-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; color: var(--text); }
+        .wallet-title small { font-weight: 500; color: var(--text-2); font-size: 12.5px; }
+        .wallet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+        .wtile { background: var(--fill); border-radius: 14px; padding: 10px 12px; text-align: left; }
+        .wtile span { display: block; font-size: 13px; font-weight: 600; color: var(--text-2); }
+        .wtile b { display: block; font-size: 21px; font-variant-numeric: tabular-nums; margin-top: 2px; color: var(--text); }
+        .wtile small { display: block; font-size: 12px; color: var(--text-2); margin-top: 3px; line-height: 1.45; }
+        .wtile.cash { background: #F0FDF4; } .wtile.cash b { color: #15803D; }
+        .wtile.debt { background: #FFF1F2; } .wtile.debt b { color: var(--danger); }
+        .wtile.piggy { background: #FDF2F8; } .wtile.piggy b { color: #BE185D; }
+        .wallet-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .wallet-actions button { flex: 1 1 200px; width: auto; }
+        .mf-explain { font-size: 14px; line-height: 1.7; color: var(--text-2); margin-top: 10px; }
+        .mf-explain b { color: var(--text); }
+        .amt-plus { color: #15803D; font-weight: 700; white-space: nowrap; } .amt-minus { color: var(--danger); font-weight: 700; white-space: nowrap; } .amt-zero { color: var(--text-3, #94A3B8); white-space: nowrap; }
+        tr.mf-neg td.bal { color: var(--danger); font-weight: 700; }
+        .piggy-hero { background: linear-gradient(135deg, #FDF2F8, #FCE7F3); border: 2px solid #FBCFE8; border-radius: 18px; padding: 16px; text-align: center; margin-bottom: 14px; }
+        .piggy-hero .big { font-size: 38px; font-weight: 800; color: #BE185D; font-variant-numeric: tabular-nums; line-height: 1.2; }
+        .num-r { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+        /* ============================================================
            ปุ่มเครื่องคิดเลขข้างหัวข้อ: คิดต้นทุนต่อชิ้น / ดูกำไร
            ============================================================ */
         .lbl-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; min-height: 30px; }
@@ -724,6 +775,7 @@
             <button onclick="openModal('inventoryModal')"><span class="ico">📦</span>สินค้าคงคลัง</button>
             <button onclick="openModal('rawMaterialModal')"><span class="ico">⚙️</span>วัตถุดิบแฝง</button>
             <button onclick="openModal('summaryModal'); updateUI();"><span class="ico">📊</span>สรุปยอด</button>
+            <button onclick="openPiggy()"><span class="ico">🐷</span>กระปุกออมสิน</button>
             <button onclick="openHelperModal()"><span class="ico">💡</span>ผู้ช่วยแม่ค้า</button>
             <button onclick="openSettings()"><span class="ico">🛠️</span>เครื่องมือ</button>
             <button onclick="openModal('backupModal'); updateSyncPill();"><span class="ico">💾</span>สำรองข้อมูล</button>
@@ -749,6 +801,7 @@
                     <span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span>
                     <input type="text" id="posSearch" data-tp-label="🔍 ค้นหาสินค้า" placeholder="ค้นหาชื่อสินค้า หรือ ยิงบาร์โค้ด…" autocomplete="off" enterkeyhint="search">
                 </div>
+                <div class="cat-pills" id="posTypes" style="display:none;"></div>
                 <div class="cat-pills" id="posCategories"></div>
             </div>
             <div class="pos-grid-wrap"><div class="pos-grid" id="storefrontGrid"><div class="pos-empty">กำลังโหลดข้อมูล…</div></div></div>
@@ -803,9 +856,12 @@
             <div class="card">
                 <h3 style="margin-top:0; color:var(--primary);">➕ เพิ่มสินค้าในสต็อก (สร้างล็อตใหม่)</h3>
                 <form id="addProductForm">
+                    <div class="kind-seg" id="prodKindSeg"><label class="on"><input type="radio" name="prodKind" value="buy" checked>🛍️ ซื้อมาขาย</label><label><input type="radio" name="prodKind" value="made">🍹 ผลิตเอง (มีสูตรวัตถุดิบ)</label></div>
                     <div class="form-group"><label class="input-label">รูปสินค้า (ตัดภาพ 1:1 ให้อัตโนมัติ)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1;">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'imagePreview')"></label></div><img id="imagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="prodName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="prodStock" min="1" required></div></div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุน (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('prodCost','prodStock')">🧮 คิดต่อชิ้น</button></div><input type="number" id="prodCost" min="0" step="0.01" required></div><div class="form-group"><div class="lbl-row"><label class="input-label">ราคาขาย (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('prodCost','prodPrice','prodStock','จำนวนนำเข้า')">📈 ดูกำไร</button></div><input type="number" id="prodPrice" min="0" step="0.01" required></div></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อสินค้า</label><input type="text" id="prodName" required></div><div class="form-group" id="prodStockGroup"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="prodStock" min="1" required></div></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group" id="prodCostGroup"><div class="lbl-row"><label class="input-label">ต้นทุน (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('prodCost','prodStock')">🧮 คิดต่อชิ้น</button></div><input type="number" id="prodCost" min="0" step="0.01" required></div><div class="form-group"><div class="lbl-row"><label class="input-label">ราคาขาย (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('prodCost','prodPrice','prodStock','จำนวนนำเข้า')">📈 ดูกำไร</button></div><input type="number" id="prodPrice" min="0" step="0.01" required></div></div>
+                    <div class="recipe-sum" id="prodRecipeBox" style="display:none;"><div class="lbl-row"><b>🧪 สูตรวัตถุดิบแฝง (ต่อ 1 ชิ้น/แก้ว)</b><button type="button" class="mini-tool" onclick="openRecipeDraft()">ตั้งสูตร / แก้สูตร</button></div><div class="rs-line" id="prodRecipeSum"></div></div>
+                    <div class="fund-pick" id="fundProd"></div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">หมวดหมู่ (ไม่ใส่ก็ได้)</label><input type="text" id="prodCategory" list="categoryList" placeholder="เช่น อาหาร, ขนม, ของเล่น"></div><div class="form-group"><label class="input-label">รหัส / บาร์โค้ด (ไม่ใส่ก็ได้)</label><input type="text" id="prodBarcode" autocomplete="off"></div></div>
                     <datalist id="categoryList"></datalist>
                     <button type="submit" class="btn-primary">บันทึกสินค้าลงคลัง</button>
@@ -825,14 +881,17 @@
                 <h3 style="margin-top:0; color:var(--raw);">➕ เพิ่มวัตถุดิบในสต็อก</h3>
                 <form id="addRawMaterialForm">
                     <div class="form-group"><label class="input-label">รูปภาพวัตถุดิบ (ตัดภาพ 1:1)</label><div style="display: flex; gap: 10px;"><label class="btn-label btn-primary" style="flex: 1; background-color: var(--raw);">📁 อัปโหลดรูป<input type="file" accept="image/*" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label><label class="btn-label btn-camera" style="flex: 1;">📸 ถ่ายรูป<input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleImageSelect(this, 'rawImagePreview')"></label></div><img id="rawImagePreview" src="" style="display:none; width: 100px; height: 100px; object-fit: cover; margin-top: 10px; border-radius: 10px; border: 0.5px solid rgba(60,60,67,0.16); margin-left: auto; margin-right: auto;"></div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อวัตถุดิบ</label><input type="text" id="rawName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า (ชิ้น)</label><input type="number" id="rawStock" min="1" required></div></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;"><div class="form-group"><label class="input-label">ชื่อวัตถุดิบ</label><input type="text" id="rawName" required></div><div class="form-group"><label class="input-label">จำนวนนำเข้า</label><input type="number" id="rawStock" min="1" required></div></div>
+                    <div class="form-group"><label class="input-label">หน่วยนับ (เช่น ชิ้น, ใบ, ถุง, ขวด, กก.)</label><input type="text" id="rawUnit" list="unitList" placeholder="ชิ้น" autocomplete="off"></div>
+                    <datalist id="unitList"><option value="ชิ้น"><option value="ใบ"><option value="ถุง"><option value="ขวด"><option value="กก."><option value="ลิตร"><option value="แพ็ก"><option value="ลูก"><option value="กระป๋อง"></datalist>
                     <div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุนที่ซื้อมา (บาท/ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('rawCost','rawStock')">🧮 คิดต่อชิ้น</button></div><input type="number" id="rawCost" min="0" step="0.01" required></div>
+                    <div class="fund-pick" id="fundRaw"></div>
                     <button type="submit" class="btn-primary" style="background-color: var(--raw);">บันทึกวัตถุดิบลงคลัง</button>
                 </form>
             </div>
             <div class="card" style="overflow-x: auto;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;"><h3 style="margin:0; color:var(--raw);">📋 คลังวัตถุดิบคงเหลือ</h3><div style="display: flex; gap: 10px;"><button class="btn-cancel" onclick="openStockHistoryModal('raw')">📋 ดูประวัติวัตถุดิบ</button><button class="btn-primary" style="background-color: var(--danger);" onclick="openRawSummaryModal()">📊 สรุปยอดจ่ายวัตถุดิบ</button></div></div>
-                <table><thead><tr><th>รูป</th><th>วัตถุดิบ</th><th>ต้นทุน (ต่อชิ้น)</th><th style="text-align:center;">คงเหลือ</th><th>จัดการ</th></tr></thead><tbody id="rawMaterialTable"></tbody></table>
+                <table><thead><tr><th>รูป</th><th>วัตถุดิบ</th><th>ต้นทุน (ต่อหน่วย)</th><th style="text-align:center;">คงเหลือ</th><th>จัดการ</th></tr></thead><tbody id="rawMaterialTable"></tbody></table>
             </div>
         </div>
     </div>
@@ -863,11 +922,11 @@
                     </div>
                     <div class="summary-box">
                         <div class="stat stat-revenue" onclick="openSummaryDetail('revenue')">ยอดขายรวม<span id="totalRevenue">0 ฿</span></div>
-                        <div class="stat stat-cost" onclick="openSummaryDetail('cost')">ต้นทุนจ่ายออกไป<span id="totalCost">0 ฿</span></div>
-                        <div class="stat stat-profit" id="profitStatBox" onclick="openSummaryDetail('profit')">กำไรเงินสด<span id="totalProfit">0 ฿</span></div>
+                        <div class="stat stat-cost" onclick="openSummaryDetail('cost')">ต้นทุนของที่ขายไป<span id="totalCost">0 ฿</span></div>
+                        <div class="stat stat-profit" id="profitStatBox" onclick="openSummaryDetail('profit')">กำไรจากการขาย<span id="totalProfit">0 ฿</span></div>
                     </div>
                     <div class="tax-note" id="taxNote" style="display:none;"></div>
-                    <div class="profit-note" id="profitNote" style="display:none;"></div>
+                    <div class="wallet" id="walletPanel"></div>
                     <div class="period-hint" id="summaryEmptyHint" data-html2canvas-ignore="true" style="display:none;"></div>
                     <div class="data-overview" id="dataOverview" data-html2canvas-ignore="true"></div>
                 </div>
@@ -985,12 +1044,12 @@
     <div class="modal-overlay" id="summaryDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="summaryDetailTitle">รายละเอียด</span><button class="close-btn" onclick="closeModal('summaryDetailModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;" id="summaryDetailValueHeader">มูลค่า</th></tr></thead><tbody id="summaryDetailTableBody"></tbody><tfoot style="font-weight:bold; background-color:#F2F2F7;"><tr><td colspan="2" style="text-align:right; padding: 15px;">รวมทั้งหมด:</td><td style="text-align:center; padding: 15px;" id="summaryDetailTotalQty">0</td><td style="text-align:right; padding: 15px; color:var(--primary);" id="summaryDetailTotalValue">0 ฿</td></tr></tfoot></table></div></div></div>
     <div class="modal-overlay" id="stockHistoryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;"><span id="stockHistoryTitle">📦 ประวัติสต็อก</span><button class="close-btn" onclick="closeModal('stockHistoryModal')">&times;</button></h2><div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;"><select id="stockHistoryFilter" onchange="renderStockHistory()" style="width: auto; flex-grow: 1;"><option value="today">วันนี้</option><option value="week">สัปดาห์นี้</option><option value="month">เดือนนี้</option><option value="all" selected>ประวัติทั้งหมด</option></select><button class="btn-sell" onclick="saveStockHistoryAsImage()">📸 เซฟเป็นรูป</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;" id="stockCaptureArea"><h3 style="text-align:center; margin-top:0; display:none;" id="watermarkTitle">รายงานประวัติสต็อก</h3><table><thead><tr><th>วัน-เวลา</th><th>รายการ</th><th style="text-align:center;">เคลื่อนไหว</th><th style="text-align:center;">คงเหลือ</th><th>หมายเหตุ</th></tr></thead><tbody id="stockHistoryTableBody"></tbody></table></div></div></div>
     <div class="modal-overlay" id="rawSummaryModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📊 สรุปยอดใช้วัตถุดิบ<button class="close-btn" onclick="closeModal('rawSummaryModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card" style="border-color: var(--danger); background-color: #FFEDEB;"><div class="kpi-title">💸 จ่ายเยอะสุด</div><div class="kpi-value" style="color: var(--danger); font-size: 1.2em;" id="rawHighestCost">-</div></div><div class="kpi-card" style="border-color: var(--secondary); background-color: #EAF6FF;"><div class="kpi-title">🛒 ซื้อบ่อยสุด</div><div class="kpi-value" style="color: var(--secondary); font-size: 1.2em;" id="rawHighestFreq">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th>วัตถุดิบ</th><th style="text-align:center;">ความถี่</th><th style="text-align:right;">เงินที่จ่ายไป</th></tr></thead><tbody id="rawSummaryTableBody"></tbody></table></div></div></div>
-    <div class="modal-overlay" id="editModal"><div class="modal-content"><h2 class="modal-title">แก้ไขรายการ</h2><form id="editForm"><div class="form-group"><label>ชื่อรายการ</label><input type="text" id="editName" required></div><div class="form-group"><label>จำนวนสต็อก</label><input type="number" id="editStock" min="0" required></div><div class="form-group"><div class="lbl-row"><label>ต้นทุน (ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('editCost','')">🧮 คิดต่อชิ้น</button></div><input type="number" id="editCost" min="0" step="0.01" required></div><div id="editPriceContainer"><div class="form-group"><div class="lbl-row"><label>ราคาขาย (ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('editCost','editPrice','editStock','คงเหลือ')">📈 ดูกำไร</button></div><input type="number" id="editPrice" min="0" step="0.01"></div><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><div class="form-group"><label>หมวดหมู่</label><input type="text" id="editCategory" list="categoryList"></div><div class="form-group"><label>รหัส / บาร์โค้ด</label><input type="text" id="editBarcode" autocomplete="off"></div></div></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('editModal')">ยกเลิก</button><button type="submit" class="btn-primary">บันทึก</button></div></form></div></div>
+    <div class="modal-overlay" id="editModal"><div class="modal-content"><h2 class="modal-title">แก้ไขรายการ</h2><form id="editForm"><div class="form-group"><label>ชื่อรายการ</label><input type="text" id="editName" required></div><div class="recipe-sum" id="editMadeNote" style="display:none;"></div><div class="form-group" id="editStockGroup"><label>จำนวนสต็อก</label><input type="number" id="editStock" min="0" required></div><div class="form-group" id="editCostGroup"><div class="lbl-row"><label>ต้นทุน (ต่อชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('editCost','')">🧮 คิดต่อชิ้น</button></div><input type="number" id="editCost" min="0" step="0.01" required></div><div class="form-group" id="editUnitGroup" style="display:none;"><label>หน่วยนับ</label><input type="text" id="editUnit" list="unitList" autocomplete="off"></div><div id="editPriceContainer"><div class="form-group"><div class="lbl-row"><label>ราคาขาย (ต่อชิ้น)</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('editCost','editPrice','editStock','คงเหลือ')">📈 ดูกำไร</button></div><input type="number" id="editPrice" min="0" step="0.01"></div><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;"><div class="form-group"><label>หมวดหมู่</label><input type="text" id="editCategory" list="categoryList"></div><div class="form-group"><label>รหัส / บาร์โค้ด</label><input type="text" id="editBarcode" autocomplete="off"></div></div></div><div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('editModal')">ยกเลิก</button><button type="submit" class="btn-primary">บันทึก</button></div></form></div></div>
     <div class="modal-overlay" id="restockModal"><div class="modal-content"><h2 class="modal-title">➕ เติมของเข้าสต็อก<button class="close-btn" type="button" onclick="closeModal('restockModal')">&times;</button></h2>
         <div class="rs-head"><img id="rsImg" src="" alt=""><div><b id="rsName">-</b><small id="rsInfo"></small></div></div>
         <form id="restockForm">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-                <div class="form-group"><label class="input-label">จำนวนที่เติม (ชิ้น)</label><input type="number" id="rsQty" min="1" required oninput="updateRestockPreview()"></div>
+                <div class="form-group"><label class="input-label" id="rsQtyLabel">จำนวนที่เติม (ชิ้น)</label><input type="number" id="rsQty" min="1" required oninput="updateRestockPreview()"></div>
                 <div class="form-group"><div class="lbl-row"><label class="input-label">ต้นทุนรอบนี้ (บาท/ชิ้น)</label><button type="button" class="mini-tool" onclick="openPackCalc('rsCost','rsQty')">🧮 คิดต่อชิ้น</button></div><input type="number" id="rsCost" min="0" step="0.01" required oninput="updateRestockPreview()"></div>
             </div>
             <div class="form-group" id="rsPriceGroup"><div class="lbl-row"><label class="input-label">ราคาขาย (บาท/ชิ้น) — ไม่เปลี่ยนก็ได้</label><button type="button" class="mini-tool profit" onclick="openProfitCalc('rsCost','rsPrice','rsQty','ที่เติมรอบนี้')">📈 ดูกำไร</button></div><input type="number" id="rsPrice" min="0" step="0.01" oninput="updateRestockPreview()"></div>
@@ -1000,6 +1059,7 @@
                 <label class="radio-line"><input type="radio" name="rsMode" value="avg" onchange="updateRestockPreview()"><span>รวมกับรายการเดิม (เฉลี่ยต้นทุน)<small id="rsAvgText">ใช้รายการเดียว ต้นทุนต่อชิ้นจะเป็นค่าเฉลี่ย</small></span></label>
             </div>
             <div class="rs-box info" id="rsUpdateNote" style="display:none;"></div>
+            <div class="fund-pick" id="fundRs"></div>
             <div class="rs-total" id="rsTotal"></div>
             <div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('restockModal')">ยกเลิก</button><button type="submit" class="btn-primary" style="background-color: var(--success);">✅ บันทึกการเติมของ</button></div>
         </form>
@@ -1021,7 +1081,39 @@
         <div id="pfBody"></div>
         <div class="modal-actions" style="display:block;"><button type="button" class="btn-primary" style="width:100%;" onclick="closeModal('profitCalcModal')">ปิด</button></div>
     </div></div>
-    <div class="modal-overlay" id="analyticsModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📈 กราฟวิเคราะห์<button class="close-btn" onclick="closeModal('analyticsModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card"><div class="kpi-title">อัตรากำไร</div><div class="kpi-value" id="kpiMargin">0%</div></div><div class="kpi-card"><div class="kpi-title">ยอดขายเฉลี่ยบิล</div><div class="kpi-value" id="kpiAOV">0 ฿</div></div><div class="kpi-card" style="border-color: var(--raw); background-color: #FFF4E6;"><div class="kpi-title">🛒 ต้นทุนรวม</div><div class="kpi-value" style="color: var(--raw);" id="kpiRawCost">0 ฿</div></div><div class="kpi-card clickable" style="border-color: var(--warning); background-color: #FFF8E1;" onclick="openRankingModal()"><div class="kpi-title">🔥 สินค้าทำเงินอันดับ 1</div><div class="kpi-value" style="color: var(--warning); font-size: 1.2em;" id="kpiBestSeller">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; height: 400px;"><canvas id="salesChart"></canvas></div></div></div>
+    <div class="modal-overlay" id="recipeModal"><div class="modal-content large"><h2 class="modal-title"><span>🧪 สูตร: <span id="rcName"></span></span><button class="close-btn" type="button" onclick="closeModal('recipeModal')">&times;</button></h2>
+        <div class="pf-note">เลือกวัตถุดิบแฝงที่ใช้ทำ <b>1 ชิ้น/แก้ว</b> แล้วใส่ปริมาณที่ใช้ หรือใส่ว่า "1 หน่วยทำได้กี่ชิ้น" ก็ได้ เช่น น้ำแข็ง 1 ถุง ทำได้ 20 แก้ว · ระบบจะคิดต้นทุนจริงต่อแก้วให้</div>
+        <div id="rcRows"></div>
+        <button type="button" class="btn-cancel" id="rcAddBtn" style="width:100%; margin:2px 0 12px;" onclick="addRecipeRow()">➕ เพิ่มวัตถุดิบในสูตร</button>
+        <div class="form-group" id="rcExtraGroup"><label class="input-label">ค่าใช้จ่ายอื่นต่อชิ้น (ไม่ใส่ก็ได้) เช่น ค่าแก๊ส ค่าไฟ</label><input type="number" id="rcExtra" min="0" step="0.01" oninput="updateRecipeTotal()"></div>
+        <div class="pc-result" id="rcTotal"></div>
+        <div class="modal-actions"><button type="button" class="btn-cancel" onclick="closeModal('recipeModal')">ยกเลิก</button><button type="button" class="btn-primary" id="rcSave" onclick="saveRecipe()">💾 บันทึกสูตร</button></div>
+    </div></div>
+    <div class="modal-overlay" id="moneyFlowModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📒 ที่มาที่ไปของเงินในร้าน<button class="close-btn" onclick="closeModal('moneyFlowModal')">&times;</button></h2>
+        <div class="card" id="mfStatus"></div>
+        <div class="card" style="overflow-x: auto;"><h3 style="margin-top:0;">🧾 รายการเงินเข้า-ออก (ล่าสุดอยู่บน)</h3><table><thead><tr><th>วันที่</th><th>รายการ</th><th class="num-r">เข้า / ออก</th><th class="num-r">เงินทุนคงเหลือ</th></tr></thead><tbody id="mfBody"></tbody></table></div>
+    </div></div>
+    <div class="modal-overlay" id="piggyModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">🐷 กระปุกออมสิน (เก็บกำไร)<button class="close-btn" onclick="closeModal('piggyModal')">&times;</button></h2>
+        <div class="piggy-hero" id="pgHero"></div>
+        <div class="wallet-actions" style="margin: -4px 0 14px;">
+            <button class="btn-primary" style="background:#DB2777;" onclick="openPiggyAction('cut')">🐷 ตัดกำไรเข้ากระปุก</button>
+            <button class="btn-primary" style="background:var(--secondary);" onclick="openPiggyAction('toShop')">🔁 ย้ายเป็นทุนซื้อของ</button>
+            <button class="btn-primary" style="background:var(--warning);" onclick="openPiggyAction('withdraw')">💸 นำออกไปใช้</button>
+        </div>
+        <div class="card" style="overflow-x: auto;"><h3 style="margin-top:0;">📅 กำไรแยกรายเดือน</h3><table><thead><tr><th>เดือน</th><th class="num-r">กำไรจากการขาย</th><th class="num-r">ตัดเข้ากระปุก</th><th class="num-r">ยังไม่ตัด</th><th class="num-r">ออกจากกระปุก</th><th></th></tr></thead><tbody id="pgMonths"></tbody></table></div>
+        <div class="card" style="overflow-x: auto;"><h3 style="margin-top:0;">🧾 ประวัติกระปุก</h3><table><thead><tr><th>วัน-เวลา</th><th>รายการ</th><th class="num-r">จำนวน</th><th class="num-r">ในกระปุก</th><th></th></tr></thead><tbody id="pgLogs"></tbody></table></div>
+    </div></div>
+    <div class="modal-overlay" id="piggyActModal"><div class="modal-content"><h2 class="modal-title"><span id="paTitle"></span><button class="close-btn" type="button" onclick="closeModal('piggyActModal')">&times;</button></h2>
+        <form id="piggyActForm">
+            <div class="form-group" id="paMonthGroup"><label class="input-label">ตัดกำไรของเดือน</label><select id="paMonth" onchange="updatePiggyAct()"></select></div>
+            <div class="pc-result" id="paInfo"></div>
+            <div class="form-group"><div class="lbl-row"><label class="input-label">จำนวนเงิน (บาท)</label><button type="button" class="mini-tool" id="paMaxBtn" onclick="piggyFillMax()">ทั้งหมด</button></div><input type="number" id="paAmount" min="0.01" step="0.01" required oninput="updatePiggyAct()"></div>
+            <div class="form-group"><label class="input-label">บันทึกช่วยจำ (ไม่ใส่ก็ได้)</label><input type="text" id="paNote" placeholder="เช่น เก็บไว้จ่ายค่าเช่า"></div>
+            <div class="fp-warn" id="paWarn" style="display:none;"></div>
+            <div class="modal-actions" style="margin-top:12px;"><button type="button" class="btn-cancel" onclick="closeModal('piggyActModal')">ยกเลิก</button><button type="submit" class="btn-primary" id="paSubmit">ยืนยัน</button></div>
+        </form>
+    </div></div>
+    <div class="modal-overlay" id="analyticsModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📈 กราฟวิเคราะห์<button class="close-btn" onclick="closeModal('analyticsModal')">&times;</button></h2><div class="kpi-grid"><div class="kpi-card"><div class="kpi-title">อัตรากำไร</div><div class="kpi-value" id="kpiMargin">0%</div></div><div class="kpi-card"><div class="kpi-title">ยอดขายเฉลี่ยบิล</div><div class="kpi-value" id="kpiAOV">0 ฿</div></div><div class="kpi-card" style="border-color: var(--raw); background-color: #FFF4E6;"><div class="kpi-title">🛒 ต้นทุนของที่ขาย</div><div class="kpi-value" style="color: var(--raw);" id="kpiRawCost">0 ฿</div></div><div class="kpi-card clickable" style="border-color: var(--warning); background-color: #FFF8E1;" onclick="openRankingModal()"><div class="kpi-title">🔥 สินค้าทำเงินอันดับ 1</div><div class="kpi-value" style="color: var(--warning); font-size: 1.2em;" id="kpiBestSeller">-</div></div></div><div style="background: white; padding: 15px; border-radius: 16px; height: 400px;"><canvas id="salesChart"></canvas></div></div></div>
     <div class="modal-overlay" id="rankingModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">🏆 จัดอันดับสินค้าขายดี<button class="close-btn" onclick="closeModal('rankingModal')">&times;</button></h2><div style="background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px; display: flex; gap: 10px;"><input type="date" id="rankStartDate"><input type="date" id="rankEndDate"><button class="btn-primary" style="width: auto;" onclick="renderRankingTable()">ค้นหา</button><button class="btn-cancel" style="width: auto;" onclick="resetRankingFilter()">ดูทั้งหมด</button></div><div style="background: white; padding: 15px; border-radius: 16px; overflow-x: auto;"><table><thead><tr><th style="text-align:center; width: 80px;">อันดับ</th><th width="60">รูป</th><th>รายการ</th><th style="text-align:center;">จำนวน</th><th style="text-align:right;">ยอดรวม (฿)</th></tr></thead><tbody id="rankingTableBody"></tbody></table></div></div></div>
     <div class="modal-overlay" id="helperModal"><div class="modal-content large" style="background-color: #F2F2F7;"><div style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 16px; margin-bottom: 15px;"><h2 class="modal-title" style="margin: 0;">💡 คู่มือผู้ช่วยแม่ค้า</h2><div style="display: flex; gap: 10px;"><select id="helperYear" onchange="renderHelperGrid()" style="width: 120px;"></select><button class="btn-primary" style="background-color: var(--connection);" onclick="openConnectionModal()">🤝 สมุดคู่ค้า</button><button class="close-btn" onclick="closeModal('helperModal')">&times;</button></div></div><div class="calendar-grid" id="helperGridContainer"></div></div></div>
     <div class="modal-overlay" id="calendarDetailModal"><div class="modal-content large" style="background-color: #F2F2F7;"><h2 class="modal-title" style="background: white; padding: 15px; border-radius: 16px;">📅 <span id="calDetailTitle">ปฏิทิน</span><button class="close-btn" onclick="closeModal('calendarDetailModal')">&times;</button></h2><div id="calDetailContainer" style="background: white; padding: 15px; border-radius: 16px;"></div></div></div>
@@ -1053,7 +1145,7 @@
         //    ระหว่างเปิดแอปยอดยังโชว์เพราะอยู่ในหน่วยความจำ แต่พอเครื่องดับ/เปิดใหม่ → ยอดขายหาย ส่วนสินค้า (สต็อก) ยังอยู่
         // ✅ แก้: ย้ายไป IndexedDB (จุได้หลายร้อย MB) + ไม่เก็บรูปในบิลอีก + บันทึกแบบ durability: strict (เขียนลงดิสก์จริงก่อนถือว่าเสร็จ)
         //    + ถ้าบันทึกพลาดจะขึ้นแถบแดงเตือนและลองใหม่อัตโนมัติ (ไม่เงียบอีกต่อไป)
-        let products = [], transactions = [], bills = [], stockLogs = [], calendarNotes = {}, connections = [], syncQueue = [];
+        let products = [], transactions = [], bills = [], stockLogs = [], calendarNotes = {}, connections = [], syncQueue = [], piggyLogs = [];
         const DEFAULT_SETTINGS = {
             taxEnabled: false, taxRate: 7, taxMode: 'exclusive',
             shopName: 'Doggy', receiptFooter: 'ขอบคุณที่อุดหนุน โอกาสหน้าเชิญใหม่นะคะ',
@@ -1061,8 +1153,8 @@
             billSeqDay: '', billSeq: 0
         };
         let settings = { ...DEFAULT_SETTINGS };
-        const DATA_KEYS = ['products', 'transactions', 'bills', 'stockLogs', 'calendarNotes', 'connections', 'settings', 'syncQueue'];
-        const getters = { products: () => products, transactions: () => transactions, bills: () => bills, stockLogs: () => stockLogs, calendarNotes: () => calendarNotes, connections: () => connections, settings: () => settings, syncQueue: () => syncQueue };
+        const DATA_KEYS = ['products', 'transactions', 'bills', 'stockLogs', 'calendarNotes', 'connections', 'piggyLogs', 'settings', 'syncQueue'];
+        const getters = { products: () => products, transactions: () => transactions, bills: () => bills, stockLogs: () => stockLogs, piggyLogs: () => piggyLogs, calendarNotes: () => calendarNotes, connections: () => connections, settings: () => settings, syncQueue: () => syncQueue };
         let storageMode = 'idb';      // 'idb' | 'local' (สำรองกรณีเครื่องไม่รองรับ IndexedDB)
         let dataReady = false;        // กันไม่ให้บันทึกทับก่อนโหลดข้อมูลเสร็จ
         let metaWritten = true;       // false = ย้ายข้อมูลรอบแรกยังเขียนไม่สำเร็จ ต้องเขียน meta ตามไปด้วย
@@ -1112,7 +1204,7 @@
             const start = Date.now();
             return new Promise(res => { (function tick() { if ((!saveRunning && dirtyKeys.size === 0) || Date.now() - start > timeoutMs) res(dirtyKeys.size === 0 && !saveRunning); else setTimeout(tick, 60); })(); });
         }
-        function saveDataLocally() { persist('products', 'transactions', 'bills', 'stockLogs', 'calendarNotes', 'connections'); }
+        function saveDataLocally() { persist('products', 'transactions', 'bills', 'stockLogs', 'calendarNotes', 'connections', 'piggyLogs'); }
         function saveQueue() { persist('syncQueue'); }
         function saveSettings() { persist('settings'); }
 
@@ -1214,6 +1306,7 @@
             transactions  = (Array.isArray(d.transactions) ? d.transactions : []).map(normalizeTx);
             bills         = (Array.isArray(d.bills) ? d.bills : []).map(b => ({ ...b, dateObj: toDateSafe(b.dateObj, b.time, msFromId(b.id)) || new Date(NaN) }));
             stockLogs     = (Array.isArray(d.stockLogs) ? d.stockLogs : []).map(normalizeLog);
+            piggyLogs     = (Array.isArray(d.piggyLogs) ? d.piggyLogs : []).map(l => ({ ...l, amount: num(l.amount), dateObj: toDateSafe(l.dateObj, l.time, Number(l.id) || null) || new Date(NaN) }));
             calendarNotes = (d.calendarNotes && typeof d.calendarNotes === 'object') ? d.calendarNotes : {};
             connections   = Array.isArray(d.connections) ? d.connections : [];
             syncQueue     = Array.isArray(d.syncQueue) ? d.syncQueue : [];
@@ -1357,7 +1450,7 @@
 
         // ================= Backup / Restore =================
         function exportBackup() {
-            const payload = { app: 'doggy', version: 2, exportedAt: new Date().toISOString(), products, transactions, bills, stockLogs, calendarNotes, connections, settings };
+            const payload = { app: 'doggy', version: 2, exportedAt: new Date().toISOString(), products, transactions, bills, stockLogs, piggyLogs, calendarNotes, connections, settings };
             const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
@@ -1437,9 +1530,10 @@
         document.getElementById('notifyToggle').addEventListener('change', function(e) { isNotifyEnabled = e.target.checked; updateNotifications(); });
 
         // ================= History & Stock Logging =================
-        function logStockChange(productName, changeAmount, currentStock, note, isRaw, itemCost, investChange, productId) {
+        function logStockChange(productName, changeAmount, currentStock, note, isRaw, itemCost, investChange, productId, fund) {
             const newLog = { dateObj: new Date(), time: new Date().toLocaleString('th-TH'), name: productName, change: changeAmount, balance: currentStock, note: note, isRawMaterial: isRaw || false, cost: itemCost || 0, investChange: investChange || 0 };
             if (productId) newLog.productId = productId;
+            if (fund && (investChange || 0) > 0) newLog.fund = fund;   // 'sales' = ใช้เงินจากยอดขาย · 'capital' = ควักทุนเพิ่ม
             stockLogs.unshift(newLog);
             if(document.getElementById('stockHistoryModal').classList.contains('active')) renderStockHistory();
             calculateSummary(); 
@@ -1461,37 +1555,48 @@
         // ================= Product & Raw Material =================
         function deleteProduct(id) { 
             const p = products.find(x => x.id === id); 
+            if (p && p.isRawMaterial && usedIn(p.id).length && !confirm(`⚠️ "${p.name}" ถูกใช้ในสูตรของ: ${usedIn(p.id).map(x => x.name).join(', ')}\n\nถ้าลบ วัตถุดิบนี้จะถูกเอาออกจากสูตรเหล่านั้นด้วย (ต้นทุนต่อชิ้นจะเปลี่ยน)\n\nยืนยันต่อหรือไม่?`)) return;
+            
             // เปลี่ยนใหม่: การลบสินค้าจะ "ไม่คืนเงิน" ลงในระบบแล้ว เพื่อป้องกันยอดติดลบ (ให้ไปลบประวัติรายจ่ายเองถ้าต้องการ)
             if (p && confirm("ลบรายการสินค้านี้ถาวรใช่หรือไม่?\n\n(การลบนี้จะไม่ลบยอดเงินที่เคยจ่ายไป หากคุณต้องการลบต้นทุน/รายจ่ายที่กดพลาด ให้ไปลบในตาราง [ประวัติซื้อเข้า] ที่หน้าสรุปยอด)")) { 
                 logStockChange(p.name, -p.stock, 0, 'ลบรายการออกจากระบบ 🗑️', p.isRawMaterial, p.cost, 0, p.id); // investChange = 0 (ไม่กระทบยอดเงิน)
                 products = products.filter(x => x.id !== id); 
+                products.forEach(x => { if (isMade(x) && Array.isArray(x.recipe)) x.recipe = x.recipe.filter(r => r.rawId !== id); });
                 saveDataLocally(); 
                 updateUI(); 
             } 
         }
         function copyProduct(id) {
             const p = products.find(x => x.id === id); if (!p) return; currentCopyImage = p.image; selectedImageFile = null; 
-            if (p.isRawMaterial) { document.getElementById('rawName').value = p.name; document.getElementById('rawCost').value = p.cost; document.getElementById('rawStock').value = p.stock; document.getElementById('rawImagePreview').src = p.image; document.getElementById('rawImagePreview').style.display = 'block'; openModal('rawMaterialModal'); } else { document.getElementById('prodName').value = p.name; document.getElementById('prodCost').value = p.cost; document.getElementById('prodPrice').value = p.price; document.getElementById('prodStock').value = p.stock; document.getElementById('prodCategory').value = p.category || ''; document.getElementById('prodBarcode').value = p.barcode || ''; document.getElementById('imagePreview').src = p.image; document.getElementById('imagePreview').style.display = 'block'; openModal('inventoryModal'); }
+            if (p.isRawMaterial) { document.getElementById('rawName').value = p.name; document.getElementById('rawCost').value = p.cost; document.getElementById('rawStock').value = p.stock; document.getElementById('rawUnit').value = p.unit || ''; document.getElementById('rawImagePreview').src = p.image; document.getElementById('rawImagePreview').style.display = 'block'; openModal('rawMaterialModal'); } else { document.getElementById('prodName').value = p.name; document.getElementById('prodCost').value = p.cost; document.getElementById('prodPrice').value = p.price; document.getElementById('prodStock').value = p.stock; document.getElementById('prodCategory').value = p.category || ''; document.getElementById('prodBarcode').value = p.barcode || ''; document.getElementById('imagePreview').src = p.image; document.getElementById('imagePreview').style.display = 'block'; openModal('inventoryModal'); }
         }
 
         document.getElementById('addProductForm').addEventListener('submit', function(e) {
-            e.preventDefault(); const name = document.getElementById('prodName').value; const cost = parseFloat(document.getElementById('prodCost').value); const price = parseFloat(document.getElementById('prodPrice').value); const stock = parseInt(document.getElementById('prodStock').value); const category = document.getElementById('prodCategory').value.trim(); const barcode = document.getElementById('prodBarcode').value.trim();
+            e.preventDefault(); if (prodKind() === 'made' && !draftRecipe.rows.length) { alert('สินค้าผลิตเอง: กรุณากด "ตั้งสูตร" เลือกวัตถุดิบที่ใช้ก่อน'); return; } const name = document.getElementById('prodName').value; const cost = parseFloat(document.getElementById('prodCost').value); const price = parseFloat(document.getElementById('prodPrice').value); const stock = parseInt(document.getElementById('prodStock').value); const category = document.getElementById('prodCategory').value.trim(); const barcode = document.getElementById('prodBarcode').value.trim();
             const handleAddition = (imgData) => { 
                 const nid = Date.now();
-                products.push({ id: nid, name, cost, price, stock, category, barcode, image: imgData, isRawMaterial: false }); 
-                logStockChange(name, stock, stock, 'นำเข้าสินค้าล็อตใหม่', false, cost, r2(stock * cost), nid); 
+                if (prodKind() === 'made') {
+                    products.push({ id: nid, name, kind: 'made', recipe: draftRecipe.rows.map(r => ({ ...r })), extraCost: draftRecipe.extra || 0, cost: 0, price, stock: 0, category, barcode, image: imgData, isRawMaterial: false });
+                    refreshMade(); const np = products.find(x => x.id === nid);
+                    logStockChange(name, 0, np.stock, `🍹 สร้างสินค้าผลิตเอง · สูตร: ${recipeText(np.recipe)} · ทุน/ชิ้น ${np.cost}฿`, false, np.cost, 0, nid);
+                    draftRecipe = { rows: [], extra: 0 };
+                } else {
+                    const fund = getFund('fundProd');
+                    products.push({ id: nid, name, cost, price, stock, category, barcode, image: imgData, isRawMaterial: false }); 
+                    logStockChange(name, stock, stock, `นำเข้าสินค้าล็อตใหม่ (${fundLabel(fund)})`, false, cost, r2(stock * cost), nid, fund); 
+                }
                 saveDataLocally(); 
-                selectedImageFile = null; currentCopyImage = null; document.getElementById('imagePreview').style.display = 'none'; this.reset(); updateUI(); 
+                selectedImageFile = null; currentCopyImage = null; document.getElementById('imagePreview').style.display = 'none'; this.reset(); setProdKind('buy'); updateUI(); 
             };
             if (selectedImageFile) cropImageToSquare(selectedImageFile, handleAddition); else if (currentCopyImage) handleAddition(currentCopyImage); else handleAddition(PLACEHOLDER_IMAGE);
         });
 
         document.getElementById('addRawMaterialForm').addEventListener('submit', function(e) {
-            e.preventDefault(); const name = document.getElementById('rawName').value; const cost = parseFloat(document.getElementById('rawCost').value); const stock = parseInt(document.getElementById('rawStock').value);
+            e.preventDefault(); const name = document.getElementById('rawName').value; const cost = parseFloat(document.getElementById('rawCost').value); const stock = parseInt(document.getElementById('rawStock').value); const unit = (document.getElementById('rawUnit').value || '').trim() || 'ชิ้น'; const fund = getFund('fundRaw');
             const handleAddition = (imgData) => { 
                 const nid = Date.now();
-                products.push({ id: nid, name, cost, price: 0, stock, image: imgData, isRawMaterial: true }); 
-                logStockChange(name, stock, stock, 'นำเข้าวัตถุดิบล็อตใหม่', true, cost, r2(stock * cost), nid); 
+                products.push({ id: nid, name, cost, price: 0, stock, unit, image: imgData, isRawMaterial: true }); 
+                logStockChange(name, stock, stock, `นำเข้าวัตถุดิบล็อตใหม่ (${fundLabel(fund)})`, true, cost, r2(stock * cost), nid, fund); 
                 saveDataLocally(); 
                 selectedImageFile = null; currentCopyImage = null; document.getElementById('rawImagePreview').style.display = 'none'; this.reset(); updateUI(); 
             };
@@ -1532,7 +1637,7 @@
         const OUT_CAT = '__OUT__';   // หมวดพิเศษ "สินค้าหมด"
         function renderPosCategories() {
             const el = document.getElementById('posCategories');
-            const all = sellableProducts();
+            const all = sellableProducts().filter(typeMatch);
             const inStock = all.filter(p => num(p.stock) > 0);
             const outN = all.length - inStock.length;
             const cats = [...new Set(inStock.map(catOf))];
@@ -1550,7 +1655,7 @@
 
         function renderPosProducts() {
             const grid = document.getElementById('storefrontGrid');
-            const all = sellableProducts();
+            const all = sellableProducts().filter(typeMatch);
             if (all.length === 0) { grid.innerHTML = `<div class="pos-empty">ยังไม่มีสินค้าในร้าน<br><button class="btn-primary" style="width:auto; margin-top:14px;" onclick="openModal('inventoryModal')">📦 เพิ่มสินค้าแรก</button></div>`; return; }
             const q = document.getElementById('posSearch').value.trim().toLowerCase();
             const match = p => !q || p.name.toLowerCase().includes(q) || String(p.barcode || '').toLowerCase().includes(q);
@@ -1565,13 +1670,13 @@
             }
             grid.innerHTML = list.map(p => {
                 const out = num(p.stock) <= 0;
-                const meta = [p.barcode ? `รหัส ${esc(p.barcode)}` : '', p.lotOf ? 'ล็อตใหม่' : ''].filter(Boolean).join(' · ');
+                const meta = [isMade(p) ? '🍹 ผลิตเอง' : '', p.barcode ? `รหัส ${esc(p.barcode)}` : '', p.lotOf ? 'ล็อตใหม่' : ''].filter(Boolean).join(' · ');
                 return `<button type="button" class="pcard ${out ? 'out restockable' : ''}" data-id="${p.id}" onclick="${out ? `openRestock(${p.id})` : `addToCart(${p.id})`}">
                     <span class="incart" style="display:none"></span>
                     <img src="${p.image || PLACEHOLDER_IMAGE}" alt="" loading="lazy">
                     <div class="pname">${esc(p.name)}</div>
                     ${meta ? `<div class="pmeta">${meta}</div>` : ''}
-                    <div class="prow"><span class="pprice">${money(p.price)}</span><span class="stock-pill ${p.stock <= 5 ? 'low' : ''}">${out ? 'หมด · แตะเติมของ' : 'เหลือ ' + p.stock}</span></div>
+                    <div class="prow"><span class="pprice">${money(p.price)}</span><span class="stock-pill ${p.stock <= 5 ? 'low' : ''}">${out ? (isMade(p) ? 'วัตถุดิบหมด' : 'หมด · แตะเติมของ') : (isMade(p) ? 'ทำได้ ' + p.stock : 'เหลือ ' + p.stock)}</span></div>
                 </button>`;
             }).join('');
             updateCardBadges();
@@ -1583,7 +1688,22 @@
                 card.classList.toggle('sel', q > 0);
             });
         }
-        function renderPos() { renderPosCategories(); renderPosProducts(); renderCart(); }
+        function renderPos() { refreshMade(); renderPosTypes(); renderPosCategories(); renderPosProducts(); renderCart(); }
+        // ---- แยกประเภท: ซื้อมาขาย / ผลิตเอง ----
+        let posType = 'ALL';
+        function typeMatch(p) { return posType === 'ALL' || (posType === 'made' ? isMade(p) : !isMade(p)); }
+        function renderPosTypes() {
+            const el = document.getElementById('posTypes'); const all = sellableProducts();
+            const nMade = all.filter(isMade).length, nBuy = all.length - nMade;
+            if (!nMade || !nBuy) { el.style.display = 'none'; posType = 'ALL'; return; }
+            el.style.display = '';
+            el.innerHTML = [['ALL', 'ทุกประเภท'], ['buy', `🛍️ ซื้อมาขาย (${nBuy})`], ['made', `🍹 ผลิตเอง (${nMade})`]]
+                .map(([k, t]) => `<button type="button" class="cat-pill ${posType === k ? 'on' : ''}" data-type="${k}">${t}</button>`).join('');
+        }
+        document.getElementById('posTypes').addEventListener('click', e => {
+            const b = e.target.closest('[data-type]'); if (!b) return;
+            posType = b.dataset.type; posCategory = 'ALL'; renderPosTypes(); renderPosCategories(); renderPosProducts();
+        });
 
         const posSearchEl = document.getElementById('posSearch');
         posSearchEl.addEventListener('input', renderPosProducts);
@@ -1743,6 +1863,12 @@
         function processCheckout() {
             const t = computeTotals();
             if (!t.lines.length) return;
+            refreshMade();
+            {   // สินค้าผลิตเอง: ตรวจวัตถุดิบรวมทั้งบิล (หลายแก้วใช้น้ำแข็งถุงเดียวกัน)
+                const need = {};
+                t.lines.forEach(l => { if (isMade(l.p)) (l.p.recipe || []).forEach(r => { need[r.rawId] = (need[r.rawId] || 0) + num(r.use) * l.qty; }); });
+                for (const [rid, q] of Object.entries(need)) { const raw = rawById(Number(rid)); if (!raw || num(raw.stock) + 1e-6 < q) { alert(`วัตถุดิบ "${raw ? raw.name : 'ที่ถูกลบไป'}" ไม่พอสำหรับบิลนี้\n(มี ${raw ? fmtQ(raw.stock) : 0} ต้องใช้ ${fmtQ(q)})`); return; } }
+            }
             for (const l of t.lines) if (l.qty > l.p.stock) { alert(`สต็อก "${l.p.name}" ไม่พอ (เหลือ ${l.p.stock})`); return; }
             const received = payMethod === 'cash' ? (parseFloat(document.getElementById('payReceived').value) || 0) : t.total;
             if (payMethod === 'cash' && received + 0.001 < t.total) return;
@@ -1760,7 +1886,7 @@
                 accD += disc; accT += tax; accR += rev;
                 l.p.stock -= l.qty;
                 const cost = r2(l.p.cost * l.qty);
-                newTxs.push({ dateObj: now, time, billId, billNo, productId: l.p.id, name: l.p.name, qty: l.qty, unitPrice: l.p.price, revenue: rev, discount: disc, tax, cost, profit: r2(rev - cost), payMethod });
+                newTxs.push({ dateObj: now, time, billId, billNo, productId: l.p.id, name: l.p.name, qty: l.qty, unitPrice: l.p.price, revenue: rev, discount: disc, tax, cost, profit: r2(rev - cost), payMethod, ...(isMade(l.p) ? { made: true, rawUse: consumeRaws(l.p, l.qty, billNo) } : {}) });
             });
             newTxs.slice().reverse().forEach(tx => transactions.unshift(tx));
             const bill = {
@@ -1771,6 +1897,7 @@
                 received: r2(received), change: r2(received - t.total)
             };
             bills.unshift(bill);
+            refreshMade();
             t.lines.forEach(l => logStockChange(l.p.name, -l.qty, l.p.stock, `ขาย บิล ${billNo}${t.discount > 0 ? ` (บิลลดไป ${t.discount}฿)` : ''}`, false, l.p.cost, 0, l.p.id));
             saveDataLocally(); saveSettings();
             newTxs.forEach(tx => sendToGoogleSheets('transaction', tx));
@@ -1879,26 +2006,20 @@
         // ================= Summary =================
         function isWithinFilter(d, filter, now) { if (filter === 'all') return true; if (!d || isNaN(d.getTime())) return false; if (filter === 'today') return d.toDateString() === now.toDateString(); if (filter === 'week') { const firstDay = new Date(new Date().setDate(now.getDate() - now.getDay())).setHours(0,0,0,0); const lastDay = new Date(new Date().setDate((now.getDate() - now.getDay()) + 6)).setHours(23,59,59,999); return d >= firstDay && d <= lastDay; } if (filter === 'month') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); if (filter === 'year') return d.getFullYear() === now.getFullYear(); return false; }
         function calculateSummary() {
-            const filter = document.getElementById('timeframeFilter').value; const now = new Date(); let sumRev = 0, totalInvested = 0;
-            let sumTax = 0; transactions.forEach(t => { if(isWithinFilter(t.dateObj, filter, now)) { sumRev += num(t.revenue); sumTax += num(t.tax); } });
-            const taxNote = document.getElementById('taxNote'); if (sumTax > 0) { taxNote.style.display = ''; taxNote.textContent = `ภาษีขายที่เก็บจากลูกค้า ${money(sumTax)} (ไม่นับรวมในยอดขาย)`; } else taxNote.style.display = 'none';
-            stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += num(log.investChange); } });
-            sumRev = r2(sumRev); totalInvested = r2(totalInvested); sumTax = r2(sumTax);
-            const profit = r2(sumRev - totalInvested); 
-            // ต้นทุนของที่ขายไปจริง (คิดตามทุนต่อชิ้นตอนขาย) + มูลค่าของที่ยังค้างสต็อก
-            let cogs = 0; transactions.forEach(t => { if (isWithinFilter(t.dateObj, filter, now)) cogs += num(t.cost); }); cogs = r2(cogs);
-            const stockValue = r2(products.reduce((a, p) => a + Math.max(0, num(p.stock)) * num(p.cost), 0));
-            const pn = document.getElementById('profitNote');
-            if (pn) {
-                if (sumRev > 0 || stockValue > 0) {
-                    pn.style.display = '';
-                    pn.innerHTML = (sumRev > 0 ? `ต้นทุนของที่ขายไป ${money(cogs)} → กำไรจากของที่ขายได้ <b>${money(r2(sumRev - cogs))}</b><br>` : '')
-                        + `ของที่ยังเหลือในสต็อกตอนนี้ คิดเป็นทุน <b>${money(stockValue)}</b> (จ่ายไปแล้ว รอขาย)`;
-                } else pn.style.display = 'none';
-            }
-            updateSummaryEmptyHint(filter, sumRev, totalInvested); renderDataOverview(); renderPeriodSeg();
-            document.getElementById('totalRevenue').innerText = sumRev.toLocaleString() + ' ฿'; document.getElementById('totalCost').innerText = totalInvested.toLocaleString() + ' ฿';
-            const pEl = document.getElementById('totalProfit'); pEl.innerText = profit.toLocaleString() + ' ฿'; const box = document.getElementById('profitStatBox'); if(profit > 0) box.style.backgroundColor = 'var(--success)'; else if(profit < 0) box.style.backgroundColor = 'var(--danger)'; else box.style.backgroundColor = '#98989D';
+            const filter = document.getElementById('timeframeFilter').value; const now = new Date();
+            let sumRev = 0, cogs = 0, invested = 0, sumTax = 0;
+            transactions.forEach(t => { if (isWithinFilter(t.dateObj, filter, now)) { sumRev += num(t.revenue); sumTax += num(t.tax); cogs += num(t.cost); } });
+            const taxNote = document.getElementById('taxNote'); if (sumTax > 0) { taxNote.style.display = ''; taxNote.textContent = `ภาษีขายที่เก็บจากลูกค้า ${money(r2(sumTax))} (ไม่นับรวมในยอดขาย)`; } else taxNote.style.display = 'none';
+            stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) invested += num(log.investChange); });
+            sumRev = r2(sumRev); cogs = r2(cogs); invested = r2(invested);
+            // กำไร = ยอดขาย − ต้นทุนของชิ้นที่ขายไป (การซื้อของเข้ามาเติม ไม่ทำให้กำไรลด)
+            const profit = r2(sumRev - cogs);
+            updateSummaryEmptyHint(filter, sumRev, invested); renderDataOverview(); renderPeriodSeg();
+            document.getElementById('totalRevenue').innerText = sumRev.toLocaleString() + ' ฿';
+            document.getElementById('totalCost').innerText = cogs.toLocaleString() + ' ฿';
+            document.getElementById('totalProfit').innerText = profit.toLocaleString() + ' ฿';
+            const box = document.getElementById('profitStatBox'); box.style.backgroundColor = profit > 0 ? 'var(--success)' : (profit < 0 ? 'var(--danger)' : '#98989D');
+            renderWallet();
         }
         const FILTER_LABELS = { today: 'วันนี้', week: 'สัปดาห์นี้', month: 'เดือนนี้', year: 'ปีนี้', all: 'ทั้งหมด' };
         // ✅ v3: จำช่วงเวลาที่เลือกไว้ (เดิมทุกครั้งที่เปิดแอปใหม่จะเด้งกลับเป็น "วันนี้" → ยอดของวันก่อน ๆ / ข้อมูลจากไฟล์สำรอง ดูเหมือนหายเป็น 0)
@@ -1943,7 +2064,7 @@
         }
         function openSummaryDetail(type) {
             const filter = document.getElementById('timeframeFilter').value; const now = new Date(); const summaryMap = {}; let titleText = ''; let headerText = ''; let valueColor = 'var(--primary)';
-            if (type === 'revenue' || type === 'profit') { transactions.forEach(t => { if(!isWithinFilter(t.dateObj, filter, now)) return; if(!summaryMap[t.name]) { summaryMap[t.name] = { name: t.name, image: imageFor(t), qty: 0, val: 0 }; } summaryMap[t.name].qty += t.qty; summaryMap[t.name].val += (type === 'revenue' ? t.revenue : t.profit); }); titleText = type === 'revenue' ? '📋 รายละเอียด: ยอดขาย' : '📋 รายละเอียด: กำไรจากสินค้าที่ขายแล้ว<div style="font-size:12px; font-weight:500; color:#8E8E93; margin-top:4px;">💡 คิดจากราคาขาย−ต้นทุนเฉพาะชิ้นที่ขายไป จึงอาจไม่เท่ากับ "กำไรเงินสด" หน้าสรุปซึ่งหักเงินลงทุนของที่ยังค้างสต็อกด้วย</div>'; headerText = type === 'revenue' ? 'ยอดขายรวม' : 'กำไรสุทธิรวม'; valueColor = type === 'revenue' ? '#007AFF' : '#34C759'; } else if (type === 'cost') { stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now) && log.investChange !== 0) { const label = log.isRawMaterial ? `${log.name} (วัตถุดิบ)` : `${log.name} (สินค้า)`; if(!summaryMap[label]) { const p = products.find(x => x.name === log.name); summaryMap[label] = { name: label, image: p ? p.image : PLACEHOLDER_IMAGE, qty: 0, val: 0 }; } if(log.change > 0) summaryMap[label].qty += log.change; summaryMap[label].val += log.investChange; } }); titleText = '📋 รายละเอียด: รวมเงินลงทุน (สินค้า+วัตถุดิบ)'; headerText = 'ต้นทุนที่จ่ายไป'; valueColor = '#FF3B30'; }
+            if (type === 'revenue' || type === 'profit') { transactions.forEach(t => { if(!isWithinFilter(t.dateObj, filter, now)) return; if(!summaryMap[t.name]) { summaryMap[t.name] = { name: t.name, image: imageFor(t), qty: 0, val: 0 }; } summaryMap[t.name].qty += t.qty; summaryMap[t.name].val += (type === 'revenue' ? t.revenue : t.profit); }); titleText = type === 'revenue' ? '📋 รายละเอียด: ยอดขาย' : '📋 รายละเอียด: กำไรจากสินค้าที่ขายแล้ว<div style="font-size:12px; font-weight:500; color:#8E8E93; margin-top:4px;">💡 ราคาขาย − ต้นทุนของชิ้นที่ขายไป (ซื้อของเข้ามาเติม ไม่ทำให้กำไรลด)</div>'; headerText = type === 'revenue' ? 'ยอดขายรวม' : 'กำไรสุทธิรวม'; valueColor = type === 'revenue' ? '#007AFF' : '#34C759'; } else if (type === 'cost') { transactions.forEach(t => { if (!isWithinFilter(t.dateObj, filter, now)) return; if (!summaryMap[t.name]) summaryMap[t.name] = { name: t.name, image: imageFor(t), qty: 0, val: 0 }; summaryMap[t.name].qty += t.qty; summaryMap[t.name].val = r2(summaryMap[t.name].val + num(t.cost)); }); titleText = '📋 รายละเอียด: ต้นทุนของที่ขายไป<div style="font-size:12px; font-weight:500; color:#8E8E93; margin-top:4px;">💡 ทุนต่อชิ้น × จำนวนที่ขาย · การซื้อของเข้าดูได้ที่ตาราง "ประวัติซื้อเข้า" และ 📒 ที่มาที่ไปของเงิน</div>'; headerText = 'ต้นทุน'; valueColor = '#FF3B30'; }
             const sortedData = Object.values(summaryMap).sort((a,b) => b.val - a.val); document.getElementById('summaryDetailTitle').innerHTML = titleText; document.getElementById('summaryDetailValueHeader').innerHTML = headerText; let totalQty = 0; let totalValue = 0; const tbody = document.getElementById('summaryDetailTableBody'); tbody.innerHTML = '';
             if(sortedData.length === 0) { tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#8E8E93; padding: 20px;">ไม่มีข้อมูลในช่วงเวลานี้</td></tr>'; } else { sortedData.forEach(item => { totalQty += item.qty; totalValue += item.val; let rowColor = (type === 'profit' && item.val < 0) ? 'var(--danger)' : valueColor; tbody.innerHTML += `<tr><td><img src="${item.image}" class="detail-img"></td><td style="font-weight:bold;">${item.name}</td><td style="text-align:center;">${item.qty}</td><td style="text-align:right; font-weight:bold; color:${rowColor};">${item.val.toLocaleString()} ฿</td></tr>`; }); }
             document.getElementById('summaryDetailTotalQty').innerText = totalQty; const totalValEl = document.getElementById('summaryDetailTotalValue'); totalValEl.innerText = totalValue.toLocaleString() + ' ฿'; totalValEl.style.color = (type === 'profit' && totalValue < 0) ? 'var(--danger)' : valueColor; openModal('summaryDetailModal');
@@ -1956,12 +2077,12 @@
             // ใช้ key แบบ yyyy-mm-dd เพื่อ (1) ไม่ให้วันเดียวกันคนละปีถูกรวมแท่งเดียว (2) เรียงลำดับเวลาได้ถูกต้อง
             const dateKeyOf = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
             transactions.forEach(t => { if(!isWithinFilter(t.dateObj, filter, now)) return; totalRev += t.revenue; if(!productSales[t.name]) productSales[t.name] = 0; productSales[t.name] += t.revenue; const k = dateKeyOf(t.dateObj); if(!labelsMap[k]) labelsMap[k] = { rev: 0, invest: 0, label: t.dateObj.toLocaleDateString('th-TH', {day: 'numeric', month: 'short', year: '2-digit'}) }; labelsMap[k].rev += t.revenue; });
-            stockLogs.forEach(log => { if (isWithinFilter(log.dateObj, filter, now)) { totalInvested += log.investChange; const k = dateKeyOf(log.dateObj); if(!labelsMap[k]) labelsMap[k] = { rev: 0, invest: 0, label: log.dateObj.toLocaleDateString('th-TH', {day: 'numeric', month: 'short', year: '2-digit'}) }; labelsMap[k].invest += log.investChange; } });
+            transactions.forEach(t => { if (!isWithinFilter(t.dateObj, filter, now)) return; totalInvested += num(t.cost); const k = dateKeyOf(t.dateObj); if (labelsMap[k]) labelsMap[k].invest += num(t.cost); });
             const profit = totalRev - totalInvested; const margin = totalRev > 0 ? ((profit / totalRev) * 100).toFixed(1) : 0; const filteredTxs = transactions.filter(t => isWithinFilter(t.dateObj, filter, now)); const billCount = new Set(filteredTxs.map(t => t.billId)).size; const aov = billCount > 0 ? (totalRev / billCount).toFixed(0) : 0; let bestSellerName = "-"; let maxSales = -1; for(const [name, sales] of Object.entries(productSales)) { if(sales > maxSales) { maxSales = sales; bestSellerName = name; } }
             document.getElementById('kpiMargin').innerText = margin + '%'; document.getElementById('kpiMargin').style.color = margin > 0 ? 'var(--success)' : (margin < 0 ? 'var(--danger)' : 'var(--primary)'); document.getElementById('kpiAOV').innerText = Number(aov).toLocaleString() + ' ฿'; document.getElementById('kpiRawCost').innerText = totalInvested.toLocaleString() + ' ฿'; document.getElementById('kpiBestSeller').innerText = bestSellerName !== '-' ? `${bestSellerName}` : '-';
             const ctx = document.getElementById('salesChart').getContext('2d'); const sortedKeys = Object.keys(labelsMap).sort(); const labels = sortedKeys.map(k => labelsMap[k].label); const dataRev = sortedKeys.map(k => labelsMap[k].rev); const dataProfit = sortedKeys.map(k => labelsMap[k].rev - labelsMap[k].invest); 
             if (typeof Chart === 'undefined') { console.warn('Chart.js ไม่ถูกโหลด — ข้ามการวาดกราฟ'); return; }
-            if(salesChartInstance) salesChartInstance.destroy(); salesChartInstance = new Chart(ctx, { type: 'bar', data: { labels: labels.length > 0 ? labels : ['ไม่มีข้อมูล'], datasets: [ { type: 'line', label: 'กำไรเงินสด', data: labels.length > 0 ? dataProfit : [0], borderColor: '#34C759', backgroundColor: '#34C759', borderWidth: 3, tension: 0.3 }, { type: 'bar', label: 'ยอดขาย', data: labels.length > 0 ? dataRev : [0], backgroundColor: 'rgba(0,122,255,0.75)', borderRadius: 4 } ] }, options: { responsive: true, maintainAspectRatio: false } });
+            if(salesChartInstance) salesChartInstance.destroy(); salesChartInstance = new Chart(ctx, { type: 'bar', data: { labels: labels.length > 0 ? labels : ['ไม่มีข้อมูล'], datasets: [ { type: 'line', label: 'กำไร', data: labels.length > 0 ? dataProfit : [0], borderColor: '#34C759', backgroundColor: '#34C759', borderWidth: 3, tension: 0.3 }, { type: 'bar', label: 'ยอดขาย', data: labels.length > 0 ? dataRev : [0], backgroundColor: 'rgba(0,122,255,0.75)', borderRadius: 4 } ] }, options: { responsive: true, maintainAspectRatio: false } });
         }
         function openRankingModal() { closeModal('analyticsModal'); openModal('rankingModal'); resetRankingFilter(); }
         function resetRankingFilter() { document.getElementById('rankStartDate').value = ''; document.getElementById('rankEndDate').value = ''; renderRankingTable(); }
@@ -2038,6 +2159,7 @@
             const billTotal = lines.reduce((s, t) => s + t.revenue + (t.tax || 0), 0);
             lines.forEach(tx => {
                 const p = findProduct(tx);
+                if (Array.isArray(tx.rawUse)) tx.rawUse.forEach(u => { const raw = rawById(u.rawId); if (raw) { raw.stock = r4(num(raw.stock) + num(u.qty)); logStockChange(raw.name, num(u.qty), raw.stock, `คืนวัตถุดิบจากการยกเลิกบิล ${tx.billNo || '-'} ↩️`, true, raw.cost, 0, raw.id); } });
                 if (p) { p.stock += tx.qty; logStockChange(p.name, tx.qty, p.stock, `ยกเลิกการขาย คืนของเข้าสต็อก ↩️ (บิล ${tx.billNo || '-'} +${billTotal.toLocaleString()}฿)`, false, p.cost, 0); }
                 sendToGoogleSheets('deleteTransaction', tx);
             });
@@ -2097,6 +2219,7 @@
                     transactions = [];
                     bills = [];
                     stockLogs = [];
+                    piggyLogs = [];
                     cart = [];
                     
                     saveDataLocally();
@@ -2113,6 +2236,7 @@
 
         // ================= Update UI & Edit =================
         function updateUI() {
+            refreshMade();
             const sellableProducts = products.filter(p => !p.isRawMaterial);
             pruneCart(); renderPos();
             document.getElementById('categoryList').innerHTML = [...new Set(sellableProducts.map(p => (p.category || '').trim()).filter(Boolean))].map(c => `<option value="${esc(c)}">`).join('');
@@ -2136,9 +2260,9 @@
 
             // ประวัติซื้อเข้า/ลงทุน (รวมทั้งวัตถุดิบและสินค้า และเพิ่มปุ่มลบรายจ่าย)
             const expenseHistoryBody = document.getElementById('rawHistoryTable'); const filteredExpenses = stockLogs.filter(log => log.investChange > 0 && isWithinFilter(log.dateObj, filter, now)); expenseHistoryBody.innerHTML = filteredExpenses.length === 0 ? '<tr><td colspan="5" style="text-align: center; color:#8E8E93;">ไม่มีประวัติการนำเข้าในช่วงเวลานี้</td></tr>' : '';
-            filteredExpenses.forEach(r => { const icon = r.isRawMaterial ? '⚙️' : '📦'; expenseHistoryBody.innerHTML += `<tr><td style="font-size: 0.85em;">${r.time}</td><td>${icon} ${r.name}</td><td style="text-align:center;">${r.change}</td><td style="color: var(--danger); font-weight: bold;">-${r.investChange.toLocaleString()} ฿</td><td style="text-align:center;"><button class="btn-delete" onclick="deleteExpense(${r.dateObj.getTime()})">🗑️</button></td></tr>`; });
+            filteredExpenses.forEach(r => { const icon = r.isRawMaterial ? '⚙️' : '📦'; expenseHistoryBody.innerHTML += `<tr><td style="font-size: 0.85em;">${r.time}</td><td>${icon} ${r.name}</td><td style="text-align:center;">${r.change}</td><td style="color: var(--danger); font-weight: bold;">-${r.investChange.toLocaleString()} ฿<br><button type="button" class="fund-chip ${fundOf(r)}" onclick="toggleFund(${r.dateObj.getTime()})" title="แตะเพื่อเปลี่ยนแหล่งเงิน">${fundOf(r) === 'capital' ? '💼 ทุนเพิ่ม' : '💵 จากยอดขาย'}</button></td><td style="text-align:center;"><button class="btn-delete" onclick="deleteExpense(${r.dateObj.getTime()})">🗑️</button></td></tr>`; });
 
-            calculateSummary(); updateNotifications();
+            calculateSummary(); updateNotifications(); refreshFundPicks();
         }
         
 
@@ -2228,20 +2352,389 @@
             openModal('profitCalcModal');
         }
 
+
+        // =====================================================================
+        // 💰 v3.6 แหล่งเงินซื้อของ · เงินทุนหมุนเวียน · กระปุกออมสิน · สูตรวัตถุดิบ
+        // ---------------------------------------------------------------------
+        //  กำไร        = ยอดขาย − ต้นทุนของชิ้นที่ขายไป        (ซื้อของเข้ามาเติม ไม่ทำให้กำไรลด)
+        //  เงินทุนร้าน  = ยอดขาย − ซื้อของด้วยเงินยอดขาย − ตัดกำไรเข้ากระปุก + ย้ายเงินกระปุกกลับมา
+        //                ถ้าติดลบ = "ค้างหัก" → ยอดขายถัดไปจะถูกนำมาหักจนครบเอง
+        //  กระปุก      = ตัดกำไรเข้า − นำออกไปใช้ − ย้ายกลับเป็นทุน
+        //  รายการซื้อเข้าเก่า (ก่อน v3.6) ไม่มีช่อง fund → นับเป็น "ใช้เงินจากยอดขาย" ทั้งหมด
+        // =====================================================================
+        const fundOf = l => (l && l.fund === 'capital') ? 'capital' : 'sales';
+        const fundLabel = f => f === 'capital' ? 'ควักทุนเพิ่ม' : 'ใช้เงินจากยอดขาย';
+        function r4(n) { return Math.round((Number(n) + Number.EPSILON) * 10000) / 10000; }
+        function smoney(n) { n = r2(num(n)); return (n < 0 ? '−' : '') + money(Math.abs(n)); }
+        function fmtQ(n) { return Number(r4(num(n))).toLocaleString('th-TH', { maximumFractionDigits: 2 }); }
+        function monthKey(d) { return (d && !isNaN(d.getTime())) ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}` : ''; }
+        function monthLabel(k) { if (!k || k === 'none') return 'ไม่ทราบเดือน'; const [y, m] = k.split('-').map(Number); return new Date(y, m - 1, 1).toLocaleDateString('th-TH', { month: 'long', year: 'numeric' }); }
+        function cutAlloc(l) { return (l.alloc && typeof l.alloc === 'object') ? l.alloc : { none: num(l.amount) }; }
+
+        function moneyState() {
+            let rev = 0, cogs = 0, buySales = 0, buyCap = 0, cut = 0, wd = 0, toShop = 0;
+            transactions.forEach(t => { rev += num(t.revenue); cogs += num(t.cost); });
+            stockLogs.forEach(l => { const v = num(l.investChange); if (v > 0) { if (fundOf(l) === 'capital') buyCap += v; else buySales += v; } });
+            piggyLogs.forEach(l => { const a = num(l.amount); if (l.type === 'cut') cut += a; else if (l.type === 'withdraw') wd += a; else if (l.type === 'toShop') toShop += a; });
+            const profitAll = r2(rev - cogs);
+            return { rev: r2(rev), cogs: r2(cogs), profitAll, buySales: r2(buySales), buyCap: r2(buyCap), cut: r2(cut), wd: r2(wd), toShop: r2(toShop),
+                     cash: r2(rev - buySales - cut + toShop), piggy: r2(cut - wd - toShop), uncut: r2(profitAll - cut),
+                     stockValue: r2(products.reduce((a, p) => a + (isMade(p) ? 0 : Math.max(0, num(p.stock)) * num(p.cost)), 0)) };
+        }
+        function monthlyProfit() {
+            const m = {}; const row = k => (m[k] = m[k] || { profit: 0, cut: 0, out: 0 });
+            transactions.forEach(t => { const k = monthKey(t.dateObj) || 'none'; row(k).profit += num(t.revenue) - num(t.cost); });
+            piggyLogs.forEach(l => {
+                if (l.type === 'cut') Object.entries(cutAlloc(l)).forEach(([k, a]) => { row(k).cut += num(a); });
+                else row(monthKey(l.dateObj) || 'none').out += num(l.amount);
+            });
+            return Object.keys(m).sort().reverse().map(k => ({ key: k, profit: r2(m[k].profit), cut: r2(m[k].cut), out: r2(m[k].out), uncut: r2(m[k].profit - m[k].cut) }));
+        }
+
+        // ---------- ตัวเลือก "ใช้เงินจากไหน" ตอนซื้อของ ----------
+        function initFundPick(id) {
+            const el = document.getElementById(id); if (!el || el.dataset.ready) return; el.dataset.ready = '1';
+            el.innerHTML = `<div class="fp-title">💰 ซื้อของรอบนี้ใช้เงินจากไหน <span class="fp-amt"></span></div>
+                <label class="radio-line"><input type="radio" name="fund_${id}" value="sales" checked><span>💵 ใช้เงินจากยอดขายของร้าน (ทุนหมุนเวียน)<small class="fp-sales"></small></span></label>
+                <label class="radio-line"><input type="radio" name="fund_${id}" value="capital"><span>💼 ควักทุนเพิ่ม (เงินนอกร้าน)<small>บันทึกเป็นทุนที่ใส่เพิ่ม ไม่หักจากเงินที่ขายได้</small></span></label>
+                <div class="fp-warn" style="display:none;"></div>`;
+            el.addEventListener('change', () => updateFundPick(id, el._amount || 0));
+        }
+        function getFund(id) { const r = document.querySelector(`input[name="fund_${id}"]:checked`); return r ? r.value : 'sales'; }
+        function resetFundPick(id) { initFundPick(id); const r = document.querySelector(`input[name="fund_${id}"][value="sales"]`); if (r) r.checked = true; }
+        function updateFundPick(id, amount) {
+            const el = document.getElementById(id); if (!el) return; initFundPick(id); el._amount = amount = r2(amount || 0);
+            const cash = moneyState().cash;
+            el.querySelector('.fp-amt').textContent = amount > 0 ? `(${money(amount)})` : '';
+            el.querySelector('.fp-sales').textContent = (cash >= 0 ? `ตอนนี้มีเงินจากยอดขาย ${money(cash)}` : `ตอนนี้ติดค้างหักอยู่ ${money(-cash)}`) + ' · ไม่นับเป็นต้นทุนเพิ่ม กำไรไม่ลด';
+            const w = el.querySelector('.fp-warn');
+            if (getFund(id) === 'sales' && amount > Math.max(0, cash) + 0.001) {
+                w.className = 'fp-warn'; w.style.display = '';
+                w.innerHTML = `⚠️ เงินจากยอดขายไม่พอ ขาดอีก <b>${money(r2(amount - Math.max(0, cash)))}</b> → ส่วนนี้จะ<b>ค้างไว้แล้วหักจากยอดขายครั้งถัดไป</b>อัตโนมัติ (ดูที่มาที่ไปได้ที่ 📒 ในหน้าสรุปยอด)`;
+            } else w.style.display = 'none';
+        }
+        function refreshFundPicks() {
+            const v = id => parseFloat(document.getElementById(id).value) || 0;
+            updateFundPick('fundProd', v('prodStock') * v('prodCost'));
+            updateFundPick('fundRaw', v('rawStock') * v('rawCost'));
+        }
+        ['prodStock', 'prodCost', 'rawStock', 'rawCost'].forEach(id => document.getElementById(id).addEventListener('input', refreshFundPicks));
+        function toggleFund(ts) {
+            const log = stockLogs.find(l => l.dateObj.getTime() === ts && l.investChange > 0); if (!log) return;
+            const cur = fundOf(log), next = cur === 'capital' ? 'sales' : 'capital';
+            if (!confirm(`เปลี่ยนแหล่งเงินของรายการซื้อ "${log.name}" (${money(log.investChange)})\n\n${fundLabel(cur)}  →  ${fundLabel(next)}\n\n${next === 'sales' ? '• จะหักจากเงินที่ขายได้ (ไม่นับเป็นทุนที่ควักเพิ่ม)' : '• จะนับเป็นทุนที่ควักเพิ่ม (ไม่หักจากเงินที่ขายได้)'}\n• กำไรจากการขายไม่เปลี่ยน`)) return;
+            log.fund = next;
+            const p = (log.productId && products.find(x => x.id === log.productId)) || products.find(x => x.name === log.name && x.isRawMaterial === log.isRawMaterial);
+            logStockChange(log.name, 0, p ? p.stock : log.balance, `💰 เปลี่ยนแหล่งเงินของรายการซื้อ (${log.time}): ${fundLabel(cur)} → ${fundLabel(next)}`, log.isRawMaterial, log.cost, 0, log.productId);
+            saveDataLocally(); updateUI();
+        }
+
+        // ---------- กระเป๋าเงินร้าน (หน้าสรุปยอด) ----------
+        function renderWallet() {
+            const el = document.getElementById('walletPanel'); if (!el) return;
+            const ms = moneyState(), debt = ms.cash < 0;
+            el.innerHTML = `<div class="wallet-title">💼 กระเป๋าเงินร้าน <small>(ยอดสะสมทั้งหมด ไม่ขึ้นกับช่วงเวลาที่เลือก)</small></div>
+                <div class="wallet-grid">
+                    <div class="wtile ${debt ? 'debt' : 'cash'}"><span>${debt ? '🔴 ค้างหักจากยอดขายถัดไป' : '💵 เงินทุนหมุนเวียน (จากยอดขาย)'}</span><b>${money(Math.abs(ms.cash))}</b><small>${debt ? 'ซื้อของเกินเงินที่ขายได้ ยอดขายใหม่จะถูกนำมาหักจนครบ' : 'เงินที่ขายได้และยังอยู่ในร้าน ใช้ซื้อของต่อได้'}</small></div>
+                    <div class="wtile"><span>📈 กำไรที่ยังไม่ตัด</span><b>${smoney(ms.uncut)}</b><small>กำไรสะสม ${money(ms.profitAll)} · ตัดเข้ากระปุกแล้ว ${money(ms.cut)}</small></div>
+                    <div class="wtile piggy"><span>🐷 ในกระปุกออมสิน</span><b>${money(ms.piggy)}</b><small>กำไรที่ตัดเก็บไว้แล้ว</small></div>
+                    <div class="wtile"><span>💼 ทุนที่ควักเพิ่ม (รวม)</span><b>${money(ms.buyCap)}</b><small>ของในสต็อกตอนนี้คิดเป็นทุน ${money(ms.stockValue)}</small></div>
+                </div>
+                <div class="wallet-actions" data-html2canvas-ignore="true">
+                    <button class="btn-primary" style="background:#DB2777;" onclick="openPiggyAction('cut')">🐷 ตัดกำไรเข้ากระปุก</button>
+                    <button class="btn-primary" style="background:var(--secondary);" onclick="openMoneyFlow()">📒 ที่มาที่ไปของเงิน</button>
+                </div>`;
+        }
+
+        // ---------- 📒 มอนิเตอร์ที่มาที่ไปของเงิน ----------
+        function moneyEvents() {
+            const ev = [], days = {};
+            transactions.forEach(t => {
+                const d = t.dateObj, ok = d && !isNaN(d.getTime()); const k = ok ? d.toDateString() : 'none';
+                const g = days[k] || (days[k] = { ts: 0, rev: 0, bills: new Set(), when: ok ? d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' }) : 'ไม่ทราบวันที่' });
+                g.rev += num(t.revenue); g.bills.add(t.billId); if (ok) g.ts = Math.max(g.ts, d.getTime());
+            });
+            Object.values(days).forEach(g => ev.push({ ts: g.ts, when: g.when, text: `💰 ยอดขายรวมของวัน (${g.bills.size} บิล)`, amt: r2(g.rev) }));
+            stockLogs.forEach(l => {
+                const v = num(l.investChange); if (v <= 0) return;
+                const ok = l.dateObj && !isNaN(l.dateObj.getTime()); const cap = fundOf(l) === 'capital';
+                ev.push({ ts: ok ? l.dateObj.getTime() : 0, when: ok ? l.dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' }) : '-',
+                          text: `${l.isRawMaterial ? '⚙️' : '📦'} ซื้อ ${esc(l.name)} ×${fmtQ(l.change)} ${cap ? `<span class="fund-chip capital">💼 ควักทุนเพิ่ม ${money(v)}</span>` : '<span class="fund-chip sales">💵 จากยอดขาย</span>'}`, amt: cap ? 0 : -v });
+            });
+            piggyLogs.forEach(l => {
+                if (l.type === 'withdraw') return;
+                const ok = l.dateObj && !isNaN(l.dateObj.getTime());
+                ev.push({ ts: ok ? l.dateObj.getTime() : 0, when: ok ? l.dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: '2-digit' }) : '-',
+                          text: l.type === 'cut' ? `🐷 ตัดกำไรเข้ากระปุก${l.note ? ` · ${esc(l.note)}` : ''}` : `🔁 ย้ายเงินจากกระปุกมาเป็นทุนร้าน${l.note ? ` · ${esc(l.note)}` : ''}`,
+                          amt: l.type === 'cut' ? -num(l.amount) : num(l.amount) });
+            });
+            ev.sort((a, b) => a.ts - b.ts);
+            let bal = 0; ev.forEach(e => { bal = r2(bal + e.amt); e.bal = bal; });
+            return ev;
+        }
+        function openMoneyFlow() {
+            const ms = moneyState(), ev = moneyEvents(), debt = ms.cash < 0;
+            document.getElementById('mfStatus').innerHTML = `<div class="wallet-grid">
+                    <div class="wtile ${debt ? 'debt' : 'cash'}"><span>${debt ? '🔴 ค้างหักจากยอดขายถัดไป' : '💵 เงินทุนหมุนเวียนตอนนี้'}</span><b>${money(Math.abs(ms.cash))}</b></div>
+                    <div class="wtile"><span>💰 รายได้จากการขายทั้งหมด</span><b>${money(ms.rev)}</b></div>
+                    <div class="wtile"><span>📦 ซื้อของด้วยเงินยอดขาย</span><b>${money(ms.buySales)}</b></div>
+                    <div class="wtile piggy"><span>🐷 ตัดเข้ากระปุก / ย้ายกลับ</span><b>${money(ms.cut)}</b><small>ย้ายกลับมาเป็นทุน ${money(ms.toShop)}</small></div>
+                    <div class="wtile"><span>💼 ทุนที่ควักเพิ่ม (ไม่กระทบเงินทุนร้าน)</span><b>${money(ms.buyCap)}</b></div>
+                    <div class="wtile"><span>📈 กำไรจากการขายสะสม</span><b>${money(ms.profitAll)}</b><small>ยอดขาย − ต้นทุนของที่ขายไป · ไม่ลดเมื่อซื้อของ</small></div>
+                </div>
+                <div class="mf-explain">🧮 <b>เงินทุนหมุนเวียน</b> = ยอดขาย ${money(ms.rev)} − ซื้อของด้วยเงินยอดขาย ${money(ms.buySales)} − ตัดเข้ากระปุก ${money(ms.cut)} + ย้ายจากกระปุก ${money(ms.toShop)} = <b>${smoney(ms.cash)}</b></div>
+                ${debt ? `<div class="fp-warn bad">🔴 ตอนนี้ซื้อของไปเกินเงินที่ขายได้ <b>${money(-ms.cash)}</b> — ยอดนี้ "ค้างหัก" ไว้ เมื่อขายได้อีก ${money(-ms.cash)} ก็จะหักครบ แล้วเงินที่ขายได้หลังจากนั้นจะกลับมาเป็นเงินทุนหมุนเวียน · <b>กำไรจากการขายไม่ลดลง</b> (ของที่ซื้อมายังอยู่ในสต็อก)</div>`
+                       : `<div class="fp-warn ok">✅ เงินที่ขายได้พอสำหรับของที่ซื้อเข้ามา ไม่มียอดค้างหัก</div>`}
+                <div class="mf-explain">ℹ️ รายการซื้อเข้าที่บันทึกก่อนเวอร์ชันนี้ ถูกนับเป็น "ใช้เงินจากยอดขาย" ทั้งหมด · ถ้ารายการไหนเป็นเงินที่ควักเพิ่ม แตะป้าย 💵/💼 ในตาราง "ประวัติซื้อเข้า" หน้าสรุปยอดเพื่อเปลี่ยนได้</div>`;
+            const rows = ev.slice().reverse().slice(0, 500);
+            document.getElementById('mfBody').innerHTML = rows.length ? rows.map(e => `<tr class="${e.bal < 0 ? 'mf-neg' : ''}"><td style="font-size:0.85em; white-space:nowrap;">${e.when}</td><td>${e.text}</td><td class="num-r ${e.amt > 0 ? 'amt-plus' : (e.amt < 0 ? 'amt-minus' : 'amt-zero')}">${e.amt > 0 ? '+' : ''}${e.amt ? smoney(e.amt) : '—'}</td><td class="num-r bal">${e.bal < 0 ? `ค้างหัก ${money(-e.bal)}` : money(e.bal)}</td></tr>`).join('')
+                : '<tr><td colspan="4" style="text-align:center; color:#8E8E93;">ยังไม่มีรายการ</td></tr>';
+            openModal('moneyFlowModal');
+        }
+
+        // ---------- 🐷 กระปุกออมสิน ----------
+        function openPiggy() { renderPiggy(); openModal('piggyModal'); }
+        function renderPiggy() {
+            const ms = moneyState();
+            document.getElementById('pgHero').innerHTML = `<div style="font-size:15px; font-weight:700; color:#9D174D;">🐷 เงินในกระปุกตอนนี้</div><div class="big">${money(ms.piggy)}</div>
+                <div class="wallet-grid" style="margin-top:12px;">
+                    <div class="wtile"><span>📈 กำไรที่ยังไม่ตัด</span><b>${money(ms.uncut)}</b></div>
+                    <div class="wtile"><span>🐷 ตัดเข้ากระปุกทั้งหมด</span><b>${money(ms.cut)}</b></div>
+                    <div class="wtile"><span>🔁 ย้ายไปเป็นทุนซื้อของ</span><b>${money(ms.toShop)}</b></div>
+                    <div class="wtile"><span>💸 นำออกไปใช้</span><b>${money(ms.wd)}</b></div>
+                </div>`;
+            const months = monthlyProfit();
+            document.getElementById('pgMonths').innerHTML = months.length ? months.map(m => `<tr><td><b>${monthLabel(m.key)}</b></td><td class="num-r" style="color:${m.profit < 0 ? 'var(--danger)' : 'inherit'}">${smoney(m.profit)}</td><td class="num-r" style="color:#BE185D;">${money(m.cut)}</td><td class="num-r" style="font-weight:700;">${smoney(m.uncut)}</td><td class="num-r">${m.out ? money(m.out) : '—'}</td><td style="text-align:center;">${m.uncut > 0.005 && m.key !== 'none' ? `<button class="btn-sm btn-recipe" onclick="openPiggyAction('cut','${m.key}')">🐷 ตัด</button>` : ''}</td></tr>`).join('')
+                : '<tr><td colspan="6" style="text-align:center; color:#8E8E93;">ยังไม่มียอดขาย</td></tr>';
+            const sorted = piggyLogs.slice().sort((a, b) => (a.dateObj.getTime() || 0) - (b.dateObj.getTime() || 0));
+            let bal = 0; const balOf = {};
+            sorted.forEach(l => { bal = r2(bal + (l.type === 'cut' ? 1 : -1) * num(l.amount)); balOf[l.id] = bal; });
+            const label = l => l.type === 'cut' ? `🐷 ตัดกำไรเข้า <small style="color:var(--text-2);">(${Object.keys(cutAlloc(l)).map(monthLabel).join(', ')})</small>` : (l.type === 'toShop' ? '🔁 ย้ายเป็นทุนซื้อของ' : '💸 นำออกไปใช้');
+            document.getElementById('pgLogs').innerHTML = sorted.length ? sorted.slice().reverse().map(l => `<tr><td style="font-size:0.85em; white-space:nowrap;">${esc(l.time || '')}</td><td>${label(l)}${l.note ? `<br><small style="color:var(--text-2);">📝 ${esc(l.note)}</small>` : ''}</td><td class="num-r ${l.type === 'cut' ? 'amt-plus' : 'amt-minus'}">${l.type === 'cut' ? '+' : '−'}${money(l.amount)}</td><td class="num-r">${money(balOf[l.id])}</td><td style="text-align:center;"><button class="btn-delete" title="ลบรายการนี้" onclick="deletePiggyLog(${l.id})">🗑️</button></td></tr>`).join('')
+                : '<tr><td colspan="5" style="text-align:center; color:#8E8E93;">ยังไม่มีรายการ · กด "ตัดกำไรเข้ากระปุก" เพื่อเริ่มเก็บ</td></tr>';
+        }
+        let paType = 'cut';
+        function openPiggyAction(type, month) {
+            const ms = moneyState(); paType = type;
+            if (type === 'cut' && ms.uncut <= 0.005) { alert('ยังไม่มีกำไรที่ตัดได้ (กำไรที่ยังไม่ตัด ' + money(ms.uncut) + ')'); return; }
+            if (type !== 'cut' && ms.piggy <= 0.005) { alert('กระปุกยังว่างอยู่ — ตัดกำไรเข้ากระปุกก่อน'); return; }
+            document.getElementById('paTitle').textContent = type === 'cut' ? '🐷 ตัดกำไรเข้ากระปุก' : (type === 'toShop' ? '🔁 ย้ายเงินกระปุกไปเป็นทุนซื้อของ' : '💸 นำเงินออกจากกระปุกไปใช้');
+            document.getElementById('paMonthGroup').style.display = type === 'cut' ? '' : 'none';
+            if (type === 'cut') {
+                const months = monthlyProfit().filter(m => m.uncut > 0.005 && m.key !== 'none');
+                document.getElementById('paMonth').innerHTML = `<option value="ALL">รวมทุกเดือน (ยังไม่ตัด ${money(ms.uncut)})</option>` + months.map(m => `<option value="${m.key}">${monthLabel(m.key)} (ยังไม่ตัด ${money(m.uncut)})</option>`).join('');
+                document.getElementById('paMonth').value = month && months.some(m => m.key === month) ? month : 'ALL';
+            }
+            document.getElementById('paAmount').value = ''; document.getElementById('paNote').value = '';
+            updatePiggyAct(); openModal('piggyActModal');
+        }
+        function paMax() {
+            const ms = moneyState();
+            if (paType !== 'cut') return Math.max(0, ms.piggy);
+            const k = document.getElementById('paMonth').value; if (k === 'ALL') return Math.max(0, ms.uncut);
+            const m = monthlyProfit().find(x => x.key === k); return Math.max(0, Math.min(m ? m.uncut : 0, ms.uncut));
+        }
+        function piggyFillMax() { const el = document.getElementById('paAmount'); el.value = r2(paMax()); el.dispatchEvent(new Event('input', { bubbles: true })); }
+        function updatePiggyAct() {
+            const ms = moneyState(), max = r2(paMax()), amt = r2(parseFloat(document.getElementById('paAmount').value) || 0);
+            const k = document.getElementById('paMonth').value;
+            document.getElementById('paInfo').innerHTML = `<div class="big" style="color:${paType === 'cut' ? '#BE185D' : '#1D4ED8'};">${money(max)}</div><small>${paType === 'cut' ? (k === 'ALL' ? 'กำไรที่ยังไม่ได้ตัดทั้งหมด' : 'กำไรที่ยังไม่ได้ตัดของ' + monthLabel(k)) : 'เงินในกระปุกตอนนี้'}</small>`;
+            document.getElementById('paMaxBtn').textContent = `ทั้งหมด ${money(max)}`;
+            const w = document.getElementById('paWarn'); let msg = '', cls = 'fp-warn';
+            if (amt > max + 0.001) { msg = `❌ เกินจำนวนที่มี (สูงสุด ${money(max)})`; cls = 'fp-warn bad'; }
+            else if (paType === 'cut' && amt > 0 && amt > Math.max(0, ms.cash) + 0.001) msg = `⚠️ ตอนนี้เงินสดจากยอดขายในร้านมี ${money(Math.max(0, ms.cash))} (กำไรส่วนที่เหลืออยู่ในรูปของในสต็อก) ถ้าตัด ${money(amt)} เงินทุนหมุนเวียนจะ<b>ค้างหัก ${money(r2(amt - Math.max(0, ms.cash)))}</b> และจะหักคืนจากยอดขายถัดไป`;
+            else if (paType === 'cut' && amt > 0) { msg = `✅ กำไรจะย้ายเข้ากระปุก · เงินทุนหมุนเวียนจะเหลือ ${money(r2(ms.cash - amt))}`; cls = 'fp-warn ok'; }
+            else if (paType === 'toShop' && amt > 0) { msg = `✅ เงินจะไปเพิ่มใน "เงินทุนหมุนเวียน" ใช้ซื้อของเข้าร้านต่อได้ (เงินทุนจะเป็น ${money(r2(ms.cash + amt))})`; cls = 'fp-warn ok'; }
+            else if (paType === 'withdraw' && amt > 0) { msg = `💸 เงินจะออกจากระบบ (นำไปใช้นอกร้าน) · กระปุกจะเหลือ ${money(r2(ms.piggy - amt))}`; cls = 'fp-warn'; }
+            w.className = cls; w.style.display = msg ? '' : 'none'; w.innerHTML = msg;
+            document.getElementById('paSubmit').disabled = !(amt > 0 && amt <= max + 0.001);
+        }
+        document.getElementById('piggyActForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const max = r2(paMax()), amt = r2(parseFloat(document.getElementById('paAmount').value) || 0);
+            if (!(amt > 0) || amt > max + 0.001) return;
+            const now = new Date();
+            const log = { id: now.getTime(), dateObj: now, time: now.toLocaleString('th-TH'), type: paType, amount: amt, note: document.getElementById('paNote').value.trim() };
+            if (paType === 'cut') {
+                const k = document.getElementById('paMonth').value; const alloc = {};
+                if (k !== 'ALL') alloc[k] = amt;
+                else {   // ตัดรวมทุกเดือน: ไล่จากเดือนเก่าสุดที่ยังมีกำไรไม่ตัด
+                    let left = amt;
+                    monthlyProfit().slice().reverse().forEach(m => { if (left <= 0.005 || m.uncut <= 0.005) return; const a = r2(Math.min(left, m.uncut)); alloc[m.key] = r2((alloc[m.key] || 0) + a); left = r2(left - a); });
+                    if (left > 0.005) alloc.none = r2((alloc.none || 0) + left);
+                }
+                log.alloc = alloc;
+            }
+            piggyLogs.unshift(log); persist('piggyLogs');
+            closeModal('piggyActModal'); updateUI();
+            if (document.getElementById('piggyModal').classList.contains('active')) renderPiggy();
+            toast(paType === 'cut' ? `🐷 เก็บกำไร ${money(amt)} เข้ากระปุกแล้ว` : (paType === 'toShop' ? `🔁 ย้าย ${money(amt)} ไปเป็นทุนซื้อของแล้ว` : `💸 นำออก ${money(amt)} แล้ว`));
+        });
+        function deletePiggyLog(id) {
+            const l = piggyLogs.find(x => x.id === id); if (!l) return;
+            const pwd = prompt(`ลบรายการกระปุกนี้? (${l.type === 'cut' ? 'ตัดเข้า' : (l.type === 'toShop' ? 'ย้ายเป็นทุน' : 'นำออก')} ${money(l.amount)})\nยอดในกระปุกและเงินทุนร้านจะคำนวณใหม่\n\nใส่รหัสผ่าน 999 เพื่อยืนยัน`);
+            if (pwd === null) return; if (pwd !== '999') { alert('❌ รหัสผ่านไม่ถูกต้อง'); return; }
+            piggyLogs = piggyLogs.filter(x => x.id !== id); persist('piggyLogs'); renderPiggy(); updateUI();
+        }
+
+        // ---------- 🍹 สินค้าผลิตเอง + สูตรวัตถุดิบแฝง ----------
+        const isMade = p => !!p && !p.isRawMaterial && p.kind === 'made';
+        function rawById(id) { return products.find(x => x.id === id && x.isRawMaterial); }
+        function recipeCostOf(recipe, extra) { let c = num(extra); (recipe || []).forEach(r => { const raw = rawById(r.rawId); if (raw) c += num(r.use) * num(raw.cost); }); return r2(c); }
+        function canMakeOf(recipe) {
+            const rs = (recipe || []).filter(r => num(r.use) > 0); if (!rs.length) return 0;
+            let m = Infinity;
+            for (const r of rs) { const raw = rawById(r.rawId); if (!raw) return 0; m = Math.min(m, Math.floor((Math.max(0, num(raw.stock)) + 1e-6) / num(r.use))); }
+            return m === Infinity ? 0 : Math.min(m, 99999);
+        }
+        function shortRaws(recipe) { return (recipe || []).filter(r => num(r.use) > 0).map(r => ({ r, raw: rawById(r.rawId) })).filter(x => !x.raw || num(x.raw.stock) + 1e-6 < num(x.r.use)).map(x => x.raw ? x.raw.name : '(วัตถุดิบถูกลบ)'); }
+        function refreshMade() { products.forEach(p => { if (isMade(p)) { p.cost = recipeCostOf(p.recipe, p.extraCost); p.stock = canMakeOf(p.recipe); } }); }
+        function usedIn(rawId) { return products.filter(p => isMade(p) && (p.recipe || []).some(r => r.rawId === rawId)); }
+        function fmtUse(n) { return Number(r4(n)).toLocaleString('th-TH', { maximumFractionDigits: 4 }); }
+        function recipeText(rows) { return (rows || []).map(r => { const raw = rawById(r.rawId); return raw ? `${raw.name} ${fmtUse(r.use)} ${raw.unit || 'ชิ้น'}` : ''; }).filter(Boolean).join(', '); }
+        function consumeRaws(p, qty, billNo) {
+            const out = [];
+            (p.recipe || []).forEach(r => {
+                const raw = rawById(r.rawId); const need = num(r.use) * qty; if (!raw || need <= 0) return;
+                const take = r4(Math.min(need, Math.max(0, num(raw.stock))));
+                let ns = r4(num(raw.stock) - need); if (ns < 0.001) ns = 0; raw.stock = ns;
+                out.push({ rawId: raw.id, qty: take });
+                logStockChange(raw.name, -take, raw.stock, `ใช้ทำ "${p.name}" ×${qty} (บิล ${billNo})`, true, raw.cost, 0, raw.id);
+            });
+            return out;
+        }
+        function markRawOut(id) {
+            const p = rawById(id); if (!p) return; const u = usedIn(id);
+            if (!confirm(`ตั้งให้ "${p.name}" หมดแล้ว?\n\nคงเหลือ ${fmtQ(p.stock)} ${p.unit || 'ชิ้น'} จะถูกปรับเป็น 0${u.length ? `\nสินค้าที่ใช้วัตถุดิบนี้ (${u.map(x => x.name).join(', ')}) จะขายไม่ได้จนกว่าจะเติม` : ''}\n\nเติมกลับได้ที่ปุ่ม ➕ เติมของ (ใส่ต้นทุนรอบใหม่ได้ เท่าเดิม/มากกว่า/น้อยกว่าก็ได้)`)) return;
+            const old = r4(num(p.stock)); p.stock = 0;
+            logStockChange(p.name, -old, 0, '⛔ กดหมด (ใช้หมด/ทิ้ง)', true, p.cost, 0, p.id);
+            saveDataLocally(); updateUI();
+        }
+
+        // ---- ฟอร์มเพิ่มสินค้า: เลือกประเภท ----
+        let draftRecipe = { rows: [], extra: 0 };
+        const prodKind = () => (document.querySelector('input[name="prodKind"]:checked') || {}).value || 'buy';
+        function setProdKind(kind) {
+            const made = kind === 'made'; const g = i => document.getElementById(i);
+            document.querySelectorAll('#prodKindSeg input').forEach(r => { r.checked = r.value === kind; r.parentElement.classList.toggle('on', r.checked); });
+            g('prodStockGroup').style.display = made ? 'none' : ''; g('prodCostGroup').style.display = made ? 'none' : '';
+            g('prodStock').required = !made; g('prodCost').required = !made;
+            g('prodRecipeBox').style.display = made ? '' : 'none'; g('fundProd').style.display = made ? 'none' : '';
+            if (made) updateDraftSummary(); else { draftRecipe = { rows: [], extra: 0 }; refreshFundPicks(); }
+        }
+        document.getElementById('prodKindSeg').addEventListener('change', e => { if (e.target.name === 'prodKind') setProdKind(e.target.value); });
+        function updateDraftSummary() {
+            const el = document.getElementById('prodRecipeSum'); const rows = draftRecipe.rows;
+            if (!rows.length) { el.innerHTML = 'ยังไม่ได้ตั้งสูตร — กด "ตั้งสูตร" เพื่อเลือกวัตถุดิบแฝงที่ใช้ เช่น แก้ว น้ำแข็ง น้ำแดง'; document.getElementById('prodCost').value = ''; return; }
+            const cost = recipeCostOf(rows, draftRecipe.extra), price = parseFloat(document.getElementById('prodPrice').value) || 0;
+            document.getElementById('prodCost').value = cost;
+            el.innerHTML = `${esc(recipeText(rows))}${draftRecipe.extra ? ` + ค่าอื่น ๆ ${money(draftRecipe.extra)}` : ''}<br>ต้นทุนจริง/ชิ้น <b>${money(cost)}</b>${price > 0 ? ` · ขาย ${money(price)} → กำไร <b>${money(r2(price - cost))}</b>/ชิ้น` : ''} · ทำได้ ${canMakeOf(rows)} ชิ้น`;
+        }
+        document.getElementById('prodPrice').addEventListener('input', () => { if (prodKind() === 'made') updateDraftSummary(); });
+
+        // ---- หน้าต่างแก้สูตร ----
+        let rc = null;
+        function openRecipeEditor(pid) { const p = products.find(x => x.id === pid); if (!p) return; rc = { mode: 'product', pid, rows: (p.recipe || []).map(r => ({ ...r })), extra: num(p.extraCost), name: p.name, price: num(p.price) }; showRecipe(); }
+        function openRecipeDraft() { rc = { mode: 'draft', rows: draftRecipe.rows.map(r => ({ ...r })), extra: draftRecipe.extra || 0, name: document.getElementById('prodName').value.trim() || 'สินค้าใหม่', price: parseFloat(document.getElementById('prodPrice').value) || 0 }; showRecipe(); }
+        function showRecipe() {
+            document.getElementById('rcName').textContent = rc.name;
+            const raws = products.filter(x => x.isRawMaterial), has = raws.length > 0;
+            ['rcAddBtn', 'rcExtraGroup', 'rcTotal', 'rcSave'].forEach(i => document.getElementById(i).style.display = has ? '' : 'none');
+            if (!has) {
+                document.getElementById('rcRows').innerHTML = `<div class="pf-empty">ยังไม่มีวัตถุดิบแฝงในระบบ<br>ไปเพิ่มวัตถุดิบ (เช่น แก้ว น้ำแข็ง น้ำแดง น้ำผึ้ง มะนาว) ที่เมนู ⚙️ วัตถุดิบแฝง ก่อน แล้วกลับมาตั้งสูตร<br><button type="button" class="btn-primary" style="width:auto; margin-top:10px; background:var(--raw);" onclick="closeModal('recipeModal'); openModal('rawMaterialModal');">⚙️ ไปหน้าวัตถุดิบแฝง</button></div>`;
+                openModal('recipeModal'); return;
+            }
+            if (!rc.rows.length) rc.rows.push({ rawId: raws[0].id, use: 0 });
+            document.getElementById('rcExtra').value = rc.extra || '';
+            renderRecipeRows(); openModal('recipeModal');
+        }
+        function rawOptions(sel) { return products.filter(x => x.isRawMaterial).map(r => `<option value="${r.id}" ${r.id === sel ? 'selected' : ''}>${esc(r.name)} · ${money(r.cost)}/${esc(r.unit || 'ชิ้น')}${num(r.stock) < 0.001 ? ' (หมด)' : ''}</option>`).join(''); }
+        function renderRecipeRows() {
+            document.getElementById('rcRows').innerHTML = rc.rows.map((r, i) => {
+                const raw = rawById(r.rawId); const unit = esc(raw ? (raw.unit || 'ชิ้น') : 'หน่วย'); const use = num(r.use);
+                return `<div class="rc-row" data-i="${i}"><div class="rc-top"><select class="rc-raw">${rawOptions(r.rawId)}</select><button type="button" class="btn-delete rc-del" title="เอาออกจากสูตร">🗑️</button></div>
+                    <div class="rc-nums"><div class="form-group"><label class="input-label">ใช้ต่อ 1 ชิ้น (<span class="rc-unit">${unit}</span>)</label><input type="number" class="rc-use" min="0" step="any" value="${use > 0 ? r4(use) : ''}"></div>
+                    <div class="form-group"><label class="input-label">หรือ 1 <span class="rc-unit">${unit}</span> ทำได้กี่ชิ้น</label><input type="number" class="rc-per" min="0" step="any" value="${use > 0 ? r2(1 / use) : ''}"></div></div>
+                    <div class="rc-cost"></div></div>`;
+            }).join('');
+            updateRecipeTotal();
+        }
+        function addRecipeRow() {
+            const raws = products.filter(x => x.isRawMaterial); if (!raws.length) return;
+            const unused = raws.find(r => !rc.rows.some(x => x.rawId === r.id)) || raws[0];
+            rc.rows.push({ rawId: unused.id, use: 0 }); renderRecipeRows();
+        }
+        const rcRowsEl = document.getElementById('rcRows');
+        rcRowsEl.addEventListener('input', e => {
+            const row = e.target.closest('.rc-row'); if (!row || !rc) return; const r = rc.rows[+row.dataset.i]; if (!r) return;
+            if (e.target.classList.contains('rc-use')) { r.use = parseFloat(e.target.value) || 0; row.querySelector('.rc-per').value = r.use > 0 ? r2(1 / r.use) : ''; }
+            else if (e.target.classList.contains('rc-per')) { const n = parseFloat(e.target.value) || 0; r.use = n > 0 ? Math.round(1e6 / n) / 1e6 : 0; row.querySelector('.rc-use').value = r.use > 0 ? r4(r.use) : ''; }
+            updateRecipeTotal();
+        });
+        rcRowsEl.addEventListener('change', e => {
+            if (!e.target.classList.contains('rc-raw') || !rc) return; const row = e.target.closest('.rc-row');
+            rc.rows[+row.dataset.i].rawId = Number(e.target.value);
+            const raw = rawById(Number(e.target.value)); row.querySelectorAll('.rc-unit').forEach(s => s.textContent = raw ? (raw.unit || 'ชิ้น') : 'หน่วย');
+            updateRecipeTotal();
+        });
+        rcRowsEl.addEventListener('click', e => { const b = e.target.closest('.rc-del'); if (!b || !rc) return; rc.rows.splice(+b.closest('.rc-row').dataset.i, 1); renderRecipeRows(); });
+        function updateRecipeTotal() {
+            if (!rc) return;
+            rc.extra = parseFloat(document.getElementById('rcExtra').value) || 0;
+            document.querySelectorAll('#rcRows .rc-row').forEach(row => {
+                const r = rc.rows[+row.dataset.i]; const raw = r && rawById(r.rawId);
+                row.querySelector('.rc-cost').textContent = raw && num(r.use) > 0 ? `= ${money(num(r.use) * num(raw.cost))} ต่อชิ้น` : 'ใส่ปริมาณที่ใช้';
+            });
+            const rows = rc.rows.filter(r => rawById(r.rawId) && num(r.use) > 0);
+            const total = recipeCostOf(rows, rc.extra), can = canMakeOf(rows), short = shortRaws(rows);
+            document.getElementById('rcTotal').innerHTML = `<div class="big" style="color:#9D174D;">${money(total)} <span style="font-size:16px; font-weight:600; color:var(--text-2);">/ชิ้น</span></div>
+                <small>ต้นทุนจริงต่อ 1 ชิ้น/แก้ว (วัตถุดิบ ${rows.length} อย่าง${rc.extra ? ' + ค่าใช้จ่ายอื่น' : ''})${rc.price > 0 ? `<br>ราคาขาย ${money(rc.price)} → กำไร <b style="color:${rc.price - total < 0 ? 'var(--danger)' : '#15803D'}">${money(r2(rc.price - total))}</b>/ชิ้น` : ''}<br>วัตถุดิบที่มีตอนนี้ ทำได้อีก <b>${can}</b> ชิ้น${short.length ? ` · ⚠️ ไม่พอ: ${esc(short.join(', '))}` : ''}</small>`;
+        }
+        function saveRecipe() {
+            if (!rc) return;
+            const rows = rc.rows.filter(r => rawById(r.rawId) && num(r.use) > 0).map(r => ({ rawId: r.rawId, use: Math.round(num(r.use) * 1e6) / 1e6 }));
+            if (!rows.length) { alert('ใส่วัตถุดิบอย่างน้อย 1 อย่าง พร้อมปริมาณที่ใช้ต่อชิ้น'); return; }
+            if (rc.mode === 'draft') { draftRecipe = { rows, extra: rc.extra }; updateDraftSummary(); closeModal('recipeModal'); return; }
+            const p = products.find(x => x.id === rc.pid); if (!p) return;
+            const oldCost = num(p.cost);
+            p.recipe = rows; p.extraCost = rc.extra; refreshMade();
+            logStockChange(p.name, 0, p.stock, `🧪 แก้สูตร: ${recipeText(rows)}${rc.extra ? ` + ค่าอื่น ๆ ${rc.extra}฿` : ''} · ทุน/ชิ้น ${oldCost}→${p.cost}฿`, false, p.cost, 0, p.id);
+            saveDataLocally(); closeModal('recipeModal'); updateUI();
+            toast(`✅ บันทึกสูตรแล้ว · ทุน/ชิ้น ${money(p.cost)}`);
+        }
+
         // ================= ตารางคลัง: แยก "ของหมด" ไว้ท้ายตาราง =================
         function lotTag(p) { return p.lotOf ? `<span class="lot-tag">ล็อตใหม่${p.lotDate ? ' ' + new Date(p.lotDate).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' }) : ''}</span>` : ''; }
+        const isOutP = p => p.isRawMaterial ? num(p.stock) < 0.001 : num(p.stock) <= 0;
         function invRowHtml(p) {
-            const raw = p.isRawMaterial, out = num(p.stock) <= 0;
-            const sub = raw ? `ทุน: ${p.cost}฿` : `ทุน: ${p.cost}฿${p.category ? ` · ${esc(p.category)}` : ''}${p.barcode ? ` · รหัส ${esc(p.barcode)}` : ''}`;
+            const raw = p.isRawMaterial, made = isMade(p), out = isOutP(p);
+            const unit = raw ? (p.unit || 'ชิ้น') : 'ชิ้น';
+            let sub;
+            if (raw) { const u = usedIn(p.id); sub = `ทุน ${money(p.cost)}/${esc(unit)}${u.length ? ` · ใช้ใน: ${u.map(x => esc(x.name)).join(', ')}` : ''}`; }
+            else if (made) sub = `ทุน/ชิ้น ${money(p.cost)} (จากสูตร ${(p.recipe || []).length} วัตถุดิบ)${p.category ? ` · ${esc(p.category)}` : ''}`;
+            else sub = `ทุน: ${p.cost}฿${p.category ? ` · ${esc(p.category)}` : ''}${p.barcode ? ` · รหัส ${esc(p.barcode)}` : ''}`;
             const val = raw ? num(p.cost) : num(p.price);
-            const stockCell = out ? '<span class="stock-out">หมด</span>' : `<span style="color:${p.stock <= 5 ? '#FF3B30' : '#1C1C1E'}">${p.stock}</span>`;
-            return `<tr class="${out ? 'inv-out' : ''}"><td><img src="${p.image || PLACEHOLDER_IMAGE}" class="inventory-img" alt=""></td><td><b>${esc(p.name)}</b>${lotTag(p)}<br><span style="font-size:0.8em; color:#8E8E93;">${sub}</span></td><td>${val.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold;">${stockCell}</td><td style="white-space:nowrap;"><button class="btn-sm btn-restock" onclick="openRestock(${p.id})">➕ เติมของ</button> <button class="btn-cancel btn-sm" style="background:${raw ? 'var(--raw)' : '#32ADE6'};" onclick="copyProduct(${p.id})">📄 Copy</button> <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button></td></tr>`;
+            let stockCell;
+            if (made) stockCell = out ? `<span class="stock-out">หมด</span><br><small style="color:var(--danger); font-weight:600;">ขาด: ${esc(shortRaws(p.recipe).join(', ') || 'ยังไม่มีสูตร')}</small>` : `<span>ทำได้ ${p.stock}</span>`;
+            else stockCell = out ? '<span class="stock-out">หมด</span>' : `<span style="color:${num(p.stock) <= 5 ? '#FF3B30' : '#1C1C1E'}">${raw ? fmtQ(p.stock) + ' <small>' + esc(unit) + '</small>' : p.stock}</span>`;
+            const tail = ` <button class="btn-edit" onclick="openEditModal(${p.id})">✏️</button> <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️</button>`;
+            const actions = made
+                ? `<button class="btn-sm btn-recipe" onclick="openRecipeEditor(${p.id})">🧪 สูตร</button>` + tail
+                : `<button class="btn-sm btn-restock" onclick="openRestock(${p.id})">➕ เติมของ</button>${raw && !out ? ` <button class="btn-sm btn-out" onclick="markRawOut(${p.id})">⛔ หมด</button>` : ''} <button class="btn-cancel btn-sm" style="background:${raw ? 'var(--raw)' : '#32ADE6'};" onclick="copyProduct(${p.id})">📄 Copy</button>` + tail;
+            return `<tr class="${out ? 'inv-out' : ''}"><td><img src="${p.image || PLACEHOLDER_IMAGE}" class="inventory-img" alt=""></td><td><b>${esc(p.name)}</b>${made ? '<span class="kind-tag">🍹 ผลิตเอง</span>' : ''}${lotTag(p)}<br><span style="font-size:0.8em; color:#8E8E93;">${sub}</span></td><td>${val.toLocaleString()} ฿</td><td style="text-align:center; font-weight:bold;">${stockCell}</td><td style="white-space:nowrap;">${actions}</td></tr>`;
         }
         function renderInvTable(bodyId, list, emptyText, outLabel) {
             const body = document.getElementById(bodyId); if (!body) return;
             if (!list.length) { body.innerHTML = `<tr><td colspan="5" style="text-align: center; color:#8E8E93;">${emptyText}</td></tr>`; return; }
-            const inStock = list.filter(p => num(p.stock) > 0), outStock = list.filter(p => num(p.stock) <= 0);
-            let h = inStock.length ? inStock.map(invRowHtml).join('') : `<tr class="inv-sec"><td colspan="5">ตอนนี้ของหมดทุกรายการ — กด ➕ เติมของ ในหมวด "${outLabel}" ด้านล่าง</td></tr>`;
+            const inStock = list.filter(p => !isOutP(p)), outStock = list.filter(isOutP);
+            let h;
+            if (!inStock.length) h = `<tr class="inv-sec"><td colspan="5">ตอนนี้ของหมดทุกรายการ — เติมของในหมวด "${outLabel}" ด้านล่าง</td></tr>`;
+            else {
+                const made = inStock.filter(isMade), buy = inStock.filter(p => !isMade(p));
+                if (made.length) h = (buy.length ? `<tr class="inv-sec buy"><td colspan="5">🛍️ สินค้าซื้อมาขาย (${buy.length})</td></tr>` + buy.map(invRowHtml).join('') : '')
+                                   + `<tr class="inv-sec made"><td colspan="5">🍹 สินค้าผลิตเอง (${made.length}) · ต้นทุนคิดจากสูตรวัตถุดิบแฝง</td></tr>` + made.map(invRowHtml).join('');
+                else h = inStock.map(invRowHtml).join('');
+            }
             if (outStock.length) h += `<tr class="inv-sec out"><td colspan="5">🚫 ${outLabel} (${outStock.length} รายการ) · เติมของแล้วจะย้ายกลับขึ้นไปรายการปกติเอง</td></tr>` + outStock.map(invRowHtml).join('');
             body.innerHTML = h;
         }
@@ -2250,10 +2743,14 @@
         let restockId = null;
         function openRestock(id) {
             const p = products.find(x => x.id === id); if (!p) return;
+            if (isMade(p)) { openRecipeEditor(id); return; }
             restockId = id;
+            const unitR = p.isRawMaterial ? (p.unit || 'ชิ้น') : 'ชิ้น';
+            document.getElementById('rsQtyLabel').textContent = `จำนวนที่เติม (${unitR})`;
+            resetFundPick('fundRs');
             document.getElementById('rsImg').src = p.image || PLACEHOLDER_IMAGE;
             document.getElementById('rsName').innerHTML = esc(p.name) + lotTag(p);
-            document.getElementById('rsInfo').textContent = `คงเหลือ ${num(p.stock) <= 0 ? '0 (หมด)' : p.stock} · ทุน ${money(p.cost)}/ชิ้น` + (p.isRawMaterial ? '' : ` · ขาย ${money(p.price)}`);
+            document.getElementById('rsInfo').textContent = `คงเหลือ ${num(p.stock) < 0.001 ? '0 (หมด)' : fmtQ(p.stock)} · ทุน ${money(p.cost)}/${p.isRawMaterial ? (p.unit || 'ชิ้น') : 'ชิ้น'}` + (p.isRawMaterial ? '' : ` · ขาย ${money(p.price)}`);
             document.getElementById('rsQty').value = '';
             document.getElementById('rsCost').value = p.cost;
             document.getElementById('rsPriceGroup').style.display = p.isRawMaterial ? 'none' : '';
@@ -2272,7 +2769,7 @@
             const oldStock = Math.max(0, num(p.stock));
             const costChanged = Math.abs(cost - num(p.cost)) > 0.0001;
             const picked = (document.querySelector('input[name="rsMode"]:checked') || {}).value || 'split';
-            const mode = !costChanged ? 'same' : (oldStock <= 0 ? 'update' : picked);
+            const mode = !costChanged ? 'same' : (oldStock < 0.001 ? 'update' : (p.isRawMaterial ? 'avg' : picked));   // วัตถุดิบ: เฉลี่ยต้นทุนเสมอ (สูตรที่ผูกไว้จะได้ไม่หลุด)
             const avg = oldStock + qty > 0 ? r2((oldStock * num(p.cost) + qty * cost) / (oldStock + qty)) : cost;
             return { p, qty, cost, price, oldStock, costChanged, mode, avg, invest: r2(qty * cost), priceChanged: !p.isRawMaterial && Math.abs(price - num(p.price)) > 0.0001 };
         }
@@ -2280,17 +2777,19 @@
             const st = restockState(); if (!st) return;
             const { p, qty, cost, oldStock, mode, avg, invest } = st;
             const choice = document.getElementById('rsChoice'), upd = document.getElementById('rsUpdateNote');
-            choice.style.display = (st.costChanged && oldStock > 0) ? '' : 'none';
-            upd.style.display = (st.costChanged && oldStock <= 0) ? '' : 'none';
+            choice.style.display = (st.costChanged && oldStock >= 0.001 && !p.isRawMaterial) ? '' : 'none';
+            upd.style.display = (st.costChanged && (oldStock < 0.001 || p.isRawMaterial)) ? '' : 'none';
             if (st.costChanged && oldStock > 0) {
                 document.getElementById('rsChoiceText').innerHTML = `⚠️ ต้นทุนรอบนี้ <b>${money(cost)}</b> ไม่เท่าของเดิม (<b>${money(p.cost)}</b>) และยังมีของเดิมเหลือ ${oldStock} ชิ้น`;
                 document.getElementById('rsAvgText').textContent = qty > 0 ? `ต้นทุนเฉลี่ยใหม่ ${money(avg)}/ชิ้น · ใช้รายการเดียว` : 'ใช้รายการเดียว ต้นทุนต่อชิ้นจะเป็นค่าเฉลี่ย';
             }
-            if (st.costChanged && oldStock <= 0) upd.innerHTML = `ℹ️ ของเดิมหมดแล้ว → อัปเดตต้นทุนของรายการนี้จาก ${money(p.cost)} เป็น <b>${money(cost)}</b>/ชิ้น (ประวัติต้นทุนเดิมยังเก็บไว้ครบ)`;
+            if (st.costChanged && p.isRawMaterial && oldStock >= 0.001) upd.innerHTML = `ℹ️ วัตถุดิบใช้วิธี <b>เฉลี่ยต้นทุน</b> → ทุนใหม่ <b>${money(avg)}</b>/${esc(p.unit || 'ชิ้น')} (ของเดิม ${fmtQ(oldStock)} ทุน ${money(p.cost)}) สินค้าที่ใช้วัตถุดิบนี้จะคิดต้นทุนใหม่ให้อัตโนมัติ`;
+            if (st.costChanged && oldStock < 0.001) upd.innerHTML = `ℹ️ ของเดิมหมดแล้ว → อัปเดตต้นทุนของรายการนี้จาก ${money(p.cost)} เป็น <b>${money(cost)}</b>/ชิ้น (ประวัติต้นทุนเดิมยังเก็บไว้ครบ)`;
             let after;
             if (mode === 'split') after = `สร้างรายการใหม่ <b>${qty}</b> ชิ้น (ทุน ${money(cost)}) · ของเดิมเหลือ ${oldStock} ชิ้น (ทุน ${money(p.cost)})`;
             else after = `คงเหลือหลังเติม <b>${oldStock + qty}</b> ชิ้น` + (mode === 'avg' ? ` · ทุนเฉลี่ย ${money(avg)}/ชิ้น` : '');
             if (st.priceChanged) after += `<br>ราคาขายเปลี่ยน ${money(p.price)} → <b>${money(st.price)}</b>`;
+            updateFundPick('fundRs', invest);
             document.getElementById('rsTotal').innerHTML = `💸 จ่ายรอบนี้ ${qty} × ${money(cost)} = <b class="money">${money(invest)}</b> <span style="color:var(--text-2); font-size:13px;">(บันทึกลงหน้าสรุปยอด)</span><br>${after}`;
         }
         document.getElementById('restockForm').addEventListener('submit', function (e) {
@@ -2298,21 +2797,22 @@
             const st = restockState(); if (!st) return;
             const { p, qty, cost, price, oldStock, mode, avg, invest } = st;
             if (qty < 1) { alert('กรุณาใส่จำนวนที่เติม'); return; }
+            const fund = getFund('fundRs');
             const priceNote = st.priceChanged ? ` · ราคาขาย ${p.price}→${price}฿` : '';
             let shownName = p.name;
             if (mode === 'split') {
                 const np = { ...p, id: Date.now(), stock: qty, cost, price: p.isRawMaterial ? 0 : price, lotOf: p.lotOf || p.id, lotDate: new Date().toISOString() };
                 const idx = products.indexOf(p); products.splice(idx + 1, 0, np);
-                logStockChange(np.name, qty, qty, `➕ เติมของ แยกเป็นล็อตใหม่ ทุน ${cost}฿/ชิ้น (ล็อตเดิมทุน ${p.cost}฿ เหลือ ${oldStock})${priceNote}`, p.isRawMaterial, cost, invest, np.id);
+                logStockChange(np.name, qty, qty, `➕ เติมของ แยกเป็นล็อตใหม่ ทุน ${cost}฿/ชิ้น (ล็อตเดิมทุน ${p.cost}฿ เหลือ ${oldStock}) · ${fundLabel(fund)}${priceNote}`, p.isRawMaterial, cost, invest, np.id, fund);
             } else {
                 const oldCost = p.cost;
                 if (mode === 'avg') p.cost = avg; else if (mode === 'update') p.cost = cost;
-                p.stock = oldStock + qty;
+                p.stock = p.isRawMaterial ? r4(oldStock + qty) : oldStock + qty;
                 if (st.priceChanged) p.price = price;
                 const note = mode === 'same' ? `➕ เติมของ (ต้นทุนเดิม ${cost}฿/ชิ้น)`
                     : mode === 'update' ? `➕ เติมของ ต้นทุนใหม่ ${cost}฿/ชิ้น (เดิม ${oldCost}฿ · ของเดิมหมดแล้ว)`
                     : `➕ เติมของ ทุน ${cost}฿/ชิ้น รวมกับของเดิม → ทุนเฉลี่ย ${avg}฿/ชิ้น (เดิม ${oldCost}฿)`;
-                logStockChange(p.name, qty, p.stock, note + priceNote, p.isRawMaterial, cost, invest, p.id);
+                logStockChange(p.name, qty, p.stock, note + ` · ${fundLabel(fund)}` + priceNote, p.isRawMaterial, cost, invest, p.id, fund);
             }
             saveDataLocally();
             closeModal('restockModal');
@@ -2320,15 +2820,31 @@
             if (typeof toast === 'function') toast(`✅ เติม ${shownName} +${qty} · บันทึกต้นทุน ${money(invest)}`);
         });
 
-        function openEditModal(id) { const p = products.find(x => x.id === id); if(p) { currentEditId = id; document.getElementById('editName').value = p.name; document.getElementById('editStock').value = p.stock; document.getElementById('editCost').value = p.cost; if (p.isRawMaterial) { document.getElementById('editPriceContainer').style.display = 'none'; } else { document.getElementById('editPriceContainer').style.display = 'block'; document.getElementById('editPrice').value = p.price; document.getElementById('editCategory').value = p.category || ''; document.getElementById('editBarcode').value = p.barcode || ''; } openModal('editModal'); } }
+        function openEditModal(id) {
+            const p = products.find(x => x.id === id); if (!p) return;
+            currentEditId = id; const made = isMade(p);
+            const g = i => document.getElementById(i);
+            g('editName').value = p.name; g('editStock').value = p.isRawMaterial ? r4(num(p.stock)) : p.stock; g('editCost').value = p.cost;
+            g('editStock').step = p.isRawMaterial ? 'any' : '1';
+            g('editStockGroup').style.display = made ? 'none' : ''; g('editCostGroup').style.display = made ? 'none' : '';
+            g('editStock').required = !made; g('editCost').required = !made;
+            g('editUnitGroup').style.display = p.isRawMaterial ? '' : 'none'; g('editUnit').value = p.unit || 'ชิ้น';
+            const note = g('editMadeNote');
+            if (made) { note.style.display = ''; note.innerHTML = `<div class="lbl-row"><b>🍹 สินค้าผลิตเอง</b><button type="button" class="mini-tool" onclick="closeModal('editModal'); openRecipeEditor(${p.id})">🧪 แก้สูตร</button></div><div class="rs-line">ต้นทุน/ชิ้น <b>${money(p.cost)}</b> (คิดจากสูตร) · ทำได้อีก ${p.stock} ชิ้น (คิดจากวัตถุดิบที่มี)</div>`; }
+            else note.style.display = 'none';
+            if (p.isRawMaterial) { g('editPriceContainer').style.display = 'none'; }
+            else { g('editPriceContainer').style.display = 'block'; g('editPrice').value = p.price; g('editCategory').value = p.category || ''; g('editBarcode').value = p.barcode || ''; }
+            openModal('editModal');
+        }
         
         // แก้ไขฟังก์ชัน Edit ไม่ให้ไปกวนยอดเงินลงทุน
         document.getElementById('editForm').addEventListener('submit', function(e) { 
             e.preventDefault(); 
             const p = products.find(x => x.id === currentEditId); if (!p) return;
             const oldStock = num(p.stock); 
-            const newStock = parseInt(document.getElementById('editStock').value); 
-            const newCost = parseFloat(document.getElementById('editCost').value); 
+            const made = isMade(p);
+            const newStock = made ? oldStock : (p.isRawMaterial ? r4(parseFloat(document.getElementById('editStock').value) || 0) : parseInt(document.getElementById('editStock').value));
+            const newCost = made ? num(p.cost) : parseFloat(document.getElementById('editCost').value);
             const before = { name: p.name, cost: num(p.cost), price: num(p.price), category: p.category || '', barcode: p.barcode || '' };
             const after = { name: document.getElementById('editName').value.trim() || p.name, cost: newCost, price: before.price, category: before.category, barcode: before.barcode };
             if (!p.isRawMaterial) { after.price = parseFloat(document.getElementById('editPrice').value) || 0; after.category = document.getElementById('editCategory').value.trim(); after.barcode = document.getElementById('editBarcode').value.trim(); }
@@ -2337,7 +2853,7 @@
             let invest = 0, stockNote = '';
             if (newStock > oldStock) {
                 const add = newStock - oldStock;
-                const asPurchase = confirm(`คุณเพิ่มสต็อก +${add} ชิ้น\n\nเป็น "การซื้อของเข้า" ใช่ไหม?\n\n• ตกลง = บันทึกต้นทุน ${add} × ${newCost}฿ = ${r2(add * newCost).toLocaleString()}฿ ลงหน้าสรุปยอด\n• ยกเลิก = แค่แก้ตัวเลขที่นับพลาด (ไม่บันทึกต้นทุน)\n\n💡 ครั้งหน้าใช้ปุ่ม "➕ เติมของ" ได้เลย สะดวกกว่า`);
+                const asPurchase = confirm(`คุณเพิ่มสต็อก +${add} ชิ้น\n\nเป็น "การซื้อของเข้า" ใช่ไหม?\n\n• ตกลง = บันทึกเป็นการซื้อของ ${add} × ${newCost}฿ = ${r2(add * newCost).toLocaleString()}฿ (ใช้เงินจากยอดขาย)\n• ยกเลิก = แค่แก้ตัวเลขที่นับพลาด (ไม่บันทึกต้นทุน)\n\n💡 ครั้งหน้าใช้ปุ่ม "➕ เติมของ" ได้เลย สะดวกกว่า`);
                 if (asPurchase) { invest = r2(add * newCost); stockNote = `➕ เติมของ (ผ่านหน้าแก้ไข) ทุน ${newCost}฿/ชิ้น`; }
                 else stockNote = 'แก้ไขจำนวนสต็อกที่นับพลาด (ไม่บันทึกต้นทุน)';
             } else if (newStock < oldStock) stockNote = 'แก้ไข/ปรับลดจำนวนสต็อก';
@@ -2349,12 +2865,13 @@
             if (after.category !== before.category) changes.push(`หมวด "${before.category || '-'}" → "${after.category || '-'}"`);
             if (after.barcode !== before.barcode) changes.push(`รหัส "${before.barcode || '-'}" → "${after.barcode || '-'}"`);
 
+            if (p.isRawMaterial) { const nu = (document.getElementById('editUnit').value || '').trim() || 'ชิ้น'; if (nu !== (p.unit || 'ชิ้น')) changes.push(`หน่วย "${p.unit || 'ชิ้น'}" → "${nu}"`); p.unit = nu; }
             p.name = after.name; p.stock = newStock; p.cost = newCost;
             if (!p.isRawMaterial) { p.price = after.price; p.category = after.category; p.barcode = after.barcode; }
 
             // บันทึกทุกการแก้ไขลงประวัติสต็อก (ทั้งจำนวน และข้อมูลอื่น ๆ)
             const detail = changes.length ? `✏️ แก้ไข: ${changes.join(', ')}` : '';
-            if (oldStock !== newStock) logStockChange(p.name, newStock - oldStock, newStock, stockNote + (detail ? ' · ' + detail : ''), p.isRawMaterial, newCost, invest, p.id);
+            if (oldStock !== newStock) logStockChange(p.name, r4(newStock - oldStock), newStock, stockNote + (detail ? ' · ' + detail : ''), p.isRawMaterial, newCost, invest, p.id, invest > 0 ? 'sales' : undefined);
             else if (detail) logStockChange(p.name, 0, newStock, detail, p.isRawMaterial, newCost, 0, p.id);
 
             saveDataLocally(); 
@@ -2365,7 +2882,7 @@
 
         // ================= v3: การแสดงผลบนแท็บเล็ต (ขนาดตัวอักษร / เต็มจอ / ติดตั้งแอป) =================
         // ค่าพวกนี้เป็นของ "เครื่องนี้" เท่านั้น จึงเก็บแยกใน localStorage (ไม่ติดไปกับไฟล์สำรอง)
-        const APP_VERSION = '3.5';
+        const APP_VERSION = '3.6';
         const UI_KEY = 'doggyUi';
         let uiPrefs = { scale: 'normal', autoFs: true };
         let fsUserExited = false;          // ผู้ใช้กดปิดเต็มจอเองในรอบนี้ → ไม่เปิดให้อัตโนมัติอีก
